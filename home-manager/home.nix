@@ -17,11 +17,11 @@
   };
 
   programs.home-manager.enable = true;
-  
+
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName  = "RSWilli";
+    userName = "RSWilli";
     userEmail = "bartel.wilhelm@gmail.com";
     aliases = {
       pfush = "push --force-with-lease";

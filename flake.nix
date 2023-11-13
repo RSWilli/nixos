@@ -75,17 +75,17 @@
             {
               name = "apply";
               help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild switch --flake . $@";
+              command = "sudo nixos-rebuild switch --flake .#$1";
             }
             {
               name = "test";
               help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild test --flake . $@";
+              command = "sudo nixos-rebuild test --flake .#$1";
             }
             {
               name = "boot";
               help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild boot --flake . $@";
+              command = "sudo nixos-rebuild boot --flake .#$1";
             }
           ];
           packages = with pkgs; [];

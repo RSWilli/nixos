@@ -1,5 +1,3 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
   inputs,
   outputs,
@@ -9,11 +7,6 @@
   ...
 }: {
   imports = [];
-
-  programs.zsh.enable = true;
-  environment.shells = with pkgs; [
-    zsh
-  ];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -28,13 +21,18 @@
       description = "Wilhelm Bartel";
       extraGroups = ["networkmanager" "wheel"];
       shell = pkgs.zsh;
+      hashedPasswordFile = config.age.secrets.password.path;
       packages = with pkgs; [
         firefox
         telegram-desktop
         gnome.adwaita-icon-theme
         gnome.gnome-tweaks
         arc-theme
-        # gnome3.gpaste
+        # gnome3.gpaste currently broken
+
+        # language server for nix:
+        nil
+        nixpkgs-fmt
       ];
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect

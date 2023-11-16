@@ -47,6 +47,7 @@
             modules = [
               ./systems/think
               agenix.nixosModules.default
+              ./secrets/config.nix
             ];
           };
         };
@@ -65,13 +66,20 @@
         formatter = pkgs.alejandra;
         devshells.default = {
           commands = [
-            # {
-            #   name = "agenix";
-            #   help = "wrapper around agenix";
-            #   command = ''
-            #     sudo EDITOR="${pkgs.lib.getExe pkgs.vim}" ${pkgs.lib.getExe' inputs'.agenix.packages.default "agenix"} --identity /etc/ssh/ssh_host_ed25519_key "$@"
-            #   '';
-            # }
+            {
+              name = "agenix";
+              help = "wrapper around agenix using vscode as editor";
+              command = ''
+                EDITOR="code --wait" ${pkgs.lib.getExe' inputs'.agenix.packages.default "agenix"} "$@"
+              '';
+            }
+            {
+              name = "pacsearch";
+              help = "search nixpkgs for packages";
+              command = ''
+                nix-env -q | grep
+              '';
+            }
             {
               name = "apply";
               help = "wrapper for nixos-rebuild switch";

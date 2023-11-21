@@ -86,14 +86,9 @@
               command = "sudo nixos-rebuild switch --flake .#$1";
             }
             {
-              name = "test";
-              help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild test --flake .#$1";
-            }
-            {
-              name = "boot";
-              help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild boot --flake .#$1";
+              name = "update";
+              help = "wrapper for nix flake update";
+              command = "nix flake update";
             }
           ];
           packages = with pkgs; [];

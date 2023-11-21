@@ -28,7 +28,7 @@
   users.users = {
     root = {
       shell = pkgs.zsh;
-      passwordFile = config.age.secrets.root-password.path;
+      hashedPasswordFile = config.age.secrets.root-password.path;
       #   openssh.authorizedKeys.keys = [
       #     # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       #   ];

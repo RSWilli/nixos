@@ -21,6 +21,23 @@
     # Making legacy nix commands consistent as well, awesome!
     # nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
+    extraOptions = "experimental-features = nix-command flakes";
+
+    gc = {
+      automatic = true;
+      options = let
+        # at least 32GB of free space
+        minFreeGB = 32;
+        minfreeSpace = toString (minFreeGB * 1024 * 1024 * 1024);
+      in "--max-freed ${minfreeSpace} --delete-older-than 14d";
+      dates = "weekly";
+    };
+
+    optimise = {
+      automatic = true;
+      dates = ["weekly"];
+    };
+
     settings = {
       experimental-features = ["nix-command" "flakes"];
       # Deduplicate and optimize nix store

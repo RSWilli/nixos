@@ -26,6 +26,9 @@
     aliases = {
       pfush = "push --force-with-lease";
     };
+    extraConfig = {
+      pull.rebase = "true";
+    };
   };
 
   programs.zsh = {

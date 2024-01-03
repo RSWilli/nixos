@@ -16,6 +16,8 @@
     ../../nixos/user-willi.nix
     inputs.home-manager.nixosModules.home-manager
 
+    ../../nixos/nvidia.nix
+
     inputs.disko.nixosModules.disko
     ../../disko/unencrypted.nix
   ];

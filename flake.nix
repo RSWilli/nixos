@@ -113,8 +113,7 @@
             {
               name = "format";
               help = "format disk according to config";
-              # all changes need to be upstream for this to work, since the repo is fetched from github
-              command = "sudo ${pkgs.lib.getExe' inputs'.disko.packages.default "disko"} --flake github:rswilli/nixos#$1 --mode disko";
+              command = "sudo ${pkgs.lib.getExe' inputs'.disko.packages.default "disko"} --flake $(pwd)#$1 --mode disko";
             }
             {
               name = "install";

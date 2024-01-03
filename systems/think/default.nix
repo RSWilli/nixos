@@ -27,5 +27,5 @@
 
   my.root-disk = "/dev/nvme0n1";
 
-  networking.hostName = "main";
+  networking.hostName = "think";
 }

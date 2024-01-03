@@ -113,8 +113,8 @@
             {
               name = "format";
               help = "format disk according to config";
-              # sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --flake github:rswilli/nixos#think --mode disko
-              command = "sudo ${pkgs.lib.getExe' inputs'.disko.packages.default "disko"} --flake .#$1 --mode disko";
+              # all changes need to be upstream for this to work, since the repo is fetched from github
+              command = "sudo ${pkgs.lib.getExe' inputs'.disko.packages.default "disko"} --flake github:rswilli/nixos#$1 --mode disko";
             }
             {
               name = "install";

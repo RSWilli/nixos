@@ -17,7 +17,7 @@
     inputs.home-manager.nixosModules.home-manager
 
     inputs.disko.nixosModules.disko
-    ../../disko/encrypted.nix
+    ../../disko/unencrypted.nix
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
@@ -26,5 +26,5 @@
 
   my.root-disk = "/dev/nvme0n1";
 
-  networking.hostName = "think";
+  networking.hostName = "main";
 }

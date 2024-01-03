@@ -26,7 +26,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # compatibility with nix-shell (e.g. while installing a new system from live usb):
-    inputs.flake-compat = {
+    flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };

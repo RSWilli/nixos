@@ -24,6 +24,12 @@
     # flake-utils.url = "github:numtide/flake-utils";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+
+    # compatibility with nix-shell (e.g. while installing a new system from live usb):
+    inputs.flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -41,6 +47,15 @@
 
       flake = {
         nixosConfigurations = {
+          main = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = {inherit inputs;};
+            modules = [
+              ./systems/main
+              agenix.nixosModules.default
+              ./secrets/config.nix
+            ];
+          };
           think = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = {inherit inputs;};
@@ -105,6 +120,11 @@
               name = "install";
               help = "install system";
               command = "sudo nixos-install --flake .#$1";
+            }
+            {
+              name = "hw-config";
+              help = "generate the hardware-configuration.nix file for the system";
+              command = "nixos-generate-config --no-filesystems --show-hardware-config > ./systems/$1/hardware-configuration.nix";
             }
           ];
         };

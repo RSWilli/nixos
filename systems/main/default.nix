@@ -15,7 +15,6 @@
     ../../nixos/system.nix
     ../../nixos/user-willi.nix
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13
 
     inputs.disko.nixosModules.disko
     ../../disko/encrypted.nix
@@ -27,5 +26,5 @@
 
   my.root-disk = "/dev/nvme0n1";
 
-  networking.hostName = "main";
+  networking.hostName = "think";
 }

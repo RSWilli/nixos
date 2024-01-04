@@ -97,8 +97,8 @@
             }
             {
               name = "apply";
-              help = "wrapper for nixos-rebuild switch";
-              command = "sudo nixos-rebuild switch --flake .#$1";
+              help = "wrapper for nixos-rebuild switch for the current system";
+              command = "sudo nixos-rebuild switch --flake .#$(hostname)";
             }
             {
               name = "update";

@@ -108,25 +108,6 @@
           ];
           packages = with pkgs; [];
         };
-        devshells.install = {
-          commands = [
-            {
-              name = "format";
-              help = "format disk according to config";
-              command = "sudo ${pkgs.lib.getExe' inputs'.disko.packages.default "disko"} --flake $(pwd)#$1 --mode disko";
-            }
-            {
-              name = "install";
-              help = "install system";
-              command = "sudo nixos-install --flake .#$1";
-            }
-            {
-              name = "hw-config";
-              help = "generate the hardware-configuration.nix file for the system";
-              command = "nixos-generate-config --no-filesystems --show-hardware-config > ./systems/$1/hardware-configuration.nix";
-            }
-          ];
-        };
       };
     };
 }

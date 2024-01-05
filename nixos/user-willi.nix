@@ -15,12 +15,10 @@
     users.willi = lib.mkMerge [
       ../home-manager/home.nix
       {
-        programs.ssh = {
-          enable = true;
-          includes = [
-            config.age.secrets."id_ed25519".path
-            (builtins.toString ../static/id_ed25519.pub)
-          ];
+        # setup public ssh key:
+        home.file.publickey = {
+          source = ../static/willi-id_ed25519.pub;
+          target = ".ssh/id_ed25519.pub";
         };
       }
     ];
@@ -54,6 +52,8 @@
   # setup ssh keys
   age.secrets."id_ed25519" = {
     file = ../secrets/willi-id_ed25519.age;
+    path = "/home/willi/.ssh/id_ed25519";
     owner = "1000";
+    mode = "600";
   };
 }

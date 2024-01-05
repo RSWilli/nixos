@@ -20,6 +20,8 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
+
     devshell.url = "github:numtide/devshell";
     # flake-utils.url = "github:numtide/flake-utils";
 

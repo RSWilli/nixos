@@ -12,7 +12,18 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.willi = ../home-manager/home.nix;
+    users.willi = lib.mkMerge [
+      ../home-manager/home.nix
+      {
+        programs.ssh = {
+          enable = true;
+          includes = [
+            config.age.secrets."id_ed25519".path
+            (builtins.toString ../static/id_ed25519.pub)
+          ];
+        };
+      }
+    ];
   };
 
   users.users = {
@@ -28,7 +39,7 @@
         gnome.adwaita-icon-theme
         gnome.gnome-tweaks
         arc-theme
-        # gnome3.gpaste currently broken
+        # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
 
         # language server for nix:
         nil
@@ -38,5 +49,11 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
     };
+  };
+
+  # setup ssh keys
+  age.secrets."id_ed25519" = {
+    file = ../secrets/willi-id_ed25519.age;
+    owner = "1000";
   };
 }

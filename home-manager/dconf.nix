@@ -9,8 +9,8 @@ with lib.hm.gvariant; {
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${./wallpaper.png}";
-      picture-uri-dark = "file://${./wallpaper.png}";
+      picture-uri = "file://${../static/wallpaper.png}";
+      picture-uri-dark = "file://${../static/wallpaper.png}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
     };
@@ -33,7 +33,7 @@ with lib.hm.gvariant; {
     "org/gnome/desktop/screensaver" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${./wallpaper.png}";
+      picture-uri = "file://${../static/wallpaper.png}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
     };

@@ -53,7 +53,7 @@
   age.secrets."id_ed25519" = {
     file = ../secrets/willi-id_ed25519.age;
     path = "/home/willi/.ssh/id_ed25519";
-    owner = "1000";
+    owner = "willi";
     mode = "600";
   };
 }

@@ -12,4 +12,5 @@ in {
   "password.age".publicKeys = all;
   "root-password.age".publicKeys = all;
   "willi-id_ed25519.age".publicKeys = all;
+  "mumble-cert.age".publicKeys = all;
 }

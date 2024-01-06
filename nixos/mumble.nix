@@ -1,7 +1,10 @@
-{ config, pkgs, ...}:
 {
+  config,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = [
-    (pkgs.mumble.override { pipewireSupport = true; })
+    (pkgs.mumble.override {pipewireSupport = true;})
   ];
 
   # add mumble cert to home directory

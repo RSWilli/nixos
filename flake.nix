@@ -18,8 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
+    # remote nixos installation:
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
 
     devshell.url = "github:numtide/devshell";
@@ -79,7 +81,7 @@
         pkgs,
         system,
         ...
-      }: {
+      } @ perSystemInputs: {
         formatter = pkgs.alejandra;
         devshells.default = {
           commands = [
@@ -107,8 +109,12 @@
               help = "wrapper for nix flake update";
               command = "nix flake update";
             }
+            {
+              name = "update-dconf";
+              help = "update dconf.nix settings";
+              package = (import ./lib/dconfdump.nix) perSystemInputs;
+            }
           ];
-          packages = with pkgs; [];
         };
       };
     };

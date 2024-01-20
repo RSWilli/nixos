@@ -25,7 +25,7 @@ with lib.hm.gvariant; {
     "org/gnome/desktop/peripherals/touchpad" = {
       click-method = "areas";
       disable-while-typing = false;
-      speed = 0.7348484848484849;
+      speed = 0.734848;
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
     };
@@ -36,6 +36,12 @@ with lib.hm.gvariant; {
       picture-uri = "file://${../static/wallpaper.png}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
+    };
+
+    "org/gnome/mutter" = {
+      dynamic-workspaces = true;
+      edge-tiling = true;
+      workspaces-only-on-primary = true;
     };
 
     "org/gnome/shell" = {

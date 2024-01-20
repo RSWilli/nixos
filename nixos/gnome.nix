@@ -50,7 +50,7 @@
       geary # email reader
       evince # document viewer
       #gnome-characters
-      totem # video player
+      #totem # video player
       tali # poker game
       iagno # go game
       hitori # sudoku game

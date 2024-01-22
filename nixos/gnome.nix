@@ -34,6 +34,10 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
+  environment.systemPackages = [
+    pkgs.pavucontrol
+  ];
+
   environment.gnome.excludePackages =
     (with pkgs; [
       gnome-photos

@@ -20,7 +20,7 @@
     modesetting.enable = true;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
     powerManagement.finegrained = false;
@@ -40,5 +40,9 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # this is apparently better, but vscode shows a blank window
+    # package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
   };
+
+  boot.blacklistedKernelModules = [ "nouveau" ];
 }

@@ -18,7 +18,7 @@ with lib.hm.gvariant; {
     "org/gnome/desktop/interface" = {
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      gtk-theme = "Arc-Darker";
+      gtk-theme = "Arc-Dark";
       show-battery-percentage = true;
     };
 

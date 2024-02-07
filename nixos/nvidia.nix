@@ -39,10 +39,14 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    # this is apparently better, but vscode shows a blank window
-    # package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
   };
 
   boot.blacklistedKernelModules = [ "nouveau" ];
+
+  # Ozone Wayland support in Chrome and several Electron apps (needed for vscode to render in Wayland)
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 }

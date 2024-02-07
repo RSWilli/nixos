@@ -5,6 +5,7 @@
 }: {
   environment.systemPackages = [
     (pkgs.mumble.override {pipewireSupport = true;})
+    pkgs.discord
   ];
 
   # add mumble cert to home directory

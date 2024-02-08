@@ -5,9 +5,10 @@
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    layout = "de";
-    xkbVariant = "";
-
+    xkb = {
+      layout = "de";
+      variant = "";
+    };
     displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "willi";
   };

@@ -36,6 +36,7 @@
 
   environment.systemPackages = [
     pkgs.pavucontrol
+    pkgs.easyeffects
   ];
 
   environment.gnome.excludePackages =

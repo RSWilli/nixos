@@ -38,6 +38,7 @@
   environment.systemPackages = [
     pkgs.pavucontrol
     pkgs.easyeffects
+    pkgs.evince
   ];
 
   environment.gnome.excludePackages =

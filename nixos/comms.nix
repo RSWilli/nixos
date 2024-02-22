@@ -6,6 +6,7 @@
   environment.systemPackages = [
     (pkgs.mumble.override {pipewireSupport = true;})
     pkgs.discord
+    pkgs.teamspeak_client
   ];
 
   # add mumble cert to home directory

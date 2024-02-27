@@ -16,3 +16,11 @@ To create a new system, run the following command:
 ```bash
 install_remote_system.sh <hostname> <user@host>
 ```
+
+## To output any key set in the flake:
+
+```bash
+$ nix repl
+nix-repl> :lf .
+nix-repl> <key>
+```

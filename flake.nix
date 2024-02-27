@@ -102,7 +102,7 @@
             {
               name = "apply";
               help = "wrapper for nixos-rebuild switch for the current system";
-              command = "sudo nixos-rebuild switch --flake .#$(hostname)";
+              command = "sudo nixos-rebuild switch --flake .#$(hostname) --show-trace";
             }
             {
               name = "update";

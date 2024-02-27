@@ -43,7 +43,7 @@
     # package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
   };
 
-  boot.blacklistedKernelModules = [ "nouveau" ];
+  boot.blacklistedKernelModules = ["nouveau"];
 
   # Ozone Wayland support in Chrome and several Electron apps (needed for vscode to render in Wayland)
   environment.sessionVariables = {

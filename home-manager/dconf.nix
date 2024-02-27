@@ -70,14 +70,14 @@ with lib.hm.gvariant; {
     };
 
     "com/github/wwmm/easyeffects/spectrum" = {
-      color = mkTuple [ 1.0 1.0 1.0 1.0 ];
-      color-axis-labels = mkTuple [ 1.0 1.0 1.0 1.0 ];
+      color = mkTuple [1.0 1.0 1.0 1.0];
+      color-axis-labels = mkTuple [1.0 1.0 1.0 1.0];
     };
 
     "com/github/wwmm/easyeffects/streaminputs" = {
       # TODO: switch the input device per system
       input-device = "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback";
-      plugins = [ "stereo_tools#0" "rnnoise#0" ];
+      plugins = ["stereo_tools#0" "rnnoise#0"];
     };
 
     "com/github/wwmm/easyeffects/streaminputs/deepfilternet/0" = {

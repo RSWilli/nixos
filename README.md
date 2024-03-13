@@ -9,6 +9,18 @@ Currently the following systems are configured:
 - `main`: My desktop gaming PC with an AMD Ryzen 5 5600X and an Nvidia RTX 3080
 - `think`: My laptop, a Lenovo Thinkpad X13
 
+Another nixosConfiguration is defined for the Nixos ISO with my configuration. This is needed for installing new systems.
+
+Build the ISO with the following command in the devshell:
+
+```bash
+nix develop .
+
+build_iso
+```
+
+and find the ISO in the `result/iso` directory.
+
 ## Creating a new system
 
 To create a new system, run the following command:

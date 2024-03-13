@@ -69,6 +69,13 @@
               ./secrets/config.nix
             ];
           };
+          iso = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = {inherit inputs;};
+            modules = [
+              ./systems/iso
+            ];
+          };
         };
       };
       systems = [
@@ -108,6 +115,11 @@
               name = "update";
               help = "wrapper for nix flake update";
               command = "nix flake update";
+            }
+            {
+              name = "build_iso";
+              help = "build the custom ISO image";
+              command = "nix build .#nixosConfigurations.iso.config.system.build.isoImage --show-trace";
             }
             {
               name = "update-dconf";

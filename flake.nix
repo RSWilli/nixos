@@ -74,6 +74,8 @@
             specialArgs = {inherit inputs;};
             modules = [
               ./systems/iso
+              agenix.nixosModules.default
+              ./secrets/config.nix
             ];
           };
         };

@@ -13,7 +13,7 @@
     ../../nixos/nix.nix
     ../../nixos/steam.nix
     ../../nixos/system.nix
-    ../../nixos/user-willi.nix
+    ../../nixos/users.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13
 

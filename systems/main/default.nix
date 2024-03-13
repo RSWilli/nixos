@@ -14,7 +14,7 @@
     ../../nixos/steam.nix
     ../../nixos/comms.nix
     ../../nixos/system.nix
-    ../../nixos/user-willi.nix
+    ../../nixos/users.nix
     inputs.home-manager.nixosModules.home-manager
 
     ../../nixos/nvidia.nix

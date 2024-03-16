@@ -20,7 +20,8 @@
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
   };
 
   # Ozone Wayland support in Chrome and several Electron apps (needed for vscode to render in Wayland)

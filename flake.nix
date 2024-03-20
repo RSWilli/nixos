@@ -131,5 +131,12 @@
           ];
         };
       };
+
+      templates = {
+        golang = {
+          path = ./templates/golang;
+          description = "Golang development environment";
+        };
+      };
     };
 }

@@ -50,6 +50,12 @@
       ];
 
       flake = {
+        templates = {
+          golang = {
+            path = ./templates/golang;
+            description = "Golang development environment";
+          };
+        };
         nixosConfigurations = {
           main = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -129,13 +135,6 @@
               package = (import ./lib/dconfdump.nix) perSystemInputs;
             }
           ];
-        };
-      };
-
-      templates = {
-        golang = {
-          path = ./templates/golang;
-          description = "Golang development environment";
         };
       };
     };

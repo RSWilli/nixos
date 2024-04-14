@@ -9,8 +9,13 @@
       layout = "de";
       variant = "";
     };
-    displayManager.autoLogin.enable = true;
-    displayManager.autoLogin.user = "willi";
+  };
+
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "willi";
+    };
   };
 
   services.printing.enable = true; # cups

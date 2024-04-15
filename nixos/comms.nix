@@ -7,6 +7,7 @@
     (pkgs.mumble.override {pipewireSupport = true;})
     pkgs.discord
     pkgs.teamspeak_client
+    pkgs.element-desktop
   ];
 
   # add mumble cert to home directory

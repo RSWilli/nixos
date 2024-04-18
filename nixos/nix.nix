@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   config,
   ...
 }: {
@@ -44,6 +45,10 @@
       auto-optimise-store = true;
     };
   };
+
+  environment.systemPackages = [
+    pkgs.nh
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

@@ -12,9 +12,9 @@
     driSupport32Bit = true;
   };
 
-    hardware.opengl.extraPackages = with pkgs; [
-      vaapiVdpau
-    ];
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiVdpau
+  ];
 
   services.xserver.videoDrivers = ["nvidia"];
 

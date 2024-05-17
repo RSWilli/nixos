@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    # nixpkgs-alternate.url = "github:nixos/nixpkgs/1ed5df1e703135d2d6814a761ce67e6e8073af30";
 
     agenix.url = "github:ryantm/agenix";
 

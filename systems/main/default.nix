@@ -25,6 +25,7 @@
 
   # https://nixos.wiki/wiki/Linux_kernel
   boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
+  # boot.kernelPackages = pkgs.alternate.linuxPackages_latest; # pinned latest kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my.root-disk = "/dev/nvme0n1";

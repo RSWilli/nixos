@@ -11,6 +11,13 @@
     config = {
       allowUnfree = true;
     };
+    # overlays = [
+    #   (
+    #     final: prev: {
+    #       alternate = import inputs.nixpkgs-alternate {system = prev.stdenv.hostPlatform.system; config = prev.config;};
+    #     }
+    #   )
+    # ];
   };
 
   nix = {

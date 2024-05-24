@@ -35,7 +35,7 @@
 
   # temp fix for https://github.com/NixOS/nixpkgs/issues/302059
   # as mentioned in: https://gitlab.gnome.org/GNOME/mutter/-/issues/2266
-  boot.kernelParams = [
-    "initcall_blacklist=simpledrm_platform_driver_init"
-  ];
+  # boot.kernelParams = [
+  #   "initcall_blacklist=simpledrm_platform_driver_init"
+  # ];
 }

@@ -15,6 +15,7 @@
     ../../nixos/comms.nix
     ../../nixos/system.nix
     ../../nixos/users.nix
+    ../../nixos/tailscale.nix
     inputs.home-manager.nixosModules.home-manager
 
     ../../nixos/nvidia.nix

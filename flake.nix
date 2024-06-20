@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # nixpkgs-alternate.url = "github:nixos/nixpkgs/1ed5df1e703135d2d6814a761ce67e6e8073af30";
+    # rnnoise 0.2 is broken, so we use the old version:
+    nixpkgs-rnnoise.url = "github:nixos/nixpkgs/1d91b59670d5a9785c87a4e63a19695727166598";
 
     agenix.url = "github:ryantm/agenix";
 
@@ -113,6 +114,11 @@
               command = ''
                 nix-env -q | grep
               '';
+            }
+            {
+              name = "boot";
+              help = "wrapper for nixos-rebuild boot for the current system";
+              command = "${pkgs.nh}/bin/nh os boot";
             }
             {
               name = "apply";

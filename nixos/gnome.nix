@@ -42,7 +42,7 @@
 
   environment.systemPackages = [
     pkgs.pavucontrol
-    pkgs.easyeffects
+    (pkgs.easyeffects.override { rnnoise = pkgs.working-rnnoise.rnnoise; })
     pkgs.evince
   ];
 

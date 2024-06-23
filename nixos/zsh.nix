@@ -5,6 +5,13 @@
     pkgs.zsh
   ];
 
+  environment.systemPackages = with pkgs; [
+    nix-zsh-completions
+  ];
+
+  # enable direnv and nix-direnv
+  programs.direnv.enable = true;
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;

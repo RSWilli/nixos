@@ -61,11 +61,6 @@
     # language server for nix:
     nil
     nixpkgs-fmt
-
-    nix-zsh-completions
-
-    direnv
-    nix-direnv
   ];
 
   environment.sessionVariables = {

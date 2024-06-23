@@ -135,11 +135,6 @@
               help = "build the custom ISO image";
               command = "nix build .#nixosConfigurations.iso.config.system.build.isoImage --show-trace";
             }
-            {
-              name = "update-dconf";
-              help = "update dconf.nix settings";
-              package = pkgs.callPackage ./lib/dconfdump.nix;
-            }
           ];
         };
       };

@@ -18,7 +18,7 @@
       };
 
       # golang package to use
-      golang = pkgs.go_1_22;
+      golang = pkgs.go;
     in
       pkgs.mkShell {
         packages = [

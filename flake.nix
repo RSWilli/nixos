@@ -97,7 +97,7 @@
         pkgs,
         system,
         ...
-      } @ perSystemInputs: {
+      }: {
         formatter = pkgs.alejandra;
         devshells.default = {
           commands = [
@@ -138,7 +138,7 @@
             {
               name = "update-dconf";
               help = "update dconf.nix settings";
-              package = (import ./lib/dconfdump.nix) perSystemInputs;
+              package = pkgs.callPackage ./lib/dconfdump.nix;
             }
           ];
         };

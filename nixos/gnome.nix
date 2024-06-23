@@ -133,6 +133,7 @@
       gnome.gnome-tweaks
       pavucontrol
       telegram-desktop
+      mpv
       # vscode-fhs # sudo does not work with this, so we use home-manager instead
     ];
 
@@ -152,7 +153,7 @@
         geary # email reader
         evince # document viewer
         #gnome-characters
-        #totem # video player
+        totem # video player
         yelp # Help view
         gnome-contacts
         gnome-initial-setup

@@ -6,7 +6,9 @@
   pkgs,
   ...
 }: {
-  imports = [];
+  imports = [
+    ./zsh.nix
+  ];
 
   boot.loader.systemd-boot = {
     enable = true;

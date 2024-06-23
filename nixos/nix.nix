@@ -14,7 +14,10 @@
     overlays = [
       (
         final: prev: {
-          working-rnnoise = import inputs.nixpkgs-rnnoise {system = prev.stdenv.hostPlatform.system; config = prev.config;};
+          working-rnnoise = import inputs.nixpkgs-rnnoise {
+            system = prev.stdenv.hostPlatform.system;
+            config = prev.config;
+          };
         }
       )
     ];
@@ -53,8 +56,16 @@
     };
   };
 
-  environment.systemPackages = [
-    pkgs.nh
+  environment.systemPackages = with pkgs; [
+    nh
+    # language server for nix:
+    nil
+    nixpkgs-fmt
+
+    nix-zsh-completions
+
+    direnv
+    nix-direnv
   ];
 
   environment.sessionVariables = {

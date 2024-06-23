@@ -24,17 +24,11 @@
     ];
   };
 
-  programs.zsh.enable = true;
-  environment.shells = with pkgs; [
-    zsh
-  ];
-
   # enforce that all users are configured via this flake
   users.mutableUsers = false;
 
   users.users = {
     root = {
-      shell = pkgs.zsh;
       hashedPasswordFile = config.age.secrets.root-password.path;
       #   openssh.authorizedKeys.keys = [
       #     # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
@@ -44,20 +38,7 @@
       isNormalUser = true;
       description = "Wilhelm Bartel";
       extraGroups = ["networkmanager" "wheel"];
-      shell = pkgs.zsh;
       hashedPasswordFile = config.age.secrets.password.path;
-      packages = with pkgs; [
-        firefox
-        telegram-desktop
-        gnome.adwaita-icon-theme
-        gnome.gnome-tweaks
-        arc-theme
-        # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
-
-        # language server for nix:
-        nil
-        nixpkgs-fmt
-      ];
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];

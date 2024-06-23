@@ -6,10 +6,7 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./dconf.nix
-    ./vscode.nix
-  ];
+  imports = [];
 
   home = {
     username = "willi";
@@ -31,20 +28,9 @@
     };
   };
 
-  programs.zsh = {
+  # TODO: move vscode config into nix system config
+  programs.vscode = {
     enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    oh-my-zsh = {
-      enable = true;
-      theme = "terminalparty";
-    };
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
   };
 
   # Nicely reload system units when changing configs

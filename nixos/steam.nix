@@ -21,4 +21,8 @@
   ];
 
   programs.gamemode.enable = true;
+
+  my.pinned-apps = [
+    "steam.desktop"
+  ];
 }

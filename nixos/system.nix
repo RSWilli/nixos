@@ -7,7 +7,7 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
+    ./zsh
   ];
 
   boot.loader.systemd-boot = {

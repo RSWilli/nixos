@@ -134,7 +134,6 @@
       pavucontrol
       telegram-desktop
       mpv
-      # vscode-fhs # sudo does not work with this, so we use home-manager instead
     ];
 
     environment.gnome.excludePackages =

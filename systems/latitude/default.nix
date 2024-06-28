@@ -11,27 +11,23 @@
     ../../nixos/gnome.nix
     ../../nixos/i18n.nix
     ../../nixos/nix.nix
-    ../../nixos/steam.nix
-    ../../nixos/comms.nix
     ../../nixos/system.nix
-    ../../nixos/users.nix
     ../../nixos/tailscale.nix
+    ../../nixos/work.nix
+    ../../nixos/users.nix
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-    ../../nixos/nvidia.nix
+    inputs.nixos-hardware.nixosModules.dell-latitude-5520
 
     inputs.disko.nixosModules.disko
-    ../../disko/unencrypted.nix
+    ../../disko/encrypted.nix
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
   # boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
-  # boot.kernelPackages = pkgs.alternate.linuxPackages_latest; # pinned latest kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
+  boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my.root-disk = "/dev/nvme0n1";
 
-  networking.hostName = "main";
+  networking.hostName = "latitude";
 }

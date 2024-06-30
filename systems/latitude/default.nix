@@ -7,14 +7,12 @@
   ...
 }: {
   imports = [
+    ../../nixos
     ./hardware-configuration.nix
     ../../nixos/gnome.nix
-    ../../nixos/i18n.nix
-    ../../nixos/nix.nix
     ../../nixos/system.nix
     ../../nixos/tailscale.nix
     ../../nixos/work.nix
-    ../../nixos/users.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.dell-latitude-5520
 

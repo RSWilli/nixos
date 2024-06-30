@@ -6,10 +6,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./zsh
-  ];
-
   boot.loader.systemd-boot = {
     enable = true;
     consoleMode = "max";

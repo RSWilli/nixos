@@ -134,6 +134,7 @@
       pavucontrol
       telegram-desktop
       mpv
+      vscode
     ];
 
     environment.gnome.excludePackages =

@@ -7,13 +7,11 @@
   ...
 }: {
   imports = [
+    ../../nixos
     ./hardware-configuration.nix
     ../../nixos/gnome.nix
-    ../../nixos/i18n.nix
-    ../../nixos/nix.nix
     ../../nixos/steam.nix
     ../../nixos/system.nix
-    ../../nixos/users.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13
 

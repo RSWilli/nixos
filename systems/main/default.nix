@@ -7,14 +7,12 @@
   ...
 }: {
   imports = [
+    ../../nixos
     ./hardware-configuration.nix
     ../../nixos/gnome.nix
-    ../../nixos/i18n.nix
-    ../../nixos/nix.nix
     ../../nixos/steam.nix
     ../../nixos/comms.nix
     ../../nixos/system.nix
-    ../../nixos/users.nix
     ../../nixos/tailscale.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.common-pc-ssd

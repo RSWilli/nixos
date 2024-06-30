@@ -34,4 +34,8 @@
   my.root-disk = "/dev/nvme0n1";
 
   networking.hostName = "main";
+
+  environment.systemPackages = with pkgs; [
+    blender
+  ];
 }

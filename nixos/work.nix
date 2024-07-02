@@ -1,7 +1,5 @@
 # packages and config needed for my work environment
 {
-  config,
-  lib,
   pkgs,
   ...
 }: {

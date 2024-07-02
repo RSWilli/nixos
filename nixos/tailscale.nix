@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # user need to run
   # sudo tailscale up --accept-routes
   # to start using tailscale

@@ -1,10 +1,5 @@
 {
-  inputs,
   modulesPath,
-  outputs,
-  lib,
-  config,
-  pkgs,
   ...
 }: {
   # do not include secrets in the iso

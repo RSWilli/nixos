@@ -1,7 +1,6 @@
 # source: https://nixos.wiki/wiki/Nvidia
 {
   config,
-  lib,
   pkgs,
   ...
 }: {

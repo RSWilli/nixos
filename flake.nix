@@ -80,9 +80,9 @@
             system = "x86_64-linux";
             specialArgs = {inherit inputs;};
             modules = [
+              # do not include secrets in the iso
               ./systems/iso
               agenix.nixosModules.default
-              ./secrets/config.nix
             ];
           };
         };

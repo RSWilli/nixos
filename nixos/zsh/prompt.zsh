@@ -11,9 +11,9 @@ function theme_precmd() {
     # right prompt: current directory, git branch, hostname
     GIT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
 
-    # add a space if there is a git branch
+    # add a space and parenthesis if there is a git branch
     if [ -n "$GIT_BRANCH" ]; then
-        GIT_BRANCH=" $GIT_BRANCH"
+        GIT_BRANCH=" ($GIT_BRANCH)"
     fi
 
     RPS1="%2~%F{yellow}${GIT_BRANCH} %B%F{blue}%m%b%f"

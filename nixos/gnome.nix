@@ -164,5 +164,9 @@
     };
 
     programs.dconf.enable = true;
+
+    fonts.packages = with pkgs; [
+      fira-code
+    ];
   };
 }

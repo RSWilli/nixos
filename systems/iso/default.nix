@@ -1,7 +1,4 @@
-{
-  modulesPath,
-  ...
-}: {
+{modulesPath, ...}: {
   # do not include secrets in the iso
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"

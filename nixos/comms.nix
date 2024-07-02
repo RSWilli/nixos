@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = [
     (pkgs.mumble.override {pipewireSupport = true;})
     pkgs.discord

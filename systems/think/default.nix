@@ -20,7 +20,13 @@
   boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
-  my.root-disk = "/dev/nvme0n1";
+  my = {
+    root-disk = "/dev/nvme0n1";
+
+    user = {
+      setup-private-ssh-key = true;
+    };
+  };
 
   networking.hostName = "think";
 }

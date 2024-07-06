@@ -1,0 +1,29 @@
+{
+    "module": {
+        "prefix": "module",
+        "description": "custom NixOS module",
+        "body": [
+            "{ lib, config, pkgs, ... }:",
+            "",
+            "with lib;",
+            "",
+            "let",
+            "  cfg = config.my.${1:serviceName};",
+            "in",
+            "",
+            "{",
+            "  options.my.${1:serviceName} = {",
+            "    enable = mkEnableOption \"${1:serviceName}\";",
+            // "    ${2:serviceName} = mkOption {",
+            // "      type = types.${3:string};",
+            // "      default = ${4:\"\"};",
+            // "      description = \"${5:Description}\";",
+            // "    };",
+            "  };",
+            "",
+            "  config = mkIf cfg.enable {",
+            "  };",
+            "}"
+        ]
+    }
+}

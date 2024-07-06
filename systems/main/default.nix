@@ -8,9 +8,7 @@
     ./hardware-configuration.nix
     ../../nixos/gnome.nix
     ../../nixos/steam.nix
-    ../../nixos/comms.nix
     ../../nixos/system.nix
-    ../../nixos/tailscale.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.common-pc-ssd
 
@@ -26,7 +24,25 @@
   # boot.kernelPackages = pkgs.alternate.linuxPackages_latest; # pinned latest kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
-  my.root-disk = "/dev/nvme0n1";
+  my = {
+    root-disk = "/dev/nvme0n1";
+
+    communication = {
+      mumble = true;
+      matrix = true;
+      discord = true;
+      teamspeak = true;
+    };
+
+    user = {
+      setup-private-ssh-key = true;
+    };
+
+    work = {
+      apps = false;
+      vpn = true;
+    };
+  };
 
   networking.hostName = "main";
 

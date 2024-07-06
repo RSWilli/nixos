@@ -8,6 +8,7 @@
     nixpkgs-rnnoise.url = "github:nixos/nixpkgs/1d91b59670d5a9785c87a4e63a19695727166598";
 
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,20 +22,6 @@
 
     # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
-
-    # remote nixos installation:
-    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
-
-    devshell.url = "github:numtide/devshell";
-    # flake-utils.url = "github:numtide/flake-utils";
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # compatibility with nix-shell (e.g. while installing a new system from live usb):
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -44,99 +31,60 @@
     devshell,
     flake-parts,
     ...
-  } @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [
-        devshell.flakeModule
-      ];
+  } @ inputs: let
+    systems = [
+      "x86_64-linux"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
+    nixosConfigurations = import ./systems inputs;
 
-      flake = {
-        templates = {
-          golang = {
-            path = ./templates/golang;
-            description = "Golang development environment";
-          };
-        };
-        nixosConfigurations = {
-          main = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = {inherit inputs;};
-            modules = [
-              ./systems/main
-              agenix.nixosModules.default
-              ./secrets/config.nix
-            ];
-          };
-          think = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = {inherit inputs;};
-            modules = [
-              ./systems/think
-              agenix.nixosModules.default
-              ./secrets/config.nix
-            ];
-          };
-          iso = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = {inherit inputs;};
-            modules = [
-              # do not include secrets in the iso
-              ./systems/iso
-              agenix.nixosModules.default
-            ];
-          };
-        };
-      };
-      systems = [
-        "x86_64-linux"
-      ];
-      perSystem = {
-        config,
-        self',
-        inputs',
-        pkgs,
-        system,
-        ...
-      }: {
-        formatter = pkgs.alejandra;
-        devshells.default = {
-          commands = [
-            {
-              name = "agenix";
-              help = "wrapper around agenix using vscode as editor";
-              command = ''
-                EDITOR="code --wait" ${pkgs.lib.getExe' inputs'.agenix.packages.default "agenix"} "$@"
-              '';
-            }
-            {
-              name = "pacsearch";
-              help = "search nixpkgs for packages";
-              command = ''
-                nix-env -q | grep
-              '';
-            }
-            {
-              name = "boot";
-              help = "wrapper for nixos-rebuild boot for the current system";
-              command = "${pkgs.nh}/bin/nh os boot";
-            }
-            {
-              name = "apply";
-              help = "wrapper for nixos-rebuild switch for the current system";
-              command = "${pkgs.nh}/bin/nh os switch";
-            }
-            {
-              name = "update";
-              help = "wrapper for nix flake update";
-              command = "nix flake update";
-            }
-            {
-              name = "build_iso";
-              help = "build the custom ISO image";
-              command = "nix build .#nixosConfigurations.iso.config.system.build.isoImage --show-trace";
-            }
-          ];
-        };
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    packages = forAllSystems (system: import ./packages nixpkgs.legacyPackages.${system});
+
+    overlays = import ./overlays {inherit inputs;};
+
+    templates = {
+      golang = {
+        path = ./templates/golang;
+        description = "Golang development environment";
       };
     };
+
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      mypkgs = self.packages.${system}; # TODO: how to overlay?
+    in {
+      default = mypkgs.mkShellMinimal {
+        packages = [
+          pkgs.nh
+          (
+            pkgs.writeShellScriptBin "agenix" ''
+              EDITOR="code --wait" ${pkgs.lib.getExe' agenix.packages.${system}.default "agenix"} "$@"
+            ''
+          )
+          (
+            pkgs.writeShellScriptBin "boot" ''
+              ${pkgs.nh}/bin/nh os boot
+            ''
+          )
+          (
+            pkgs.writeShellScriptBin "apply" ''
+              ${pkgs.nh}/bin/nh os switch
+            ''
+          )
+          (
+            pkgs.writeShellScriptBin "update" ''
+              nix flake update
+            ''
+          )
+          (
+            pkgs.writeShellScriptBin "build_iso" ''
+              nix build .#nixosConfigurations.iso.config.system.build.isoImage --show-trace
+            ''
+          )
+        ];
+      };
+    });
+  };
 }

@@ -1,5 +1,6 @@
 {
   inputs,
+  outputs,
   lib,
   pkgs,
   config,
@@ -12,14 +13,8 @@
       allowUnfree = true;
     };
     overlays = [
-      (
-        final: prev: {
-          working-rnnoise = import inputs.nixpkgs-rnnoise {
-            system = prev.stdenv.hostPlatform.system;
-            config = prev.config;
-          };
-        }
-      )
+      outputs.overlays.additions
+      outputs.overlays.working-rnnoise
     ];
   };
 
@@ -57,7 +52,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nh
     # language server for nix:
     nil
     nixpkgs-fmt

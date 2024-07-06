@@ -125,13 +125,14 @@
     systemd.services."autovt@tty1".enable = false;
 
     environment.systemPackages = with pkgs; [
-      (easyeffects.override {rnnoise = working-rnnoise.rnnoise;})
+      easyeffects
       # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
       arc-theme
       firefox
       gnome.adwaita-icon-theme
       gnome.gnome-tweaks
       pavucontrol
+      qjackctl
       telegram-desktop
       mpv
       vscode

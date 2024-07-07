@@ -25,8 +25,8 @@
       enable = true;
 
       communication = {
-      matrix = true;
-    };
+        matrix = true;
+      };
     };
 
     user = {

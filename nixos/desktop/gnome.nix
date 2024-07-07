@@ -1,8 +1,10 @@
-{ lib, config, pkgs, ... }:
-
-with lib;
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.my.desktop;
 
   alwaysPinnedApps = [
@@ -15,8 +17,7 @@ let
 
   # correctly quote and concat the apps
   toDconfPinnedApps = apps: lib.strings.concatStringsSep ", " (lib.lists.imap0 (i: app: "'${app}'") apps);
-in
-{
+in {
   options.my.desktop = {
     enable = mkEnableOption "desktop";
 

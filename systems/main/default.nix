@@ -30,11 +30,11 @@
       steam = true;
 
       communication = {
-      mumble = true;
-      matrix = true;
-      discord = true;
-      teamspeak = true;
-    };
+        mumble = true;
+        matrix = true;
+        discord = true;
+        teamspeak = true;
+      };
     };
 
     user = {

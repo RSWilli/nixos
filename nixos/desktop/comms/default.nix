@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.my.communication;
+  cfg = config.my.desktop.communication;
 in {
-  options.my.communication = {
+  options.my.desktop.communication = {
     matrix = mkEnableOption "matrix";
     discord = mkEnableOption "discord";
     teamspeak = mkEnableOption "teamspeak";

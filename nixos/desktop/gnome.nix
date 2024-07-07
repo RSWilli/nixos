@@ -1,13 +1,26 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
-  imports = [];
+{ lib, config, pkgs, ... }:
 
-  options = {
-    my.pinned-apps = lib.mkOption {
+with lib;
+
+let
+  cfg = config.my.desktop;
+
+  alwaysPinnedApps = [
+    "firefox.desktop"
+    "org.gnome.Nautilus.desktop"
+    "org.gnome.Console.desktop"
+    "code.desktop"
+    "org.telegram.desktop.desktop"
+  ];
+
+  # correctly quote and concat the apps
+  toDconfPinnedApps = apps: lib.strings.concatStringsSep ", " (lib.lists.imap0 (i: app: "'${app}'") apps);
+in
+{
+  options.my.desktop = {
+    enable = mkEnableOption "desktop";
+
+    pinned-apps = lib.mkOption {
       default = [];
       type = with lib.types; listOf str;
       description = ''
@@ -15,19 +28,7 @@
       '';
     };
   };
-
-  config = let
-    alwaysPinnedApps = [
-      "firefox.desktop"
-      "org.gnome.Nautilus.desktop"
-      "org.gnome.Console.desktop"
-      "code.desktop"
-      "org.telegram.desktop.desktop"
-    ];
-
-    # correctly quote and concat the apps
-    toDconfPinnedApps = apps: lib.strings.concatStringsSep ", " (lib.lists.imap0 (i: app: "'${app}'") apps);
-  in {
+  config = mkIf cfg.enable {
     services.xserver = {
       enable = true;
       xkb = {
@@ -39,7 +40,7 @@
         enable = true;
         favoriteAppsOverride = ''
           [org.gnome.shell]
-          favorite-apps=[ ${toDconfPinnedApps (alwaysPinnedApps ++ config.my.pinned-apps)} ]
+          favorite-apps=[ ${toDconfPinnedApps (alwaysPinnedApps ++ cfg.pinned-apps)} ]
         '';
 
         extraGSettingsOverrides = ''
@@ -74,15 +75,15 @@
           [org/gnome/desktop/screensaver]
           color-shading-type='solid'
           picture-options='zoom'
-          picture-uri='file://${../static/wallpaper.png}'
+          picture-uri='file://${../../static/wallpaper.png}'
           primary-color='#000000000000'
           secondary-color='#000000000000'
 
           [org/gnome/desktop/background]
           color-shading-type='solid'
           picture-options='zoom'
-          picture-uri='file://${../static/wallpaper.png}'
-          picture-uri-dark='file://${../static/wallpaper.png}'
+          picture-uri='file://${../../static/wallpaper.png}'
+          picture-uri-dark='file://${../../static/wallpaper.png}'
           primary-color='#000000000000'
           secondary-color='#000000000000'
         '';

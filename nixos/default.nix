@@ -1,14 +1,17 @@
 {pkgs, ...}: {
   # TODO: auto import all files in this directory
   imports = [
+    ./desktop/bootloader.nix
+    ./desktop/comms
+    ./desktop/comms/mumble.nix
+    ./desktop/gnome.nix
+    ./desktop/steam.nix
+    ./general.nix
     ./git
     ./i18n.nix
-    ./users.nix
     ./nix.nix
+    ./users.nix
     ./work
-    ./general.nix
-    ./comms
-    ./comms/mumble.nix
     ./zsh
   ];
 }

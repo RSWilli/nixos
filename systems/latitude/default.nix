@@ -6,8 +6,6 @@
   imports = [
     ../../nixos
     ./hardware-configuration.nix
-    ../../nixos/gnome.nix
-    ../../nixos/system.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.dell-latitude-5520
 
@@ -22,6 +20,14 @@
 
   my = {
     root-disk = "/dev/nvme0n1";
+
+    desktop = {
+      enable = true;
+
+      communication = {
+      matrix = true;
+    };
+    };
 
     user = {
       setup-private-ssh-key = true;

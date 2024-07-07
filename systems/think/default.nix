@@ -6,9 +6,6 @@
   imports = [
     ../../nixos
     ./hardware-configuration.nix
-    ../../nixos/gnome.nix
-    ../../nixos/steam.nix
-    ../../nixos/system.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13
 
@@ -22,6 +19,10 @@
 
   my = {
     root-disk = "/dev/nvme0n1";
+
+    desktop = {
+      enable = true;
+    };
 
     user = {
       setup-private-ssh-key = true;

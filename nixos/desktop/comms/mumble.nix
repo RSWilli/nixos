@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.my.communication;
+  cfg = config.my.desktop.communication;
 in {
-  options.my.communication = {
+  options.my.desktop.communication = {
     mumble = mkEnableOption "mumble and its config";
   };
 
@@ -16,13 +16,13 @@ in {
       pkgs.mumble
     ];
 
-    my.pinned-apps = [
+    my.desktop.pinned-apps = [
       "info.mumble.Mumble.desktop"
     ];
 
     # add mumble cert to home directory
     age.secrets."mumble-cert.p12" = {
-      file = ../../secrets/mumble-cert.age;
+      file = ../../../secrets/mumble-cert.age;
       path = "/home/willi/mumble-cert.p12";
       owner = "willi";
       mode = "600";

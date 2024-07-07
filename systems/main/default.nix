@@ -6,9 +6,6 @@
   imports = [
     ../../nixos
     ./hardware-configuration.nix
-    ../../nixos/gnome.nix
-    ../../nixos/steam.nix
-    ../../nixos/system.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.common-pc-ssd
 
@@ -27,11 +24,17 @@
   my = {
     root-disk = "/dev/nvme0n1";
 
-    communication = {
+    desktop = {
+      enable = true;
+
+      steam = true;
+
+      communication = {
       mumble = true;
       matrix = true;
       discord = true;
       teamspeak = true;
+    };
     };
 
     user = {

@@ -9,6 +9,14 @@ zstyle ':completion::complete:*' gain-privileges 1
 # For autocompletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
 
+# completion matching: (source https://stackoverflow.com/a/24237590)
+#                                    |- try matching exactly and prefer them over others
+#                                    |  |- case insensitive completion
+#                                    |  |                     |- allow for partial completion before "." and "_", e.g. `f.b` -> `foo.bar`
+#                                    |  |                     |                  |- allow for completion on the left side of the text, e.g. bar -> foobar
+#                                    v  v                     v                  v
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # source: https://wiki.archlinux.org/title/zsh#Key_bindings
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo

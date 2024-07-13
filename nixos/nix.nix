@@ -1,6 +1,6 @@
 {
   inputs,
-  outputs,
+  self,
   lib,
   pkgs,
   config,
@@ -13,8 +13,8 @@
       allowUnfree = true;
     };
     overlays = [
-      outputs.overlays.additions
-      outputs.overlays.working-rnnoise
+      self.overlays.custompackages
+      self.overlays.working-rnnoise
     ];
   };
   nix = let

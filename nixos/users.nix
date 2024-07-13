@@ -44,7 +44,7 @@ in {
       root = {
         hashedPasswordFile = config.age.secrets.root-password.path;
         openssh.authorizedKeys.keys = [
-          (builtins.readFile ../static/willi-id_ed25519.pub)
+          lib.my.publicKey
         ];
       };
       willi = {
@@ -53,7 +53,7 @@ in {
         extraGroups = ["networkmanager" "wheel"];
         hashedPasswordFile = config.age.secrets.password.path;
         openssh.authorizedKeys.keys = [
-          (builtins.readFile ../static/willi-id_ed25519.pub)
+          lib.my.publicKey
         ];
       };
     };

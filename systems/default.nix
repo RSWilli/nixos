@@ -6,9 +6,9 @@
 } @ inputs: {
   main = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
+    inherit (self) lib;
     specialArgs = {
-      inherit inputs;
-      inherit (self) outputs;
+      inherit inputs self;
     };
     modules = [
       ./main
@@ -18,9 +18,9 @@
   };
   think = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
+    inherit (self) lib;
     specialArgs = {
-      inherit inputs;
-      inherit (self) outputs;
+      inherit inputs self;
     };
     modules = [
       ./think
@@ -30,9 +30,9 @@
   };
   iso = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
+    inherit (self) lib;
     specialArgs = {
-      inherit inputs;
-      inherit (self) outputs;
+      inherit inputs self;
     };
     modules = [
       ./iso

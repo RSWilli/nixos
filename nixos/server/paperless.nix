@@ -1,12 +1,12 @@
-{ lib, config, pkgs, ... }:
-
-with lib;
-
-let
-  cfg = config.my.paperless;
-in
-
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.my.paperless;
+in {
   options.my.paperless = {
     enable = mkEnableOption "paperless";
   };

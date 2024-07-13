@@ -1,5 +1,5 @@
 {
-  description = "golang development flake";
+  description = "golang nodejs development flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -18,6 +18,8 @@
       pkgs.mkShell {
         packages = with pkgs; [
           go
+          nodejs_22
+          openapi-generator-cli
         ];
 
         GO111MODULE = "on";
@@ -28,6 +30,8 @@
 
         shellHook = ''
           ${pkgs.go}/bin/go version
+          ${pkgs.nodejs_22}/bin/node --version
+          ${pkgs.nodejs_22}/bin/npm --version
         '';
       };
   };

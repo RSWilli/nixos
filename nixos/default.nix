@@ -6,6 +6,7 @@
     ./desktop/comms/mumble.nix
     ./desktop/gnome.nix
     ./desktop/steam.nix
+    ./docker.nix
     ./general.nix
     ./git
     ./i18n.nix

@@ -14,9 +14,9 @@
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
-  # boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
+  # boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my = {
     root-disk = "/dev/nvme0n1";

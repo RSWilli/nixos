@@ -28,7 +28,7 @@ in {
 
         # setup public ssh key:
         home.file.publickey = {
-          source = ../static/willi-id_ed25519.pub;
+          text = lib.my.publicKey;
           target = ".ssh/id_ed25519.pub";
         };
 

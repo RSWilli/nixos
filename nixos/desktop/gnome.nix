@@ -170,5 +170,10 @@ in {
     fonts.packages = with pkgs; [
       fira-code
     ];
+
+    # Ozone Wayland support in Chrome and several Electron apps (needed for vscode to render in Wayland)
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
   };
 }

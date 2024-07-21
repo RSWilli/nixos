@@ -5,6 +5,7 @@
     ./desktop/comms
     ./desktop/comms/mumble.nix
     ./desktop/gnome.nix
+    ./desktop/nvidia.nix
     ./desktop/steam.nix
     ./docker.nix
     ./general.nix

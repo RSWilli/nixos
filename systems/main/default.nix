@@ -27,6 +27,8 @@
     desktop = {
       enable = true;
 
+      nvidia = true;
+
       steam = true;
 
       communication = {

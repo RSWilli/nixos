@@ -9,8 +9,6 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.common-pc-ssd
 
-    ../../nixos/nvidia.nix
-
     inputs.disko.nixosModules.disko
     ../../disko/unencrypted.nix
   ];

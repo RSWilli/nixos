@@ -54,10 +54,14 @@
     };
 
     devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      mypkgs = self.packages.${system}; # TODO: how to overlay?
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          self.overlays.custompackages
+        ];
+      };
     in {
-      default = mypkgs.mkShellMinimal {
+      default = pkgs.mkShellMinimal {
         packages = [
           pkgs.nh
           (

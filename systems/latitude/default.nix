@@ -23,6 +23,7 @@
 
     desktop = {
       enable = true;
+      combined_audio_sink = true;
 
       communication = {
         matrix = true;
@@ -33,7 +34,10 @@
       setup-private-ssh-key = true;
     };
 
-    work-apps = true;
+    work = {
+      vpn = true;
+      apps = true;
+    };
   };
 
   networking.hostName = "latitude";

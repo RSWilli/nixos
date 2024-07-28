@@ -4,12 +4,9 @@
   ...
 }: {
   imports = [
-    ../../nixos
     ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.dell-latitude-5520
 
-    inputs.disko.nixosModules.disko
     ../../disko/encrypted.nix
   ];
 

@@ -4,12 +4,9 @@
   ...
 }: {
   imports = [
-    ../../nixos
     ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.common-pc-ssd
 
-    inputs.disko.nixosModules.disko
     ../../disko/unencrypted.nix
   ];
 

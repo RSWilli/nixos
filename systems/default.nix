@@ -1,62 +1,27 @@
-# maybe auto import systems from subfolders. How to specify system arch?
-# WIP:
-# let
-#   lib = self.lib;
-#   base = toString ./.;
-#   dirs = lib.mapAttrsToList (path: _: path) (lib.filterAttrs (_path: type: type == "directory") (builtins.readDir ./.));
-#  in 
 {
   self,
   nixpkgs,
   agenix,
   ...
-} @ inputs: {
-  main = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
+} @ inputs: let
+  mkGenericSystem = system: path: nixpkgs.lib.nixosSystem {
+    inherit system;
     inherit (self) lib;
     specialArgs = {
       inherit inputs self;
     };
     modules = [
-      ./main
+      path
       agenix.nixosModules.default
+      inputs.home-manager.nixosModules.home-manager
+      inputs.disko.nixosModules.disko
       ../secrets/config.nix
+      ../nixos
     ];
   };
-  latitude = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    inherit (self) lib;
-    specialArgs = {
-      inherit inputs self;
-    };
-    modules = [
-      ./latitude
-      agenix.nixosModules.default
-      ../secrets/config.nix
-    ];
-  };
-  think = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    inherit (self) lib;
-    specialArgs = {
-      inherit inputs self;
-    };
-    modules = [
-      ./think
-      agenix.nixosModules.default
-      ../secrets/config.nix
-    ];
-  };
-  iso = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    inherit (self) lib;
-    specialArgs = {
-      inherit inputs self;
-    };
-    modules = [
-      ./iso
-      agenix.nixosModules.default
-      ../secrets/config.nix
-    ];
-  };
+  x64System = mkGenericSystem "x86_64-linux";
+ in {
+  main = x64System ./main;
+  latitude = x64System ./latitude;
+  think = x64System ./think;
 }

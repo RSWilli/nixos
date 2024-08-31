@@ -126,39 +126,37 @@ in {
     systemd.services."autovt@tty1".enable = false;
 
     environment.systemPackages = with pkgs; [
-      easyeffects
       # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
+      adwaita-icon-theme
       arc-theme
+      easyeffects
       firefox
-      gnome.adwaita-icon-theme
-      gnome.gnome-tweaks
+      gnome-tweaks
+      mpv
       pavucontrol
       qjackctl
       telegram-desktop
-      mpv
       vscode
     ];
 
     environment.gnome.excludePackages =
       (with pkgs; [
-        gnome-photos
-        gnome-tour
-        gnome-connections
-      ])
-      ++ (with pkgs.gnome; [
-        cheese # webcam tool
-        gnome-music
-        gnome-maps
-        #gnome-terminal
-        #gedit # text editor
         #epiphany # web browser
-        geary # email reader
-        evince # document viewer
+        #gedit # text editor
         #gnome-characters
-        totem # video player
-        yelp # Help view
+        #gnome-terminal
+        cheese # webcam tool
+        evince # document viewer
+        geary # email reader
+        gnome-connections
         gnome-contacts
         gnome-initial-setup
+        gnome-maps
+        gnome-music
+        gnome-photos
+        gnome-tour
+        totem # video player
+        yelp # Help view
       ]);
 
     services.gnome = {

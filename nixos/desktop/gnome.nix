@@ -89,7 +89,7 @@ in {
           secondary-color='#000000000000'
         '';
 
-        extraGSettingsOverridePackages = with pkgs.gnome; [
+        extraGSettingsOverridePackages = with pkgs; [
           gnome-settings-daemon
           gnome-session
           gnome-shell

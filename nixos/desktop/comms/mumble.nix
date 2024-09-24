@@ -40,7 +40,7 @@ in {
         name='Mumble Toggle Mute'
       '';
 
-      extraGSettingsOverridePackages = [pkgs.gnome.gnome-settings-daemon];
+      extraGSettingsOverridePackages = [pkgs.gnome-settings-daemon];
     };
   };
 }

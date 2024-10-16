@@ -139,25 +139,24 @@ in {
       vscode
     ];
 
-    environment.gnome.excludePackages =
-      (with pkgs; [
-        #epiphany # web browser
-        #gedit # text editor
-        #gnome-characters
-        #gnome-terminal
-        cheese # webcam tool
-        evince # document viewer
-        geary # email reader
-        gnome-connections
-        gnome-contacts
-        gnome-initial-setup
-        gnome-maps
-        gnome-music
-        gnome-photos
-        gnome-tour
-        totem # video player
-        yelp # Help view
-      ]);
+    environment.gnome.excludePackages = with pkgs; [
+      #epiphany # web browser
+      #gedit # text editor
+      #gnome-characters
+      #gnome-terminal
+      cheese # webcam tool
+      evince # document viewer
+      geary # email reader
+      gnome-connections
+      gnome-contacts
+      gnome-initial-setup
+      gnome-maps
+      gnome-music
+      gnome-photos
+      gnome-tour
+      totem # video player
+      yelp # Help view
+    ];
 
     services.gnome = {
       games.enable = false;

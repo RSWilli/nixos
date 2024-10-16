@@ -28,8 +28,6 @@
     self,
     nixpkgs,
     agenix,
-    devshell,
-    flake-parts,
     ...
   } @ inputs: let
     systems = [

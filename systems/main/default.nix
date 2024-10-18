@@ -6,8 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-    ../../disko/unencrypted.nix
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
@@ -17,7 +15,10 @@
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my = {
-    root-disk = "/dev/nvme0n1";
+    disko = {
+      root-disk = "/dev/nvme0n1";
+      encrypted = false;
+    };
 
     desktop = {
       enable = true;

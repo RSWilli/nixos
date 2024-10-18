@@ -6,8 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.dell-latitude-5520
-
-    ../../disko/encrypted.nix
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel
@@ -16,7 +14,10 @@
   # boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my = {
-    root-disk = "/dev/nvme0n1";
+    disko = {
+      root-disk = "/dev/nvme0n1";
+      encrypted = true;
+    };
 
     desktop = {
       enable = true;

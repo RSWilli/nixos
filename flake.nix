@@ -82,13 +82,17 @@
               nix flake update
             ''
           )
-          (
-            pkgs.writeShellScriptBin "build_iso" ''
-              nix build .#nixosConfigurations.iso.config.system.build.isoImage --show-trace
-            ''
-          )
         ];
       };
     });
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
 }

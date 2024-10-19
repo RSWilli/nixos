@@ -23,6 +23,8 @@
     desktop = {
       enable = true;
 
+      amd = true;
+
       steam = true;
 
       communication = {
@@ -46,6 +48,6 @@
   networking.hostName = "main";
 
   environment.systemPackages = with pkgs; [
-    blender
+    blender-hip # blender with AMD HIP support
   ];
 }

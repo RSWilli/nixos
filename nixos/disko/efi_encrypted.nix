@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.my.disko;
 in {
-  config = mkIf cfg.encrypted {
+  config = mkIf (cfg.encrypted && !cfg.legacy-boot) {
     disko.devices = {
       disk = {
         main = {

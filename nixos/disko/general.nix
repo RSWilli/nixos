@@ -16,5 +16,13 @@ with lib; {
         Whether to encrypt the root disk.
       '';
     };
+
+    legacy-boot = mkOption {
+      default = false;
+      type = with types; bool;
+      description = ''
+        Format according to legacy boot mode.
+      '';
+    };
   };
 }

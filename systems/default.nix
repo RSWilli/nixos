@@ -25,4 +25,5 @@ in {
   main = x64System ./main;
   latitude = x64System ./latitude;
   think = x64System ./think;
+  cloud = x64System ./cloud;
 }

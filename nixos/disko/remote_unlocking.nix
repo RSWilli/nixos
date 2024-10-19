@@ -1,13 +1,12 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib; let
-  cfg = config.my.disk;
+  cfg = config.my.disko;
 in {
-  options.my.disk = {
+  options.my.disko = {
     remote-unlocking = mkEnableOption "remote unlocking";
   };
 

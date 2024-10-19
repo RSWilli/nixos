@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.my.disko;
 in {
-  config = mkIf (!cfg.encrypted) {
+  config = mkIf (cfg.encrypted && cfg.legacy-boot) {
     disko.devices = {
       disk = {
         main = {
@@ -15,8 +15,13 @@ in {
           content = {
             type = "gpt";
             partitions = {
+              boot = {
+                size = "1M";
+                type = "EF02";
+                priority = 1;
+              };
               ESP = {
-                size = "500M";
+                size = "512M";
                 type = "EF00";
                 content = {
                   type = "filesystem";
@@ -24,12 +29,16 @@ in {
                   mountpoint = "/boot";
                 };
               };
-              root = {
+              luks = {
                 size = "100%";
                 content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/";
+                  type = "luks";
+                  name = "crypted";
+                  content = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                  };
                 };
               };
             };

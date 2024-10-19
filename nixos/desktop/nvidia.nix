@@ -9,7 +9,7 @@ with lib; let
 in {
   options.my.desktop.nvidia = mkEnableOption "nvidia";
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.nvidia {
     services.xserver.videoDrivers = ["nvidia"];
 
     hardware.nvidia = {

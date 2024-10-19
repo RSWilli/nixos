@@ -172,5 +172,11 @@ in {
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
+
+    # hardware acceleration for graphics
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
   };
 }

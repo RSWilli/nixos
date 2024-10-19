@@ -55,7 +55,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # language server for nix:
+    # language server for nix, installed globally to have it available in all devshells
     nil
     nixpkgs-fmt
   ];

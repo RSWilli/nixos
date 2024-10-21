@@ -33,6 +33,8 @@
         discord = true;
         teamspeak = true;
       };
+
+      vm.enable = true;
     };
 
     user = {

@@ -51,13 +51,13 @@
 
     # Opinionated: make flake registry and nix path match flake inputs
     registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+    nixPath = lib.mapAttrsToList (n: v: "${n}=${v}") flakeInputs;
   };
 
   environment.systemPackages = with pkgs; [
     # language server for nix, installed globally to have it available in all devshells
-    nil
-    nixpkgs-fmt
+    nixd
+    alejandra
   ];
 
   environment.sessionVariables = {

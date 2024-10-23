@@ -13,6 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [80 443];
+
     services.nginx = {
       enable = true;
 
@@ -73,6 +75,17 @@ in {
             };
           };
         };
+    };
+
+    # let's encrypt settings:
+    security.acme = {
+      acceptTerms = true;
+      defaults = {
+        email = "bartel.wilhelm@gmail.com";
+
+        # use staging environment, see https://letsencrypt.org/docs/staging-environment/
+        server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+      };
     };
   };
 }

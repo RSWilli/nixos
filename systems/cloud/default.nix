@@ -16,9 +16,9 @@
 
     server = {
       enable = true;
-      paperless = true;
+      paperless.enable = true;
 
-      teamspeak = true;
+      teamspeak.enable = true;
     };
 
     user = {

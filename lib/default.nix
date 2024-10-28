@@ -17,4 +17,6 @@
     modules ++ lib.concatMap listModulesRecursivly subdirs;
 
   publicKey = builtins.readFile ../static/willi-id_ed25519.pub;
+
+  initrd-ssh-host-pubkey = builtins.readFile ../static/initrd-ssh-host-key.pub;
 }

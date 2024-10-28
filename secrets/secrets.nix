@@ -5,12 +5,17 @@ let
   think = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDseXq0mgC/CN9CtgZeduV7MG1h0wzohUS+Cy+hzRMBz";
   main = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDdftcbfr7MVnbjMPzRL1KHfOoYkwnDScyZCJWcSBmN";
 
-  systems = [main think];
+  cloud = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtWXfbInoez4N3XF8ec7ZMAl8PUzojSvJxB9tBi+rW7";
+
+  desktops = [main think];
+  servers = [cloud];
   users = [willi];
-  all = systems ++ users;
 in {
-  "password.age".publicKeys = all;
-  "root-password.age".publicKeys = all;
-  "willi-id_ed25519.age".publicKeys = all;
-  "mumble-cert.age".publicKeys = all;
+  "root-password.age".publicKeys = desktops ++ servers ++ users;
+
+  "password.age".publicKeys = desktops ++ users;
+  "willi-id_ed25519.age".publicKeys = desktops ++ users;
+  "mumble-cert.age".publicKeys = desktops ++ users;
+
+  "initrd-ssh-host-key.age".publicKeys = servers ++ users;
 }

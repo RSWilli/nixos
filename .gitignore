@@ -1,2 +1,4 @@
 .direnv
 result
+# files to be transferred to the installation server
+transfer

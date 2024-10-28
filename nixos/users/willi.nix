@@ -1,21 +1,18 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib; let
-  cfg = config.my.user;
+  cfg = config.my.users;
 in {
-  options.my.user = {
-    setup-private-ssh-key = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Setup private ssh key";
+  options.my.users = {
+    willi = {
+      enable = mkEnableOption "enable willi user";
     };
   };
 
-  config = {
+  config = mkIf cfg.willi.enable {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -37,16 +34,7 @@ in {
       };
     };
 
-    # enforce that all users are configured via this flake
-    users.mutableUsers = false;
-
     users.users = {
-      root = {
-        hashedPasswordFile = config.age.secrets.root-password.path;
-        openssh.authorizedKeys.keys = [
-          lib.my.publicKey
-        ];
-      };
       willi = {
         isNormalUser = true;
         description = "Wilhelm Bartel";
@@ -59,8 +47,8 @@ in {
     };
 
     # setup ssh keys
-    age.secrets."id_ed25519" = mkIf cfg.setup-private-ssh-key {
-      file = ../secrets/willi-id_ed25519.age;
+    age.secrets."id_ed25519" = {
+      file = ../../secrets/willi-id_ed25519.age;
       path = "/home/willi/.ssh/id_ed25519";
       owner = "willi";
       mode = "600";

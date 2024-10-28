@@ -22,8 +22,8 @@
       enable = true;
     };
 
-    user = {
-      setup-private-ssh-key = true;
+    users = {
+      willi.enable = true;
     };
   };
 

@@ -22,7 +22,7 @@ in {
 
     services.paperless = {
       enable = true;
-      extraConfig = {
+      settings = {
         PAPERLESS_DB_NAME = "paperless";
         PAPERLESS_DB_HOST = "/run/postgresql";
 

@@ -20,10 +20,6 @@
 
       teamspeak.enable = true;
     };
-
-    user = {
-      setup-private-ssh-key = false;
-    };
   };
 
   networking.hostName = "cloud";

@@ -29,18 +29,18 @@ in {
     };
 
     # add shortcut to mumble toggle mute key
-    services.xserver.desktopManager.gnome = {
-      extraGSettingsOverrides = ''
-        [org/gnome/settings-daemon/plugins/media-keys]
-        custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+    # services.xserver.desktopManager.gnome = {
+    #   extraGSettingsOverrides = ''
+    #     [org/gnome/settings-daemon/plugins/media-keys]
+    #     custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
 
-        [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
-        binding='KP_Add'
-        command='mumble rpc togglemute '
-        name='Mumble Toggle Mute'
-      '';
+    #     [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+    #     binding='KP_Add'
+    #     command='mumble rpc togglemute '
+    #     name='Mumble Toggle Mute'
+    #   '';
 
-      extraGSettingsOverridePackages = [pkgs.gnome-settings-daemon];
-    };
+    #   extraGSettingsOverridePackages = [pkgs.gnome-settings-daemon];
+    # };
   };
 }

@@ -50,6 +50,7 @@
   networking.hostName = "main";
 
   environment.systemPackages = with pkgs; [
-    blender-hip # blender with AMD HIP support
+    # blender-hip # blender with AMD HIP support
+    numbat # terminal unit converter and calculator
   ];
 }

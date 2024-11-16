@@ -11,7 +11,8 @@ in {
 
   config = mkIf cfg.amd {
     hardware.graphics.extraPackages = [
-      pkgs.amdvlk
+      # this causes black boxes https://gitlab.gnome.org/GNOME/gtk/-/issues/6890 , re-enable when fixed
+      # pkgs.amdvlk
     ];
   };
 }

@@ -145,7 +145,7 @@ in {
       #gnome-characters
       #gnome-terminal
       cheese # webcam tool
-      evince # document viewer
+      # evince # document viewer
       geary # email reader
       gnome-connections
       gnome-contacts

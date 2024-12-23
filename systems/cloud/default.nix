@@ -16,7 +16,7 @@
 
     server = {
       enable = true;
-      paperless.enable = true;
+      # paperless.enable = true;
 
       teamspeak.enable = true;
     };

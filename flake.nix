@@ -22,6 +22,12 @@
 
     # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    # nix-build requires a default.nix file
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
 
   outputs = {

@@ -37,6 +37,8 @@
       vm.enable = true;
     };
 
+    docker.enable = true;
+
     users = {
       willi.enable = true;
     };
@@ -50,6 +52,7 @@
   networking.hostName = "main";
 
   environment.systemPackages = with pkgs; [
+    obsidian
     # blender-hip # blender with AMD HIP support
   ];
 }

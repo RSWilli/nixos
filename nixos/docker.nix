@@ -13,6 +13,9 @@ in {
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
+
+      # automatically run a prune schedule
+      autoPrune.enable = true;
     };
 
     users.users.willi.extraGroups = ["docker"];

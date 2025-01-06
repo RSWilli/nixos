@@ -53,6 +53,7 @@
 
   environment.systemPackages = with pkgs; [
     obsidian
+    appimage-run
     # blender-hip # blender with AMD HIP support
   ];
 }

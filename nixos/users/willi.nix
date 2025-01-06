@@ -38,7 +38,14 @@ in {
       willi = {
         isNormalUser = true;
         description = "Wilhelm Bartel";
-        extraGroups = ["networkmanager" "wheel"];
+        extraGroups = [
+          "audio"
+          "avahi"
+          "networkmanager"
+          "render"
+          "video"
+          "wheel"
+        ];
         hashedPasswordFile = config.age.secrets.password.path;
         openssh.authorizedKeys.keys = [
           lib.my.publicKey

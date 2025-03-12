@@ -37,6 +37,8 @@
       vm.enable = true;
     };
 
+    minecraft.enable = true;
+
     docker.enable = true;
 
     users = {

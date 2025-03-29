@@ -11,8 +11,7 @@ in {
 
   config = mkIf cfg.amd {
     hardware.graphics.extraPackages = [
-      # this causes black boxes https://gitlab.gnome.org/GNOME/gtk/-/issues/6890 , re-enable when fixed
-      # pkgs.amdvlk
+      pkgs.amdvlk
 
       # ROCm
       pkgs.rocmPackages.clr.icd
@@ -32,11 +31,5 @@ in {
     systemd.tmpfiles.rules = [
       "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
     ];
-
-    environment.sessionVariables = {
-      # Radeon RX 7800XT needs for ROCm 11.0.0 as per: https://llvm.org/docs/AMDGPUUsage.html
-      # defined by the gfx1100
-      HSA_OVERRIDE_GFX_VERSION = "11.0.0";
-    };
   };
 }

@@ -58,4 +58,10 @@
     appimage-run
     # blender-hip # blender with AMD HIP support
   ];
+
+  environment.sessionVariables = {
+    # Radeon RX 7800XT needs for ROCm 11.0.0 as per: https://llvm.org/docs/AMDGPUUsage.html
+    # defined by the gfx1100
+    HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+  };
 }

@@ -21,7 +21,6 @@
 
     desktop = {
       enable = true;
-      combined_audio_sink = true;
 
       communication = {
         matrix = true;

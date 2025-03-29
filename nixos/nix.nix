@@ -12,7 +12,6 @@
     };
     overlays = [
       self.overlays.custompackages
-      self.overlays.working-rnnoise
     ];
   };
   nix = let

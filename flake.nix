@@ -65,6 +65,8 @@
       default = pkgs.mkShellMinimal {
         packages = [
           pkgs.nh
+          pkgs.dconf
+          pkgs.dconf2nix
           (
             pkgs.writeShellScriptBin "agenix" ''
               EDITOR="code --wait" ${pkgs.lib.getExe' agenix.packages.${system}.default "agenix"} "$@"

@@ -57,6 +57,7 @@
     obsidian
     appimage-run
     # blender-hip # blender with AMD HIP support
+    xournalpp
   ];
 
   environment.sessionVariables = {

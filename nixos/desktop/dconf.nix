@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
@@ -15,6 +16,11 @@ with lib; let
   ];
 
   favorite-apps = alwaysPinnedApps ++ cfg.pinned-apps;
+
+  enabled-extensions = with pkgs.gnomeExtensions; [
+    launch-new-instance # always launch a new instance of an app if the icon is clicked
+    # user-themes # allows to change the shell theme
+  ];
 
   dconf-settings = with lib.gvariant; {
     # TODO: easyeffects is dependent on the device names
@@ -106,11 +112,12 @@ with lib; let
     };
 
     "org/gnome/shell" = {
-      enabled-extensions = ["launch-new-instance@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com"];
       favorite-apps = favorite-apps;
       last-selected-power-profile = "power-saver";
       remember-mount-password = false;
       welcome-dialog-last-shown-version = "44.2";
+      disable-user-extensions = false;
+      enabled-extensions = map (ext: ext.extensionUuid) enabled-extensions;
     };
 
     "org/gnome/shell/extensions/user-theme" = {
@@ -174,5 +181,7 @@ in {
         ];
       };
     };
+
+    environment.systemPackages = enabled-extensions;
   };
 }

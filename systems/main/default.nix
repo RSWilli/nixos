@@ -34,20 +34,15 @@
         teamspeak = true;
       };
 
-      vm.enable = true;
+      vm.enable = false;
     };
 
-    minecraft.enable = true;
+    minecraft.enable = false;
 
     docker.enable = true;
 
     users = {
       willi.enable = true;
-    };
-
-    work = {
-      apps = false;
-      vpn = true;
     };
   };
 

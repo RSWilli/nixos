@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -59,5 +60,17 @@
     # Radeon RX 7800XT needs for ROCm 11.0.0 as per: https://llvm.org/docs/AMDGPUUsage.html
     # defined by the gfx1100
     HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+  };
+
+  specialisation = {
+    guest.configuration = {
+      my.users.guest.enable = true;
+
+      # disable gnome autologin for willi
+      services.displayManager.autoLogin = lib.mkForce {
+        enable = false;
+        user = null;
+      };
+    };
   };
 }

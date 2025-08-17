@@ -12,6 +12,9 @@
   boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
+  # Laptop battery optimizations https://nixos.wiki/wiki/Laptop
+  powerManagement.enable = true;
+
   my = {
     disko = {
       root-disk = "/dev/nvme0n1";

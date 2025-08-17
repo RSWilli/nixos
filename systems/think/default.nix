@@ -27,6 +27,10 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    obsidian
+  ];
+
   # BIOS updates, run `fwupdmgr update` to check for updates and install them
   # https://wiki.nixos.org/wiki/Fwupd
   services.fwupd.enable = true;

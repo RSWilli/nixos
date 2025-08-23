@@ -5,7 +5,8 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13
+    # https://github.com/NixOS/nixos-hardware/tree/master/lenovo/thinkpad/x13
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-amd
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel

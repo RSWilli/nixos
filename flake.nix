@@ -74,12 +74,12 @@
           )
           (
             pkgs.writeShellScriptBin "boot" ''
-              ${pkgs.nh}/bin/nh os boot
+              ${pkgs.nh}/bin/nh os boot -- --show-trace
             ''
           )
           (
             pkgs.writeShellScriptBin "apply" ''
-              ${pkgs.nh}/bin/nh os switch
+              ${pkgs.nh}/bin/nh os switch -- --show-trace
             ''
           )
           (

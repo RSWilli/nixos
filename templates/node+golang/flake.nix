@@ -17,8 +17,8 @@
     in
       pkgs.mkShell {
         packages = with pkgs; [
-          go
-          nodejs_22
+          go_latest
+          nodejs_latest
           openapi-generator-cli
         ];
 
@@ -29,9 +29,9 @@
         hardeningDisable = ["fortify"];
 
         shellHook = ''
-          ${pkgs.go}/bin/go version
-          ${pkgs.nodejs_22}/bin/node --version
-          ${pkgs.nodejs_22}/bin/npm --version
+          ${pkgs.go_latest}/bin/go version
+          ${pkgs.nodejs_latest}/bin/node --version
+          ${pkgs.nodejs_latest}/bin/npm --version
         '';
       };
   };

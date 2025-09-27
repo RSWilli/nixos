@@ -17,7 +17,7 @@
     in
       pkgs.mkShell {
         packages = with pkgs; [
-          go
+          go_latest
         ];
 
         GO111MODULE = "on";
@@ -27,7 +27,7 @@
         hardeningDisable = ["fortify"];
 
         shellHook = ''
-          ${pkgs.go}/bin/go version
+          ${pkgs.go_latest}/bin/go version
         '';
       };
   };

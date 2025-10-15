@@ -31,8 +31,11 @@ in {
       rocmEnv = pkgs.symlinkJoin {
         name = "rocm-combined";
         paths = with pkgs.rocmPackages; [
-          rocblas
-          hipblas
+          # doesn't hit the nixpkgs cache, takes a long time to build
+          # rocblas
+          # hipblas
+
+          # amd common language runtime
           clr
         ];
       };

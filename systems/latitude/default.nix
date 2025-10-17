@@ -21,6 +21,7 @@
 
     desktop = {
       enable = true;
+      enableAutoLogin = true;
 
       communication = {
         matrix = true;

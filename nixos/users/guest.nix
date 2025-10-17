@@ -25,7 +25,7 @@ in {
           "video"
         ];
 
-        initialPassword = "guest";
+        password = "guest";
       };
     };
   };

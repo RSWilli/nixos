@@ -24,6 +24,7 @@
 
     desktop = {
       enable = true;
+      enableAutoLogin = true;
     };
 
     users = {

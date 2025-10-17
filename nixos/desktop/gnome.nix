@@ -10,6 +10,8 @@ in {
   options.my.desktop = {
     enable = mkEnableOption "desktop";
 
+    enableAutoLogin = mkEnableOption "desktop";
+
     pinned-apps = lib.mkOption {
       default = [];
       type = with lib.types; listOf str;
@@ -31,7 +33,7 @@ in {
 
     services.displayManager = {
       gdm.enable = true;
-      autoLogin = {
+      autoLogin = mkIf cfg.enableAutoLogin {
         enable = true;
         user = "willi";
       };
@@ -71,7 +73,7 @@ in {
     ];
 
     environment.gnome.excludePackages = with pkgs; [
-      #epiphany # web browser
+      epiphany # web browser
       #gedit # text editor
       #gnome-characters
       #gnome-terminal

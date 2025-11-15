@@ -55,12 +55,27 @@ in {
       #media-session.enable = true;
     };
 
+    xdg = {
+      portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
+        ];
+      };
+    };
+
+    programs.firefox = {
+      enable = true;
+      wrapperConfig = {
+        pipewireSupport = true;
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
       adwaita-icon-theme
       arc-theme
       easyeffects
-      firefox
       gnome-tweaks
 
       totem # video player

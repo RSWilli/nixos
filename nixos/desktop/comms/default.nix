@@ -19,6 +19,8 @@ in {
         environment.systemPackages = [
           pkgs.element-desktop
         ];
+        # dependency of element-desktop marked as insecure
+        nixpkgs.config.permittedInsecurePackages = ["jitsi-meet-1.0.8792"];
       }
     )
     (

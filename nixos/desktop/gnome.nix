@@ -78,7 +78,7 @@ in {
       easyeffects
       gnome-tweaks
 
-      totem # video player
+      showtime # video player
       decibels # audio player
 
       pavucontrol

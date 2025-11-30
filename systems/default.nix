@@ -22,8 +22,8 @@
     };
   x64System = mkGenericSystem "x86_64-linux";
 in {
-  main = x64System ./main;
-  latitude = x64System ./latitude;
-  think = x64System ./think;
   cloud = x64System ./cloud;
+  dell = x64System ./dell;
+  main = x64System ./main;
+  think = x64System ./think;
 }

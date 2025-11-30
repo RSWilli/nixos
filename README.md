@@ -11,9 +11,12 @@ Currently the following systems are configured:
 
 ## Creating a new system
 
-To create a new system, run the following command:
+To create a new system, run the following commands:
 
 ```bash
+# on the new machine:
+nixos-generate-config --no-filesystems --dir .
+
 install_remote_system.sh <hostname> <user@host>
 ```
 

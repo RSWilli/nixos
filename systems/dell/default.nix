@@ -1,11 +1,6 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    inputs.nixos-hardware.nixosModules.dell-latitude-5520
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel

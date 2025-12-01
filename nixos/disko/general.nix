@@ -3,7 +3,7 @@ with lib; {
   options.my.disko = {
     root-disk = mkOption {
       default = "/dev/nvme0n1";
-      type = with types; string;
+      type = with types; str;
       description = ''
         The root disk that disko formats.
       '';

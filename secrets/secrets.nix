@@ -9,10 +9,10 @@ let
 
   cloud = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtWXfbInoez4N3XF8ec7ZMAl8PUzojSvJxB9tBi+rW7";
 
-  # dell = "TODO";
+  dell = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADeWaKQ194hhRQoU6C+Q2xwbaADaDyM9ZYbvxtrvdTS";
 
   private = [willi main cloud think];
-  work = [willi-work];
+  work = [willi-work dell];
 
   all = private ++ work;
 in {

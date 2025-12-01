@@ -37,5 +37,5 @@
   # https://wiki.nixos.org/wiki/Fwupd
   services.fwupd.enable = true;
 
-  networking.hostName = "latitude";
+  networking.hostName = "dell";
 }

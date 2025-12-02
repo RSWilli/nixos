@@ -14,6 +14,8 @@
       encrypted = true;
     };
 
+    docker.enable = true;
+
     desktop = {
       enable = true;
       enableAutoLogin = true;
@@ -28,8 +30,7 @@
     };
 
     work = {
-      vpn = true;
-      apps = true;
+      enable = true;
     };
   };
 

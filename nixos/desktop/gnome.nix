@@ -75,7 +75,7 @@ in {
       # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
       adwaita-icon-theme
       arc-theme
-      easyeffects
+      # easyeffects
       gnome-tweaks
 
       showtime # video player

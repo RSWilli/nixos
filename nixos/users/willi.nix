@@ -68,12 +68,12 @@ in {
         owner = "willi";
         mode = "600";
       };
-      # "id_rsa" = {
-      #   file = ../../secrets/willi-id_rsa.age;
-      #   path = "/home/willi/.ssh/id_rsa";
-      #   owner = "willi";
-      #   mode = "600";
-      # };
+      "id_rsa" = {
+        file = ../../secrets/willi-id_rsa.age;
+        path = "/home/willi/.ssh/id_rsa";
+        owner = "willi";
+        mode = "600";
+      };
     };
   };
 }

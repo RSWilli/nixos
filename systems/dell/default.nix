@@ -34,6 +34,12 @@
     };
   };
 
+  # Laptop battery optimizations https://nixos.wiki/wiki/Laptop
+  powerManagement.enable = true;
+
+  # powertop and auto tune service
+  powerManagement.powertop.enable = true;
+
   # BIOS updates, run `fwupdmgr update` to check for updates and install them
   # https://wiki.nixos.org/wiki/Fwupd
   services.fwupd.enable = true;

@@ -36,5 +36,11 @@ in {
     security.pki.certificates = [
       (builtins.readFile ./internal-ca.pem)
     ];
+
+    # configure https://github.com/ezbz/gitlabber
+    environment.sessionVariables = {
+      GITLABBER_FOLDER_NAMING = "path";
+      GITLABBER_CLONE_METHOD = "ssh";
+    };
   };
 }

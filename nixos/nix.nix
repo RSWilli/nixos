@@ -12,6 +12,13 @@
     };
     overlays = [
       self.overlays.custompackages
+      # # overlay master branch:
+      # (final: _prev: {
+      #   master = import inputs.nixpkgs-master {
+      #     system = final.system;
+      #     config.allowUnfree = true;
+      #   };
+      # })
     ];
   };
   nix = let

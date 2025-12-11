@@ -19,6 +19,8 @@ in {
       dig
       gitlabber
 
+      obs-studio
+
       # make the tailscale command usable to users
       pkgs.tailscale
     ];
@@ -47,5 +49,12 @@ in {
       GITLABBER_FOLDER_NAMING = "path";
       GITLABBER_CLONE_METHOD = "ssh";
     };
+
+    # configure npm to use a user-writable global package location, needed for npm link
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/npm.nix#L46
+    environment.etc.npmrc.text = ''
+      prefix = ''${HOME}/.npm
+    '';
+    environment.variables.NPM_CONFIG_GLOBALCONFIG = "/etc/npmrc";
   };
 }

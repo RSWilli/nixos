@@ -35,7 +35,12 @@ in {
     # trust the internal CA cert system wide
     security.pki.certificates = [
       (builtins.readFile ./internal-ca.pem)
+      (builtins.readFile ./local-ca.pem)
     ];
+
+    networking.extraHosts = ''
+      127.0.0.1 local.streamonkey.net
+    '';
 
     # configure https://github.com/ezbz/gitlabber
     environment.sessionVariables = {

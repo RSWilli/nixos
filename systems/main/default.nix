@@ -21,6 +21,8 @@
       encrypted = false;
     };
 
+    ai.enable = true;
+
     desktop = {
       enable = true;
 

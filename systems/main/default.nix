@@ -30,6 +30,8 @@
 
       steam = true;
 
+      gamedev.enable = true;
+
       communication = {
         mumble = true;
         matrix = true;

@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
   # https://nixos.wiki/wiki/Linux_kernel

@@ -35,6 +35,8 @@
       enable = true;
       enableAutoLogin = true;
 
+      amd = true;
+
       communication = {
         matrix = true;
       };

@@ -18,6 +18,19 @@
       pkgs.mkShell {
         packages = with pkgs; [
           go_latest
+
+          # used by vscode extension for go:
+          delve # go debugger
+          go-tools # staticcheck & co.
+          # goplay not in nixpkgs
+          gopls
+          gotests
+          impl
+          graphviz # for pprof and pipeline dots
+
+          # for cgo:
+          # pkg-config
+
           nodejs_latest
           openapi-generator-cli
         ];

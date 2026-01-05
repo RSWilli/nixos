@@ -25,6 +25,10 @@ in {
       pkgs.tailscale
     ];
 
+    my.desktop.pinned-apps = [
+      "chromium-browser.desktop"
+    ];
+
     # user need to run
     # sudo tailscale up --accept-routes
     # to start using tailscale

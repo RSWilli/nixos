@@ -19,6 +19,20 @@
       #     config.allowUnfree = true;
       #   };
       # })
+
+      # fix wireplumber crashes gnome volume control:
+      # https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/issues/34
+      # https://github.com/NixOS/nixpkgs/issues/475202
+      (
+        final: _prev: let
+          stablepkgs = import inputs.nixpkgs-stable {
+            system = final.system;
+            config.allowUnfree = true;
+          };
+        in {
+          wireplumber = stablepkgs.wireplumber;
+        }
+      )
     ];
   };
   nix = let

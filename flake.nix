@@ -54,6 +54,10 @@
         path = ./templates/golang;
         description = "Golang development environment";
       };
+      "node+golang" = {
+        path = ./templates/node+golang;
+        description = "Golang Nodejs development environment";
+      };
     };
 
     devShells = forAllSystems (system: let

@@ -15,6 +15,9 @@ in {
     environment.systemPackages = with pkgs; [
       blender
       godot
+      gimp
+      krita
+      inkscape
     ];
   };
 }

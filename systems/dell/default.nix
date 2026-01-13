@@ -21,6 +21,7 @@
   # constantly drops wifi connection speed. I have an alternative usb wifi adapter.
   # disable the module entirely until a fix is found.
   boot.blacklistedKernelModules = ["mt7925e"];
+  boot.extraModprobeConfig = "blacklist mt7925e";
 
   my = {
     disko = {

@@ -18,18 +18,15 @@ function theme_precmd() {
     fi
 }
 
+if [[ -n "$SSH_CONNECTION" ]]; then
+    HOSTNAME_PROMPT="%B%F{blue}%m%b%f "
+else
+    HOSTNAME_PROMPT=""
+fi
+
 autoload -U add-zsh-hook
 add-zsh-hook precmd theme_precmd
 
 # Define prompts once to avoid overwriting VS Code's shell integration injections
-# this is a % char on the left side, green if the last command succeeded, red if failed
-PS1='%(?.%F{green}.%F{red})%#%f '
-
-# right prompt: current directory, git branch, hostname
-# Uses ${GIT_BRANCH} which is updated by the precmd hook
-RPS1='%2~%F{yellow}${GIT_BRANCH} %B%F{blue}%m%b%f'
-
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    # Disable RPS1 in VS Code to fix Copilot command detection
-    unset RPS1
-fi
+# Hostname (only in SSH), current directory, git branch, and status symbol (green if success, red if failed)
+PS1='${HOSTNAME_PROMPT}%2~%F{yellow}${GIT_BRANCH}%f %(?.%F{green}.%F{red})%#%f '

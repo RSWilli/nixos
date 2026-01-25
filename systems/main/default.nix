@@ -55,7 +55,7 @@
 
   environment.systemPackages = with pkgs; [
     obsidian
-    appimage-run
+    # appimage-run
     # blender-hip # blender with AMD HIP support
     xournalpp
   ];

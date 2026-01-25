@@ -30,7 +30,8 @@ in {
       pkgs.mangohud
     ];
 
-    programs.gamemode.enable = true;
+    # currently fails to build:
+    # programs.gamemode.enable = true;
 
     my.desktop.pinned-apps = [
       "steam.desktop"

@@ -12,25 +12,20 @@
     };
     overlays = [
       self.overlays.custompackages
-      # # overlay master branch:
-      # (final: _prev: {
-      #   master = import inputs.nixpkgs-master {
-      #     system = final.system;
-      #     config.allowUnfree = true;
-      #   };
-      # })
+      # overlay stable nixpkgs:
+      (final: _prev: {
+        stable = import inputs.nixpkgs-stable {
+          system = final.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
+      })
 
       # fix wireplumber crashes gnome volume control:
       # https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/issues/34
       # https://github.com/NixOS/nixpkgs/issues/475202
       (
-        final: _prev: let
-          stablepkgs = import inputs.nixpkgs-stable {
-            system = final.stdenv.hostPlatform.system;
-            config.allowUnfree = true;
-          };
-        in {
-          wireplumber = stablepkgs.wireplumber;
+        final: _prev: {
+          wireplumber = final.stable.wireplumber;
         }
       )
 

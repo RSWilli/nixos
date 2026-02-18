@@ -20,15 +20,6 @@
         };
       })
 
-      # fix wireplumber crashes gnome volume control:
-      # https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/issues/34
-      # https://github.com/NixOS/nixpkgs/issues/475202
-      (
-        final: _prev: {
-          wireplumber = final.stable.wireplumber;
-        }
-      )
-
       # override vscode version since 1.109.0 has security issues with copilot, see
       # https://github.com/microsoft/vscode/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22January+2026+Recovery+1%22+
       # https://github.com/microsoft/vscode/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22January+2026+Chat+Recovery+2%22+

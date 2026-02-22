@@ -19,26 +19,6 @@
           config.allowUnfree = true;
         };
       })
-
-      # override vscode version since 1.109.0 has security issues with copilot, see
-      # https://github.com/microsoft/vscode/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22January+2026+Recovery+1%22+
-      # https://github.com/microsoft/vscode/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22January+2026+Chat+Recovery+2%22+
-      (
-        final: prev: {
-          vscode =
-            prev.vscode.overrideAttrs
-            (finalVscode: prevVscode: let
-              plat = "linux-x64";
-            in rec {
-              version = "1.109.2";
-              src = final.fetchurl {
-                name = "VSCode_${version}_${plat}.tar.gz";
-                url = "https://update.code.visualstudio.com/${version}/${plat}/stable";
-                hash = "sha256-ST5i8gvNtAaBbmcpcg9GJipr8e5d0A0qbdG1P9QViek=";
-              };
-            });
-        }
-      )
     ];
   };
   nix = let

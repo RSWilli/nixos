@@ -20,13 +20,9 @@
             type = "luks";
             name = "crypted";
             content = {
-              type = "btrfs";
-              extraArgs = ["-f"]; # Override existing partition
+              type = "filesystem";
+              format = "ext4";
               mountpoint = "/";
-              mountOptions = [
-                "compress=zstd"
-                "noatime"
-              ];
             };
           };
         };

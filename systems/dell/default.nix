@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
@@ -14,11 +13,6 @@
   # boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my = {
-    disko = {
-      root-disk = "/dev/nvme0n1";
-      encrypted = true;
-    };
-
     docker.enable = true;
 
     desktop = {

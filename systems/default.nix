@@ -13,6 +13,8 @@
       };
       modules = [
         path
+        "${path}/hardware-configuration.nix"
+        "${path}/disko.nix"
         agenix.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         inputs.disko.nixosModules.disko

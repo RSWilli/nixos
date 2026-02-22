@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
@@ -15,13 +14,6 @@
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my = {
-    disko = {
-      root-disk = "/dev/nvme0n1";
-      encrypted = false;
-    };
-
-    ai.enable = true;
-
     desktop = {
       enable = true;
 

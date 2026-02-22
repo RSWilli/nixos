@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
     # https://github.com/NixOS/nixos-hardware/tree/master/lenovo/thinkpad/x13
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x13-amd
   ];
@@ -17,11 +16,6 @@
   powerManagement.enable = true;
 
   my = {
-    disko = {
-      root-disk = "/dev/nvme0n1";
-      encrypted = true;
-    };
-
     desktop = {
       enable = true;
       enableAutoLogin = true;

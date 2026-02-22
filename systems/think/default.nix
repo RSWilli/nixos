@@ -17,6 +17,10 @@
 
   my = {
     desktop = {
+      amd = true;
+
+      steam = true;
+
       enable = true;
       enableAutoLogin = true;
     };

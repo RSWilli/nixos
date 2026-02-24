@@ -21,7 +21,7 @@
 
       steam = true;
 
-      gamedev.enable = true;
+      # gamedev.enable = true;
 
       communication = {
         mumble = true;

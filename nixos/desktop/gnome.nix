@@ -39,8 +39,6 @@ in {
       };
     };
 
-    services.printing.enable = true; # cups
-
     # Enable sound with pipewire.
     security.rtkit.enable = true;
     services.pipewire = {
@@ -122,6 +120,22 @@ in {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
+    };
+
+    # autodiscover network printers and other devices
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    # enable cups for printing with some drivers
+    services.printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
     };
   };
 }

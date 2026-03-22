@@ -18,15 +18,14 @@ in {
 
     # nixpkgs.config.rocmSupport = true;
 
-    boot.kernelModules = ["kvm-amd"];
-    boot.initrd.kernelModules = ["amdgpu"];
+    hardware.amdgpu.initrd.enable = true;
 
-    # environment.systemPackages = with pkgs; [
-    #   radeontop
-    #   clinfo
-    # ];
+    environment.systemPackages = with pkgs; [
+      radeontop
+      # clinfo
+    ];
 
-    # # fix ROCm path for software where it is hardcoded
+    # fix ROCm path for software where it is hardcoded
     # systemd.tmpfiles.rules = let
     #   rocmEnv = pkgs.symlinkJoin {
     #     name = "rocm-combined";
@@ -43,7 +42,7 @@ in {
     #   "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
     # ];
 
-    # # linux AMD GPU controller
+    # linux AMD GPU controller
     # services.lact.enable = true;
   };
 }

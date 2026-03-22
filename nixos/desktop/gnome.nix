@@ -21,14 +21,6 @@ in {
     };
   };
   config = mkIf cfg.enable {
-    services.xserver = {
-      enable = true;
-      xkb = {
-        layout = "de";
-        variant = "";
-      };
-    };
-
     services.desktopManager.gnome.enable = true;
 
     services.displayManager = {

@@ -5,61 +5,14 @@
   ...
 }:
 with lib; let
-  cfg = config.my.desktop;
+  cfg = config.my.desktop.gnome;
 in {
-  options.my.desktop = {
-    enable = mkEnableOption "desktop";
-
-    enableAutoLogin = mkEnableOption "desktop";
-
-    pinned-apps = lib.mkOption {
-      default = [];
-      type = with lib.types; listOf str;
-      description = ''
-        additional apps to pin to the dock
-      '';
-    };
+  options.my.desktop.gnome = {
+    enable = mkEnableOption "gnome desktop";
   };
   config = mkIf cfg.enable {
     services.desktopManager.gnome.enable = true;
-
-    services.displayManager = {
-      gdm.enable = true;
-      autoLogin = mkIf cfg.enableAutoLogin {
-        enable = true;
-        user = "willi";
-      };
-    };
-
-    # Enable sound with pipewire.
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
-    };
-
-    xdg = {
-      portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
-        ];
-      };
-    };
-
-    programs.firefox = {
-      enable = true;
-      wrapperConfig = {
-        pipewireSupport = true;
-      };
-    };
+    services.displayManager.gdm.enable = true;
 
     environment.systemPackages = with pkgs; [
       # gnome3.gpaste currently broken, see https://github.com/NixOS/nixpkgs/issues/92265
@@ -67,14 +20,6 @@ in {
       arc-theme
       # easyeffects
       gnome-tweaks
-
-      showtime # video player
-      decibels # audio player
-
-      pavucontrol
-      qjackctl
-      telegram-desktop
-      vscode
     ];
 
     environment.gnome.excludePackages = with pkgs; [
@@ -97,37 +42,6 @@ in {
 
     services.gnome = {
       games.enable = false;
-    };
-
-    fonts.packages = with pkgs; [
-      fira-code
-    ];
-
-    # Ozone Wayland support in Chrome and several Electron apps (needed for vscode to render in Wayland)
-    environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-    };
-
-    # hardware acceleration for graphics
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-
-    # autodiscover network printers and other devices
-    services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
-    # enable cups for printing with some drivers
-    services.printing = {
-      enable = true;
-      drivers = with pkgs; [
-        cups-filters
-        cups-browsed
-      ];
     };
   };
 }

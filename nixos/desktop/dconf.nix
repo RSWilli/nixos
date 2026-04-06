@@ -169,7 +169,7 @@ with lib; let
     };
   };
 in {
-  config = mkIf cfg.enable {
+  config = mkIf cfg.gnome.enable {
     programs.dconf = {
       enable = true;
       profiles = {

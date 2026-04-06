@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.my.desktop;
 in {
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.gnome.enable || cfg.cosmic.enable) {
     boot.loader.systemd-boot = {
       enable = true;
       consoleMode = "max";

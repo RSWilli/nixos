@@ -16,7 +16,7 @@
     docker.enable = true;
 
     desktop = {
-      enable = true;
+      gnome.enable = true;
       enableAutoLogin = true;
 
       amd = true;

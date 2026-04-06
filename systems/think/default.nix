@@ -17,11 +17,12 @@
 
   my = {
     desktop = {
+      gnome.enable = true;
+
       amd = true;
 
       steam = true;
 
-      enable = true;
       enableAutoLogin = true;
     };
 

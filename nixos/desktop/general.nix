@@ -49,8 +49,6 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      papers # pdf viewer
-
       baobab # GNOME disk usage analyzer
 
       pavucontrol

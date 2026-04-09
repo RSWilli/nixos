@@ -17,6 +17,14 @@ in {
 
     environment.cosmic.excludePackages = with pkgs; [
       pulseaudio
+
+      cosmic-player # in favor of showtime from gnome
+      cosmic-reader # in favor of papers from gnome
+    ];
+
+    environment.systemPackages = with pkgs; [
+      showtime
+      papers
     ];
 
     services.system76-scheduler.enable = true;

@@ -20,6 +20,7 @@ in {
       gitlabber
 
       obs-studio
+      kdePackages.kdenlive
 
       # make the tailscale command usable to users
       pkgs.tailscale

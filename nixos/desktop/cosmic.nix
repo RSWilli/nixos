@@ -23,6 +23,8 @@ in {
     ];
 
     environment.systemPackages = with pkgs; [
+      seahorse # gnome keyring manager
+
       showtime
       papers
     ];

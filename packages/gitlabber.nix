@@ -18,12 +18,12 @@ in
   # ported from https://archlinux.org/packages/extra/any/python-gitlabber/
   python3.pkgs.buildPythonApplication rec {
     pname = "gitlabber";
-    version = "1.2.8";
+    version = "2.1.1";
     format = "setuptools";
 
     src = fetchPypi {
       inherit pname version;
-      hash = "sha256-euqxDM6jwZzod2N42oqSIAaWKT8sROMEAbVIIdeeb5Y=";
+      hash = "sha256-8sAFqu7fO+7p2M5pB8A72FcHJpAAdJHXhEJxXRKUEpo=";
     };
 
     propagatedBuildInputs = with python3.pkgs; [
@@ -34,7 +34,10 @@ in
       python-gitlab
       globre
       pyyaml
-      tqdm
-      docopt
+      rich
+      typer
+      pydantic
+      pydantic-settings
+      urllib3
     ];
   }

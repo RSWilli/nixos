@@ -25,6 +25,7 @@ in {
     environment.systemPackages = with pkgs; [
       seahorse # gnome keyring manager
 
+      eog # gnome image viewer
       showtime
       papers
     ];

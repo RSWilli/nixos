@@ -22,6 +22,8 @@ in {
       obs-studio
       kdePackages.kdenlive
 
+      teams-for-linux
+
       # make the tailscale command usable to users
       pkgs.tailscale
     ];

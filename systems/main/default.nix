@@ -33,7 +33,7 @@
       vm.enable = false;
     };
 
-    minecraft.enable = false;
+    minecraft.enable = true;
 
     docker.enable = true;
 

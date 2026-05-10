@@ -65,8 +65,8 @@ with lib; let
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${../../static/wallpaper.png}";
-      picture-uri-dark = "file://${../../static/wallpaper.png}";
+      picture-uri = "file://${../../static/wallpaper.jpg}";
+      picture-uri-dark = "file://${../../static/wallpaper.jpg}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
     };
@@ -74,7 +74,7 @@ with lib; let
     "org/gnome/desktop/screensaver" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${../../static/wallpaper.png}";
+      picture-uri = "file://${../../static/wallpaper.jpg}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
     };

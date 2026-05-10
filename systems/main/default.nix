@@ -15,7 +15,7 @@
 
   my = {
     desktop = {
-      cosmic.enable = true;
+      gnome.enable = true;
 
       amd = true;
 

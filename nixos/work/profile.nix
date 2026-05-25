@@ -17,7 +17,7 @@ in {
       dbgate
       chromium
       dig
-      gitlabber
+      custompackages.gitlabber
 
       obs-studio
       kdePackages.kdenlive

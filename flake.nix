@@ -19,6 +19,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # wrapper-modules for wrapping packages to not require config files.
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
@@ -38,16 +41,34 @@
     systems = [
       "x86_64-linux"
     ];
+
+    getPkgs = system:
+      import nixpkgs {
+        inherit system;
+        overlays = [
+          self.overlays.custompackages
+        ];
+      };
+
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
     lib = nixpkgs.lib.extend (stdlib: _: {my = import ./lib {lib = stdlib;};});
 
     nixosConfigurations = import ./systems inputs;
 
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-    packages = forAllSystems (system: import ./packages nixpkgs.legacyPackages.${system});
+    formatter = forAllSystems (system: (getPkgs system).alejandra);
 
-    overlays = import ./overlays {inherit inputs;};
+    packages = forAllSystems (
+      system:
+        import ./packages (
+          {
+            pkgs = getPkgs system;
+          }
+          // inputs
+        )
+    );
+
+    overlays = import ./overlays inputs;
 
     templates = {
       golang = {
@@ -61,14 +82,9 @@
     };
 
     devShells = forAllSystems (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          self.overlays.custompackages
-        ];
-      };
+      pkgs = getPkgs system;
     in {
-      default = pkgs.mkShellMinimal {
+      default = pkgs.custompackages.mkShellMinimal {
         packages = [
           pkgs.nh
           pkgs.dconf

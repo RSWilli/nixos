@@ -42,6 +42,9 @@ in {
 
     services.gnome = {
       games.enable = false;
+
+      # see https://github.com/NixOS/nixpkgs/issues/234003
+      gnome-user-share.enable = true;
     };
   };
 }

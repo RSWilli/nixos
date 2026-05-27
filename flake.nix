@@ -6,8 +6,11 @@
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix =  {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -20,10 +23,19 @@
     };
 
     # wrapper-modules for wrapping packages to not require config files.
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    # graphical niri configuration module:
+    nirimod = {
+      url = "github:srinivasr/nirimod/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # nix-build requires a default.nix file
     flake-compat = {

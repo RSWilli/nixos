@@ -1,6 +1,8 @@
 # Wrapper package for niri, containing all settings and configuration. Also see noctalia-shell.nix.
 #
 # See: https://birdeehub.github.io/nix-wrapper-modules/wrapperModules/niri.html
+#
+# niri default config: https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl
 {
   lib,
   pkgs,

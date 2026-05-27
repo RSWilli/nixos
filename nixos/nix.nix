@@ -19,6 +19,8 @@
           config.allowUnfree = true;
         };
       })
+      # add nirimod:
+      inputs.nirimod.overlays.default
     ];
   };
   nix = let

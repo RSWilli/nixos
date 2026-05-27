@@ -51,6 +51,8 @@ in {
       loupe # gnome image viewer
       showtime
       papers
+
+      nirimod # graphical niri configuration editor
      ];
   };
 }

@@ -19,7 +19,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.gnome.enable || cfg.cosmic.enable) {
+  config = mkIf (cfg.gnome.enable || cfg.cosmic.enable || cfg.niri.enable) {
     services.displayManager = {
       autoLogin = mkIf cfg.enableAutoLogin {
         enable = true;

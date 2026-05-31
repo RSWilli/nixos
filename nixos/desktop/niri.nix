@@ -29,6 +29,7 @@ in {
       };
     };
     programs.regreet.enable = true;
+    # programs.regreet.cursorTheme.package = pkgs.material-cursors;
 
     # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
     # unit which shadows the imported user-manager PATH. Disabling the default
@@ -43,16 +44,21 @@ in {
     services.upower.enable = true;
     services.power-profiles-daemon.enable = true;
 
-    environment.systemPackages = with pkgs; [ 
+    services.gnome.gnome-keyring.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      custompackages.noctalia-shell # for running `noctalia-shell ipc show` and other commands
+
       alacritty
 
       seahorse # gnome keyring manager
 
       loupe # gnome image viewer
       showtime
+      decibels
       papers
 
       nirimod # graphical niri configuration editor
-     ];
+    ];
   };
 }

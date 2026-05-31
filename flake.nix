@@ -6,7 +6,7 @@
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
-    agenix =  {
+    agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";

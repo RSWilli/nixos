@@ -16,25 +16,10 @@ in {
   config = mkIf cfg.enable {
     programs.niri = {
       enable = true;
-      package = pkgs.custompackages.niri; # my wrapped niri
+      package = pkgs.custompackages.niri; # wrapped niri with included config
     };
 
-    services.greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${config.programs.niri.package}/bin/niri-session";
-          user = "willi";
-        };
-      };
-    };
-    programs.regreet.enable = true;
-    # programs.regreet.cursorTheme.package = pkgs.material-cursors;
-
-    # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
-    # unit which shadows the imported user-manager PATH. Disabling the default
-    # lets niri inherit the full PATH set up by niri-session.
-    systemd.user.services.niri.enableDefaultPath = false;
+    services.displayManager.gdm.enable = true;
 
     # wifi and bluetooth, required by noctalia
     networking.networkmanager.enable = true;
@@ -47,7 +32,8 @@ in {
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
-      custompackages.noctalia-shell # for running `noctalia-shell ipc show` and other commands
+      material-cursors
+      noctalia
 
       alacritty
 
@@ -58,7 +44,83 @@ in {
       decibels
       papers
 
+      nautilus # file manager
+
       nirimod # graphical niri configuration editor
+    ];
+
+    environment.sessionVariables = {
+      NOCTALIA_CONFIG_HOME = let
+        tomlFormat = pkgs.formats.toml {};
+        configToml = tomlFormat.generate "config.toml" {
+          wallpaper = {
+            enabled = true;
+            default.path = ../../static/wallpaper.jpg;
+          };
+
+          bar = {
+            default = {
+              capsule = true;
+              margin_edge = 0;
+              margin_ends = 0;
+              radius = 0;
+              shadow = false;
+              start = [
+                "launcher"
+                "workspaces"
+              ];
+            };
+          };
+          desktop_widgets = {
+            enabled = false;
+          };
+          idle = {
+            behavior = {
+              lock = {
+                action = "lock";
+                enabled = true;
+                timeout = 600;
+              };
+              lock-and-suspend = {
+                action = "lock_and_suspend";
+                enabled = false;
+                timeout = 900;
+              };
+              screen-off = {
+                action = "screen_off";
+                enabled = true;
+                timeout = 660;
+              };
+            };
+            behavior_order = [
+              "lock"
+              "screen-off"
+              "lock-and-suspend"
+            ];
+          };
+          location = {
+            address = "Leipzig, Germany";
+          };
+          theme = {
+            mode = "light";
+          };
+        };
+      in
+        pkgs.runCommand "noctalia-config-home" {} ''
+          mkdir -p $out/noctalia
+          cp ${configToml} $out/noctalia/config.toml
+        '';
+      NOCTALIA_STATE_HOME = "/tmp/noctalia-state";
+    };
+
+    nix.settings = {
+      extra-substituters = ["https://noctalia.cachix.org"];
+      extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
+    };
+
+    # link the niri config to a fixed location:
+    systemd.tmpfiles.rules = [
+      "L! /etc/niri/config.kdl - - - - ${pkgs.custompackages.niri}/niri-config.kdl"
     ];
   };
 }

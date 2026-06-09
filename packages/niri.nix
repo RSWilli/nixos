@@ -1,4 +1,4 @@
-# Wrapper package for niri, containing all settings and configuration. Also see noctalia-shell.nix.
+# Wrapper package for niri, containing all settings and configuration.
 #
 # See: https://birdeehub.github.io/nix-wrapper-modules/wrapperModules/niri.html
 #
@@ -9,18 +9,17 @@
   lib,
   pkgs,
   niriWrapper,
-  custompackages,
+  noctalia,
   material-cursors,
   mumble,
 }: let
-  noctalia-shell = lib.getExe custompackages.noctalia-shell;
+  noctaliaExe = lib.getExe noctalia;
   noValue = _: {}; # wrapper config kdl value for value-less keys
 in
   niriWrapper {
     inherit pkgs;
 
     runtimePkgs = [
-      custompackages.noctalia-shell
       material-cursors
     ];
 
@@ -28,7 +27,7 @@ in
 
     settings = {
       spawn-at-startup = [
-        noctalia-shell
+        noctaliaExe
         # maybe wallpaper with swaybg instead of noctalia-shell:
         # (lib.getExe (
         #   pkgs.writeShellScriptBin "wallpaper"
@@ -78,7 +77,7 @@ in
               y = 0;
             };
           };
-          variable-refresh-rate = noValue;
+          # variable-refresh-rate = noValue;
         };
 
         "Acer Technologies VG270U P 0x91704B66" = {
@@ -92,7 +91,7 @@ in
               y = 0;
             };
           };
-          variable-refresh-rate = noValue;
+          # variable-refresh-rate = noValue;
         };
       };
 
@@ -118,7 +117,7 @@ in
 
       # prefer-no-csd = noValue; # prefer non-client-side-decorations (title bars) when available
 
-      screenshot-path = "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png";
+      screenshot-path = null; # disabled, we screenshot via hotkey script
 
       # see https://niri-wm.github.io/niri/Configuration:-Animations
       animations = {};
@@ -155,31 +154,34 @@ in
           content.toggle-overview = noValue;
         };
 
-        "Mod+Space".spawn-sh = "${noctalia-shell} ipc call launcher toggle";
-        "Mod+S".spawn-sh = "${noctalia-shell} ipc call controlCenter toggle";
-        "Mod+Comma".spawn-sh = "${noctalia-shell} ipc call settings toggle";
+        "Mod+Space".spawn-sh = "${noctaliaExe} msg panel-toggle launcher";
+        "Mod+S".spawn-sh = "${noctaliaExe} msg panel-toggle control-center";
+        "Mod+Comma".spawn-sh = "${noctaliaExe} msg settings-toggle";
 
         # Audio & Brightness
         "XF86AudioRaiseVolume" = _: {
           props.allow-when-locked = true;
-          content.spawn-sh = "${noctalia-shell} ipc call volume increase";
+          content.spawn-sh = "${noctaliaExe} msg volume-up";
         };
         "XF86AudioLowerVolume" = _: {
           props.allow-when-locked = true;
-          content.spawn-sh = "${noctalia-shell} ipc call volume decrease";
+          content.spawn-sh = "${noctaliaExe} msg volume-down";
         };
         "XF86AudioMute" = _: {
           props.allow-when-locked = true;
-          content.spawn-sh = "${noctalia-shell} ipc call volume muteOutput";
+          content.spawn-sh = "${noctaliaExe} msg volume-mute";
         };
         "XF86MonBrightnessUp" = _: {
           props.allow-when-locked = true;
-          content.spawn-sh = "${noctalia-shell} ipc call brightness increase";
+          content.spawn-sh = "${noctaliaExe} msg brightness-up";
         };
         "XF86MonBrightnessDown" = _: {
           props.allow-when-locked = true;
-          content.spawn-sh = "${noctalia-shell} ipc call brightness decrease";
+          content.spawn-sh = "${noctaliaExe} msg brightness-down";
         };
+
+        # TODO: use a custom screenshot script that pipes into satty so we can edit the screenshot
+        "Mod+Shift+S".spawn-sh = "${noctaliaExe} msg screenshot-region";
 
         "Mod+Left".focus-column-left = noValue;
         "Mod+Down".focus-window-down = noValue;

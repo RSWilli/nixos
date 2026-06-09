@@ -37,6 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      # inputs.nixpkgs.follows = "nixpkgs"; # removed so we can use binary cache
+    };
+
     # nix-build requires a default.nix file
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -58,6 +63,7 @@
       import nixpkgs {
         inherit system;
         overlays = [
+          inputs.noctalia.overlays.default
           self.overlays.custompackages
         ];
       };
@@ -67,6 +73,11 @@
     lib = nixpkgs.lib.extend (stdlib: _: {my = import ./lib {lib = stdlib;};});
 
     nixosConfigurations = import ./systems inputs;
+
+    nixConfig = {
+      extra-substituters = ["https://noctalia.cachix.org"];
+      extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
+    };
 
     formatter = forAllSystems (system: (getPkgs system).alejandra);
 

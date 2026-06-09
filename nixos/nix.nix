@@ -11,6 +11,7 @@
       allowUnfree = true;
     };
     overlays = [
+      inputs.noctalia.overlays.default
       self.overlays.custompackages
       # overlay stable nixpkgs:
       (final: _prev: {

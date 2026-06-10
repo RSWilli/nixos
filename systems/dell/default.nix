@@ -13,6 +13,7 @@
   # boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my = {
+    ai.enable = true;
     docker.enable = true;
 
     desktop = {

@@ -15,12 +15,13 @@ in {
   config = mkIf cfg.enable {
     services.llama-cpp = {
       enable = true;
+      package = pkgs.llama-cpp-vulkan;
       port = 34000;
       openFirewall = false;
 
       modelsPreset = {
         "Gemma4-26B-A4B" = {
-          hf-repo = "coder3101/gemma-4-26B-A4B-it-heretic";
+          hf-repo = "ggml-org/gemma-4-26B-A4B-it-GGUF";
           alias = " google/gemma-4-26B-A4B-it";
           # fit = "on";
           # seed = "3407";
@@ -28,10 +29,10 @@ in {
           top-p = "0.95";
           # min-p = "0.01";
           top-k = "64";
-          jinja = "on";
+          # jinja = "on";
         };
         "Gemma4-E4B" = {
-          hf-repo = "coder3101/gemma-4-E4B-it-heretic";
+          hf-repo = "ggml-org/gemma-4-E4B-it-GGUF";
           alias = " google/gemma-4-E4B-it";
           # fit = "on";
           # seed = "3407";
@@ -39,7 +40,7 @@ in {
           top-p = "0.95";
           # min-p = "0.01";
           top-k = "64";
-          jinja = "on";
+          # jinja = "on";
         };
       };
     };

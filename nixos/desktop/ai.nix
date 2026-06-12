@@ -21,7 +21,14 @@ with lib; let
     "Gemma4-26B-A4B" = {
       hf = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
       alias = " google/gemma-4-26B-A4B-it";
-      # device = "Vulkan0";
+      # MoE model (~4B active of 26B): keep all expert weights in system RAM and
+      # only attention/dense layers + KV on the 16GB iGPU -- this is what makes
+      # it fit. 999 > layer count, so effectively --cpu-moe (all experts on CPU).
+      n-cpu-moe = "999";
+      ctx-size = "16384"; # cap the model's 131072 default; saves a lot of KV memory
+      parallel = "1"; # single user, and MTP speculative decoding wants n_parallel=1
+      cache-reuse = "256"; # reuse cached KV across requests sharing a prefix
+      sleep-idle-seconds = "600"; # release the GPU after 10 min idle
       spec-type = "draft-mtp";
       spec-draft-n-max = "3";
       temp = "1.0";
@@ -31,7 +38,12 @@ with lib; let
     "Gemma4-E4B" = {
       hf = "unsloth/gemma-4-E4B-it-qat-GGUF:UD-Q4_K_XL";
       alias = " google/gemma-4-E4B-it";
-      # device = "Vulkan0";
+      ngl = 999; # offload all layers (small model, fits the GPU)
+      fa = "off"; # flash attention
+      ctx-size = "32768"; # small model -> room for a larger context
+      parallel = "1"; # single user, and MTP speculative decoding wants n_parallel=1
+      cache-reuse = "256"; # reuse cached KV across requests sharing a prefix
+      sleep-idle-seconds = "600"; # release the GPU after 10 min idle
       spec-type = "draft-mtp";
       spec-draft-n-max = "3";
       temp = "1.0";
@@ -54,6 +66,10 @@ in {
       settings = {
         port = 34000;
         models-preset = modelsPreset;
+        metrics = true; # expose the Prometheus /metrics endpoint on the router
+        # keep only one model resident; loading another evicts the LRU (the
+        # other) one, so the two models don't fight over the 16GB iGPU.
+        models-max = 1;
       };
     };
 

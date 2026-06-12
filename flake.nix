@@ -28,6 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # upstream llama.cpp flake: provides a current build (with MTP / newer model
+    # architectures) instead of nixpkgs' lagging llama-cpp package.
+    llama-cpp = {
+      url = "github:ggml-org/llama.cpp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hardware quirks:
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 

@@ -130,7 +130,7 @@ in
         # Set the overview wallpaper on the backdrop, from https://docs.noctalia.dev/v4/getting-started/compositor-settings/niri/#option-1-blurred-overview-wallpaper
         {
           matches = [
-            {namespace = "^noctalia-overview*";}
+            {namespace = "^noctalia-backdrop";}
           ];
           place-within-backdrop = true;
         }
@@ -179,6 +179,8 @@ in
           props.allow-when-locked = true;
           content.spawn-sh = "${noctaliaExe} msg brightness-down";
         };
+
+        "Mod+L".spawn-sh = "${noctaliaExe} msg lock";
 
         # TODO: use a custom screenshot script that pipes into satty so we can edit the screenshot
         "Mod+Shift+S".spawn-sh = "${noctaliaExe} msg screenshot-region";

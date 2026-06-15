@@ -36,6 +36,16 @@
     };
   };
 
+  # fingerprint sensor, see https://wiki.nixos.org/wiki/Fingerprint_scanner
+  # run `fprintd-enroll` to enroll a fingerprint
+  services.fprintd = {
+    enable = true;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-broadcom-cv3plus; # for dell keyboard fingerprint sensor
+    };
+  };
+
   # Laptop battery optimizations https://nixos.wiki/wiki/Laptop
   powerManagement.enable = true;
 

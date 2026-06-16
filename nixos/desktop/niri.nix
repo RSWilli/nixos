@@ -1,6 +1,7 @@
 # https://wiki.nixos.org/wiki/Niri
 # https://wiki.nixos.org/wiki/Greetd
 {
+  inputs,
   lib,
   config,
   pkgs,
@@ -70,6 +71,10 @@ with lib; let
     };
   };
 in {
+  imports = [
+    inputs.noctalia-greeter.nixosModules.default
+  ];
+
   options.my.desktop.niri = {
     enable = mkEnableOption "niri";
   };
@@ -80,19 +85,17 @@ in {
       package = pkgs.custompackages.niri; # wrapped niri with included config
     };
 
-    services.greetd.enable = true;
-    programs.regreet = {
+    programs.noctalia-greeter = {
       enable = true;
-      cageArgs = [ "-s" "-d" "-m" "last" ]; # only start cage on the last monitor
-      settings = {
-        # https://github.com/rharish101/ReGreet/blob/main/regreet.sample.toml
-        skip_selection = true;
-        background = {
-          fit = "contain";
-          path = ../../static/wallpaper.jpg;
-        };
-        appearance.greeting_msg = "Welcome back!";
-      };
+      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+      # # Optional configuration
+      # greeter-args = "";
+      # settings.cursor = {
+      #   theme = "Adwaita";
+      #   size = 24;
+      #   package = pkgs.adwaita-icon-theme;
+      # };
     };
 
     # wifi and bluetooth, required by noctalia

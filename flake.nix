@@ -49,6 +49,11 @@
       # inputs.nixpkgs.follows = "nixpkgs"; # removed so we can use binary cache
     };
 
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # nix-build requires a default.nix file
     flake-compat = {
       url = "github:edolstra/flake-compat";

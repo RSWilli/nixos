@@ -95,6 +95,7 @@ in {
     environment.systemPackages = [
       # also make the binary available for testing
       llama-cpp
+      pi-coding-agent
     ];
   };
 }

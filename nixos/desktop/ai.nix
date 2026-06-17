@@ -35,6 +35,27 @@ with lib; let
       top-p = "0.95";
       top-k = "64";
     };
+    "Gemma4-12B" = {
+      hf = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+      alias = " google/gemma-4-12B-it";
+      ngl = 999; # offload all layers
+      # FA is effectively required here: this model has per-layer varying V head
+      # dims, so with FA off llama.cpp pads the V cache to 2048/layer and the
+      # 256k KV cache OOMs the 16GB iGPU (vk::Queue::submit: ErrorDeviceLost).
+      fa = "on"; # flash attention
+      # quantize the KV cache so the full 256k context fits in VRAM
+      cache-type-k = "q8_0";
+      cache-type-v = "q8_0";
+      ctx-size = "262144"; # full 256k context
+      parallel = "1"; # single user, and MTP speculative decoding wants n_parallel=1
+      cache-reuse = "256"; # reuse cached KV across requests sharing a prefix
+      sleep-idle-seconds = "600"; # release the GPU after 10 min idle
+      spec-type = "draft-mtp";
+      spec-draft-n-max = "3";
+      temp = "1.0";
+      top-p = "0.95";
+      top-k = "64";
+    };
     "Gemma4-E4B" = {
       hf = "unsloth/gemma-4-E4B-it-qat-GGUF:UD-Q4_K_XL";
       alias = " google/gemma-4-E4B-it";
@@ -95,7 +116,7 @@ in {
     environment.systemPackages = [
       # also make the binary available for testing
       llama-cpp
-      pi-coding-agent
+      pkgs.pi-coding-agent
     ];
   };
 }

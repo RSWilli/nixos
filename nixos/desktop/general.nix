@@ -43,6 +43,7 @@ in {
 
     programs.firefox = {
       enable = true;
+      package = pkgs.stable.firefox; # broken on unstable, see https://github.com/NixOS/nixpkgs/issues/532959
       wrapperConfig = {
         pipewireSupport = true;
       };

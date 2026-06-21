@@ -234,10 +234,10 @@ in
         "Mod+Ctrl+8".move-column-to-workspace = 8;
         "Mod+Ctrl+9".move-column-to-workspace = 9;
 
-        "Mod+F".maximize-column = noValue;
+        # Fill the whole screen, but leave the bar visible:
+        "Mod+F".maximize-window-to-edges = noValue;
+        # fullscreen, hides the bar:
         "Mod+Shift+F".fullscreen-window = noValue;
-
-        "Mod+M".maximize-window-to-edges = noValue;
 
         "Mod+Minus".set-column-width = "-10%";
         "Mod+Plus".set-column-width = "+10%";

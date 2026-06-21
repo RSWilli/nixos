@@ -14,6 +14,8 @@
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my = {
+    ai.enable = true;
+
     desktop = {
       niri.enable = true;
 

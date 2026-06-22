@@ -129,8 +129,14 @@ in {
       ];
     };
 
+    environment.sessionVariables = {
+      # for pi-llama-cpp, see https://pi.dev/packages/pi-llama-cpp
+      LLAMA_SERVER_URL = "http://localhost:${toString config.services.llama-cpp.settings.port}";
+    };
+
     environment.systemPackages = with pkgs; [
       pi-coding-agent
+      nodejs # required for installing plugins for pi-coding-agent
     ];
   };
 }

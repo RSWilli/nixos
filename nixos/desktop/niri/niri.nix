@@ -15,7 +15,7 @@ with lib; let
     backdrop.enabled = true;
     wallpaper = {
       enabled = true;
-      default.path = ../../static/wallpaper.jpg;
+      default.path = ../../../static/wallpaper.jpg;
     };
 
     bar = {
@@ -82,20 +82,19 @@ in {
   config = mkIf cfg.enable {
     programs.niri = {
       enable = true;
-      package = pkgs.custompackages.niri; # wrapped niri with included config
     };
 
     programs.noctalia-greeter = {
       enable = true;
       package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-      # # Optional configuration
-      # greeter-args = "";
-      # settings.cursor = {
-      #   theme = "Adwaita";
-      #   size = 24;
-      #   package = pkgs.adwaita-icon-theme;
-      # };
+      # Optional configuration
+      greeter-args = "";
+      settings.cursor = {
+        theme = "Adwaita";
+        size = 24;
+        package = pkgs.adwaita-icon-theme;
+      };
     };
 
     # wifi and bluetooth, required by noctalia
@@ -109,8 +108,9 @@ in {
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
-      material-cursors
+      adwaita-icon-theme
       noctalia
+      xwayland-satellite
 
       alacritty
 
@@ -133,22 +133,18 @@ in {
       NOCTALIA_CONFIG_HOME = "/etc/noctalia";
       # make runtime changes to noctalia config temporary:
       NOCTALIA_STATE_HOME = "/tmp/noctalia-state";
-    };
 
-    nix.settings = {
-      extra-substituters = ["https://noctalia.cachix.org"];
-      extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
+      NIRI_CONFIG = "/etc/niri/config.kdl";
     };
 
     environment.etc = {
       "noctalia/config.toml" = {
         source = noctaliaConfigToml;
       };
+      "niri/config.kdl" = {
+        source = ./config.kdl;
+      };
     };
 
-    systemd.tmpfiles.rules = [
-      # link the niri config to a fixed location:
-      "L! /etc/niri/config.kdl - - - - ${pkgs.custompackages.niri}/niri-config.kdl"
-    ];
   };
 }

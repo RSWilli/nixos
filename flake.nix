@@ -22,12 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # wrapper-modules for wrapping packages to not require config files.
-    wrapper-modules = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # upstream llama.cpp flake: provides a current build (with MTP / newer model
     # architectures) instead of nixpkgs' lagging llama-cpp package.
     llama-cpp = {

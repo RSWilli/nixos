@@ -24,6 +24,8 @@ in {
     environment.systemPackages = with pkgs; [
       radeontop
       clinfo
+      vulkan-tools # vulkaninfo --summary: verify the RADV device + heap sizes
+      amdgpu_top # live iGPU busy% + VRAM/GTT usage split
     ];
 
     # fix ROCm path for software where it is hardcoded

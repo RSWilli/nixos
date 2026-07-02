@@ -44,37 +44,13 @@ with lib; let
   };
 
   modelsPreset = pkgs.writeText "llama-models.ini" (lib.generators.toINI {} {
-    "Qwen3.6-35B-A3B" =
+      "Ornith-1.0-9B" =
       common
-      // qwen3Common
+      // qwen3Common # Qwen 3.5-based; recommended sampling matches (temp 0.6, top-p 0.95, top-k 20)
       // {
-        hf = "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL";
-        n-cpu-moe = "999"; # MoEs on the CPU
-        fa = "on"; # flash attention
-        ctx-size = "16384"; # cap the model's 262144 default; saves a lot of KV memory
-      };
-    "Qwen3.6-35B-A3B-IQ3_S" =
-      common
-      // qwen3Common
-      // {
-        hf = "unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_S";
-        ctx-size = "16384"; # cap the model's 262144 default; saves a lot of KV memory
-      };
-    "Gemma4-26B-A4B" =
-      common
-      // gemma4Common
-      // specMTP
-      // {
-        hf = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
-        n-cpu-moe = "999"; # MoEs on the CPU
-        ctx-size = "16384"; # cap the model's 131072 default; saves a lot of KV memory
-      };
-    "Gemma4-12B" =
-      common
-      // gemma4Common
-      // specMTP
-      // {
-        hf = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
+        # no Gemma MTP draft, so specMTP is omitted.
+        # see https://huggingface.co/deepreinforce-ai/Ornith-1.0-9B-GGUF
+        hf = "deepreinforce-ai/Ornith-1.0-9B-GGUF:Q8_0";
         ngl = 999; # all layers on GPU
         ctx-size = "262144"; # full 256k context
       };
@@ -91,12 +67,40 @@ with lib; let
 in {
   options.my.ai = {
     enable = mkEnableOption "ai";
+
+    backend = mkOption {
+      type = types.enum ["rocm" "vulkan"];
+      default = "rocm";
+      description = ''
+        GPU backend for llama-cpp.
+        "rocm"   - HIP backend, for discrete AMD GPUs (RX 7800 XT / gfx1101).
+        "vulkan" - RADV backend; faster on RDNA 3.5 iGPUs (gfx1152) and can use
+                   GTT / shared system RAM instead of the small VRAM carveout.
+      '';
+    };
+
+    rocmGpuTargets = mkOption {
+      type = types.str;
+      default = "gfx1101";
+      description = ''Semicolon-separated HIP gfx targets; only used when backend = "rocm".'';
+    };
   };
 
   config = mkIf cfg.enable {
     services.llama-cpp = {
       enable = true;
-      package = pkgs.llama-cpp;
+      # GPU backend selected per-host via my.ai.backend:
+      #   main -> rocm   (RX 7800 XT, gfx1101)
+      #   dell -> vulkan (Radeon 860M iGPU, gfx1152: RADV is faster + uses GTT)
+      # see https://github.com/ggml-org/llama.cpp/blob/master/.devops/nix/package.nix
+      package = pkgs.llama-cpp.override ({
+          useRocm = cfg.backend == "rocm";
+          useVulkan = cfg.backend == "vulkan";
+        }
+        // lib.optionalAttrs (cfg.backend == "rocm") {
+          # build HIP kernels only for this host's GPU arch
+          rocmGpuTargets = cfg.rocmGpuTargets;
+        });
       openFirewall = false;
 
       # llama-server CLI args (foo = bar => --foo bar).
@@ -110,23 +114,30 @@ in {
       };
     };
 
-    # The upstream NixOS llama-cpp module ships an aggressive systemd sandbox
-    # that breaks GPU compute on this AMD APU (Radeon 860M, integrated -> VRAM
-    # is system RAM). Relax the parts the Vulkan/ROCm backend needs:
-    #  - ProcSubset/ProtectProc hide /proc/meminfo -> UMA memory detection fails
-    #    (the spammed "failed to open /proc/meminfo" errors + stalled -fit step)
-    #  - MemoryDenyWriteExecute blocks the W+X pages the RADV/ROCm JIT shader
-    #    compiler needs -> warmup hangs forever
-    #  - HOME=/ is read-only -> Vulkan shader cache disabled (perf)
-    systemd.services.llama-cpp.serviceConfig = {
-      ProcSubset = lib.mkForce "all";
-      ProtectProc = lib.mkForce "default";
-      MemoryDenyWriteExecute = lib.mkForce false;
-      Environment = lib.mkForce [
-        "LLAMA_CACHE=/var/cache/llama-cpp"
-        "HOME=/var/cache/llama-cpp"
-        "XDG_CACHE_HOME=/var/cache/llama-cpp"
-      ];
+    # upstream's module hardens the unit for a CPU-only default; relax only the
+    # knobs the GPU backends actually need. MemoryDenyWriteExecute must go for
+    # the ROCm/Vulkan runtime kernel & shader JIT; ProcSubset/ProtectProc let
+    # ROCm read /proc/meminfo and peer-process info during device init.
+    systemd.services.llama-cpp = {
+      serviceConfig = {
+        ProcSubset = lib.mkForce "all";
+        ProtectProc = lib.mkForce "default";
+        MemoryDenyWriteExecute = lib.mkForce false;
+      };
+
+      # merged with upstream's serviceConfig.Environment (LLAMA_CACHE) instead
+      # of force-replacing it. HOME/XDG_CACHE_HOME give the DynamicUser a
+      # writable location for the Mesa/ROCm shader & kernel caches.
+      environment =
+        {
+          HOME = "/var/cache/llama-cpp";
+          XDG_CACHE_HOME = "/var/cache/llama-cpp";
+        }
+        # system services don't inherit the session's Vulkan ICD var, so point
+        # RADV discovery at the AMD driver explicitly.
+        // lib.optionalAttrs (cfg.backend == "vulkan") {
+          VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+        };
     };
 
     environment.sessionVariables = {

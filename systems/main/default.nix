@@ -14,7 +14,11 @@
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my = {
-    ai.enable = true;
+    ai = {
+      enable = true;
+      backend = "rocm"; # default, but explicit alongside HSA_OVERRIDE below
+      rocmGpuTargets = "gfx1101"; # RX 7800 XT only
+    };
 
     desktop = {
       niri.enable = true;

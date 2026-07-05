@@ -19,6 +19,10 @@ output "Acer Technologies VG270U P 0x91704B66" {
     scale 1.0
     transform "normal"
 }
+// living room tv
+"output" "Samsung Electric Company SAMSUNG 0x01000E00" {
+  "scale" 2.0
+}
 // laptop internal display
 output "eDP-1" {
 

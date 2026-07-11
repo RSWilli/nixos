@@ -44,7 +44,7 @@ with lib; let
   };
 
   modelsPreset = pkgs.writeText "llama-models.ini" (lib.generators.toINI {} {
-      "Ornith-1.0-9B" =
+    "Ornith-1.0-9B" =
       common
       // qwen3Common # Qwen 3.5-based; recommended sampling matches (temp 0.6, top-p 0.95, top-k 20)
       // {

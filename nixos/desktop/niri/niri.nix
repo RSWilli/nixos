@@ -99,6 +99,7 @@ in {
 
     # wifi and bluetooth, required by noctalia
     networking.networkmanager.enable = true;
+    systemd.services.NetworkManager-wait-online.enable = false;
     hardware.bluetooth.enable = true;
 
     # power management, required by noctalia
@@ -145,6 +146,5 @@ in {
         source = ./config.kdl;
       };
     };
-
   };
 }

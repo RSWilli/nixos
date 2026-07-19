@@ -23,11 +23,20 @@ in {
       extraCompatPackages = with pkgs; [
         proton-ge-bin
       ];
+
+      # fix cursor theme in steam, see https://www.reddit.com/r/NixOS/comments/1htxgly/steam_not_using_cursor_theme/
+      package = pkgs.steam.override {
+        extraPkgs = pkgs:
+          with pkgs; [
+            adwaita-icon-theme
+          ];
+      };
     };
 
-    environment.systemPackages = [
-      pkgs.r2modman
-      pkgs.mangohud
+    environment.systemPackages = with pkgs; [
+      r2modman
+      mangohud
+      ckan # kerbal space program mod manager
     ];
 
     programs.gamemode.enable = true;

@@ -69,6 +69,7 @@ with lib; let
       source = "wallpaper";
       wallpaper_scheme = "vibrant";
     };
+    osd.kinds.media = false; # no notification for playing media
   };
 in {
   imports = [

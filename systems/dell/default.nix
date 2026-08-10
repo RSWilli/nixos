@@ -41,7 +41,7 @@
     docker.enable = true;
 
     desktop = {
-      gnome.enable = true;
+      niri.enable = true;
       enableAutoLogin = true;
 
       amd = true;

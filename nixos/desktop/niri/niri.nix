@@ -153,7 +153,6 @@ in {
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
-      adwaita-icon-theme
       noctalia
       xwayland-satellite
 

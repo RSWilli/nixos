@@ -18,4 +18,7 @@
   zramSwap = {
     enable = true;
   };
+
+  # /tmp isn't a tmpfs on NixOS
+  boot.tmp.cleanOnBoot = true;
 }

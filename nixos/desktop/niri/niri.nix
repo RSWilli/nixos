@@ -37,6 +37,9 @@ with lib; let
     widget.control-center = {
       glyph = "adjustments-horizontal";
     };
+    widget.bluetooth = {
+      show_label = true;
+    };
     desktop_widgets = {
       enabled = false;
     };

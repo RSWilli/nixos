@@ -23,10 +23,31 @@ output "Acer Technologies VG270U P 0x91704B66" {
 "output" "Samsung Electric Company SAMSUNG 0x01000E00" {
   "scale" 2.0
 }
-// laptop internal display
-output "eDP-1" {
 
+// dell laptop display
+output "LG Display 0x07A6 Unknown" {
+    mode "1920x1200@60.001"
+    position x=1678 y=1440
+    scale 1.0
+    transform "normal"
 }
+
+// work monitor left
+output "Dell Inc. DELL P2720DC 59XTMK3" {
+    mode "2560x1440@59.951"
+    position x=0 y=0
+    scale 1.0
+    transform "normal"
+}
+
+// work monitor right
+output "Dell Inc. DELL P2720DC 7Q3VMK3" {
+    mode "2560x1440@59.951"
+    position x=2560 y=0
+    scale 1.0
+    transform "normal"
+}
+
 // see https://niri-wm.github.io/niri/Configuration:-Animations
 animations {
 

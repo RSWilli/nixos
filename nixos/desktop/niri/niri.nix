@@ -73,6 +73,11 @@ with lib; let
       wallpaper_scheme = "vibrant";
     };
     osd.kinds.media = false; # no notification for playing media
+
+    # the first-run setup wizard writes noctalia's bundled wallpaper into the
+    # state overrides, which then shadow the wallpaper declared above. Nothing
+    # it asks for is left undeclared here, so skip it.
+    shell.setup_wizard_enabled = false;
   };
 in {
   imports = [
@@ -172,8 +177,8 @@ in {
 
     environment.sessionVariables = {
       # point at a fixed location whose config is symlinked into the store via
-      # tmpfiles below; keeping the path stable lets noctalia pick up config
-      # reloads instead of requiring a new session on every rebuild.
+      # environment.etc below; keeping the path stable lets noctalia pick up
+      # config reloads instead of requiring a new session on every rebuild.
       NOCTALIA_CONFIG_HOME = "/etc/noctalia";
       # make runtime changes to noctalia config temporary:
       NOCTALIA_STATE_HOME = "/tmp/noctalia-state";
@@ -182,7 +187,9 @@ in {
     };
 
     environment.etc = {
-      "noctalia/config.toml" = {
+      # noctalia appends "/noctalia" to NOCTALIA_CONFIG_HOME itself, so the config
+      # dir it actually reads is /etc/noctalia/noctalia.
+      "noctalia/noctalia/config.toml" = {
         source = noctaliaConfigToml;
       };
       "niri/config.kdl" = {

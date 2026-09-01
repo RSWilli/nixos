@@ -60,7 +60,8 @@ binds {
     Mod+Q repeat=false {
         close-window
     }
-    Mod+O repeat=false {
+    // workaround for super-only keybind:
+    Super+Super_L repeat=false {
         toggle-overview
     }
     Mod+Space {
@@ -71,6 +72,9 @@ binds {
     }
     Mod+Comma {
         spawn-sh "noctalia msg settings-toggle"
+    }
+    Mod+L {
+        spawn-sh "noctalia msg session lock"
     }
 
     // Audio & Brightness

@@ -60,8 +60,7 @@ binds {
     Mod+Q repeat=false {
         close-window
     }
-    // workaround for super-only keybind:
-    Super+Super_L repeat=false {
+    Mod+O repeat=false {
         toggle-overview
     }
     Mod+Space {

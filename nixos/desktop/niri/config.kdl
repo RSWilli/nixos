@@ -279,8 +279,8 @@ input {
         accel-profile "flat"
     }
     touchpad {
-        accel-profile "flat"
-        accel-speed 0.734848
+        accel-profile "adaptive"
+        accel-speed 0.5
         natural-scroll
         tap
     }

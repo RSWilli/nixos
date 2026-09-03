@@ -81,6 +81,8 @@ with lib; let
     # state overrides, which then shadow the wallpaper declared above. Nothing
     # it asks for is left undeclared here, so skip it.
     shell.setup_wizard_enabled = false;
+
+    shell.offline_mode = true;
   };
 in {
   imports = [

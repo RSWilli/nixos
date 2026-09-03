@@ -13,6 +13,8 @@
   # boot.kernelPackages = pkgs.linuxPackages_zen; # zen kernel, patched for everyday desktop performance
 
   my = {
+    claude.enable = true;
+
     docker.enable = true;
 
     desktop = {

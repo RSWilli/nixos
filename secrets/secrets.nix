@@ -7,11 +7,11 @@ let
   think = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDseXq0mgC/CN9CtgZeduV7MG1h0wzohUS+Cy+hzRMBz";
   main = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDdftcbfr7MVnbjMPzRL1KHfOoYkwnDScyZCJWcSBmN";
 
-  cloud = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMtWXfbInoez4N3XF8ec7ZMAl8PUzojSvJxB9tBi+rW7";
+  homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNQZOU4ou1acFONG02i2fr0k6/qmLCbTUNpfRs95U8q";
 
   dell = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADeWaKQ194hhRQoU6C+Q2xwbaADaDyM9ZYbvxtrvdTS";
 
-  private = [willi main cloud think];
+  private = [willi main homelab think];
   work = [willi-work dell];
 
   all = private ++ work;
@@ -20,8 +20,11 @@ in {
 
   "password.age".publicKeys = all;
 
+  "paperless-admin.age".publicKeys = all;
+
   "mumble-cert.age".publicKeys = all;
-  "initrd-ssh-host-key.age".publicKeys = all;
+
+  "wifi-ssids.age".publicKeys = all;
 
   "willi-id_ed25519.age".publicKeys = all;
   "willi-id_rsa.age".publicKeys = all;

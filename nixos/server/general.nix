@@ -11,8 +11,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    boot.loader.grub.enable = true;
-
     services.openssh.enable = true;
 
     services.fail2ban.enable = true;

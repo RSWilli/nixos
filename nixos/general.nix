@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  age.identityPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+  ];
+
   environment.systemPackages = with pkgs; [
     htop
     lm_sensors # for the `sensors` command
@@ -21,4 +25,7 @@
 
   # /tmp isn't a tmpfs on NixOS
   boot.tmp.cleanOnBoot = true;
+
+  # enable microcode updates for CPU
+  hardware.enableRedistributableFirmware = true;
 }

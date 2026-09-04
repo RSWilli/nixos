@@ -40,6 +40,8 @@ in {
       };
     };
 
+    age.secrets.password.file = ../../secrets/password.age;
+
     users.users = {
       willi = {
         isNormalUser = true;

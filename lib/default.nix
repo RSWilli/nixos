@@ -18,6 +18,4 @@
 
   publicKey = builtins.readFile ../static/willi-id_ed25519.pub;
   publicKeyWork = builtins.readFile ../static/willi-id_rsa.pub;
-
-  initrd-ssh-host-pubkey = builtins.readFile ../static/initrd-ssh-host-key.pub;
 }

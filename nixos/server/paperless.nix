@@ -11,23 +11,25 @@ in {
   };
 
   config = mkIf cfg.enable {
-    my.server.postgresql = {
-      enable = true;
-      ensureDatabases = ["paperless"];
-    };
-
-    my.server.reverseproxy_targets = {
-      "paperless.w-bartel.de" = config.services.paperless.port;
-    };
-
     services.paperless = {
       enable = true;
       settings = {
-        PAPERLESS_DB_NAME = "paperless";
-        PAPERLESS_DB_HOST = "/run/postgresql";
-
         PAPERLESS_OCR_LANGUAGE = "deu+eng";
+
+        PAPERLESS_ADMIN_USER = "rswilli";
       };
+
+      passwordFile = config.age.secrets.paperless-admin.path;
+
+      # configureNginx = true;
+      # domain = "example.com";
+
+      exporter = {
+        enable = config.my.backup.enable;
+        directory = "${config.my.backup.directory}/paperless";
+      };
+
+      database.createLocally = true;
     };
   };
 }

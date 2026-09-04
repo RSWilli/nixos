@@ -152,7 +152,7 @@ in {
     };
 
     # wifi and bluetooth, required by noctalia
-    networking.networkmanager.enable = true;
+    my.wifi.enable = true;
     systemd.services.NetworkManager-wait-online.enable = false;
     hardware.bluetooth.enable = true;
 

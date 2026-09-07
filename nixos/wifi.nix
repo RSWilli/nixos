@@ -78,7 +78,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    age.secrets.wifi-ssids.file = ../../secrets/wifi-ssids.age;
+    age.secrets.wifi-ssids.file = ../secrets/wifi-ssids.age;
 
     networking.networkmanager = {
       enable = true;

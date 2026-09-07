@@ -15,13 +15,13 @@
       self.overlays.custompackages
       # upstream llama.cpp (current master) replaces nixpkgs' lagging package
       inputs.llama-cpp.overlays.default
-      # overlay stable nixpkgs:
-      (final: _prev: {
-        stable = import inputs.nixpkgs-stable {
-          system = final.stdenv.hostPlatform.system;
-          config.allowUnfree = true;
-        };
-      })
+      # # overlay stable nixpkgs:
+      # (final: _prev: {
+      #   stable = import inputs.nixpkgs-stable {
+      #     system = final.stdenv.hostPlatform.system;
+      #     config.allowUnfree = true;
+      #   };
+      # })
       # add nirimod:
       inputs.nirimod.overlays.default
     ];

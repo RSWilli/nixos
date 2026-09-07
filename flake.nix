@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -30,7 +30,10 @@
     };
 
     # hardware quirks:
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixos-hardware = { 
+      url = "github:nixos/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+       };
 
     # graphical niri configuration module:
     nirimod = {
@@ -40,7 +43,7 @@
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
-      # inputs.nixpkgs.follows = "nixpkgs"; # removed so we can use binary cache
+      inputs.nixpkgs.follows = "nixpkgs"; # removed so we can use binary cache
     };
 
     noctalia-greeter = {

@@ -174,6 +174,7 @@ in {
       showtime
       decibels
       papers
+      file-roller # gnome archive manager
 
       nautilus # file manager
 

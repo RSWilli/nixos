@@ -27,5 +27,4 @@ in {
   "wifi-ssids.age".publicKeys = all;
 
   "willi-id_ed25519.age".publicKeys = all;
-  "willi-id_rsa.age".publicKeys = all;
 }

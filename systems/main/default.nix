@@ -15,7 +15,7 @@
 
   my = {
     ai = {
-      enable = true;
+      enable = false;
       backend = "rocm"; # default, but explicit alongside HSA_OVERRIDE below
       rocmGpuTargets = "gfx1101"; # RX 7800 XT only
     };

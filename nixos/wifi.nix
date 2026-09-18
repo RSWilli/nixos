@@ -1,3 +1,6 @@
+# declaritive wifi configuration. Does not disallow adding additional networks via the GUI.
+# remove all networks not declared by this module:
+# sudo nmcli -f UUID,FILENAME -t connection show | awk -F: '$2 ~ "^/etc/NetworkManager"{print $1}' | xargs -rn1 sudo nmcli connection delete
 {
   lib,
   config,

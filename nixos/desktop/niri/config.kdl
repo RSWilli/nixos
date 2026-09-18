@@ -309,3 +309,15 @@ screenshot-path null
 xwayland-satellite {
     path "xwayland-satellite"
 }
+
+// steam notifications:
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+// steam big picture:
+window-rule {
+    match app-id="steam" title=r#"^Steam Big Picture Mode$"#
+    open-fullscreen true
+}

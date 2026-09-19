@@ -63,4 +63,7 @@
     # defined by the gfx1100
     HSA_OVERRIDE_GFX_VERSION = "11.0.0";
   };
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "26.11";
 }

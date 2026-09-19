@@ -21,7 +21,7 @@
     luksAutoUnlock.enable = true;
 
     backup.enable = true;
-  
+
     wifi.enable = true;
   };
 
@@ -32,4 +32,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "homelab";
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "26.11";
 }

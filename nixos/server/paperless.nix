@@ -11,6 +11,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    age.secrets.paperless-admin.file = ../../secrets/paperless-admin.age;
+
     services.paperless = {
       enable = true;
       settings = {

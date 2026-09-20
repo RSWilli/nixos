@@ -11,10 +11,7 @@
       allowUnfree = true;
     };
     overlays = [
-      inputs.noctalia.overlays.default
       self.overlays.custompackages
-      # upstream llama.cpp (current master) replaces nixpkgs' lagging package
-      inputs.llama-cpp.overlays.default
       # # overlay stable nixpkgs:
       # (final: _prev: {
       #   stable = import inputs.nixpkgs-stable {
@@ -22,8 +19,6 @@
       #     config.allowUnfree = true;
       #   };
       # })
-      # add nirimod:
-      inputs.nirimod.overlays.default
     ];
   };
   nix = let

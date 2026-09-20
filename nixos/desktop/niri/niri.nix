@@ -1,7 +1,4 @@
-# https://wiki.nixos.org/wiki/Niri
-# https://wiki.nixos.org/wiki/Greetd
 {
-  inputs,
   lib,
   config,
   pkgs,
@@ -85,10 +82,6 @@ with lib; let
     shell.offline_mode = true;
   };
 in {
-  imports = [
-    inputs.noctalia-greeter.nixosModules.default
-  ];
-
   options.my.desktop.niri = {
     enable = mkEnableOption "niri";
   };
@@ -100,11 +93,9 @@ in {
 
     services.displayManager.noctalia-greeter = {
       enable = true;
-      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       # Optional configuration
       # https://docs.noctalia.dev/greeter/configuration/
-      greeter-args = "";
       settings = {
         session.default = "niri";
 

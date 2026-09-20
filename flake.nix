@@ -22,34 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # upstream llama.cpp flake: provides a current build (with MTP / newer model
-    # architectures) instead of nixpkgs' lagging llama-cpp package.
-    llama-cpp = {
-      url = "github:ggml-org/llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # hardware quirks:
     nixos-hardware = { 
       url = "github:nixos/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
        };
-
-    # graphical niri configuration module:
-    nirimod = {
-      url = "github:srinivasr/nirimod/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs"; # removed so we can use binary cache
-    };
-
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # nix-build requires a default.nix file
     flake-compat = {
@@ -72,7 +49,6 @@
       import nixpkgs {
         inherit system;
         overlays = [
-          inputs.noctalia.overlays.default
           self.overlays.custompackages
         ];
       };

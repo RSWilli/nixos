@@ -41,9 +41,9 @@
       dates = "weekly";
     };
 
+    # does not optimze if auto-optimise-store is enabled:
     optimise = {
-      automatic = true;
-      dates = ["weekly"];
+      automatic = false;
     };
 
     settings = {

@@ -21,6 +21,7 @@ in {
 
       # tools claude likes to use:
       python3
+      jq
     ];
   };
 }

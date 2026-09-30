@@ -31,11 +31,10 @@ with lib; let
         ];
       };
     };
-    widget.control-center = {
-      glyph = "adjustments-horizontal";
-    };
-    widget.bluetooth = {
-      show_label = true;
+    widget = {
+      bluetooth.show_label = true;
+      clock.format = "{:%A %d.%m.%Y %T (%z %Z)}";
+      control-center.glyph = "adjustments-horizontal";
     };
     desktop_widgets = {
       enabled = false;

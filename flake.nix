@@ -23,10 +23,10 @@
     };
 
     # hardware quirks:
-    nixos-hardware = { 
+    nixos-hardware = {
       url = "github:nixos/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
-       };
+    };
 
     # nix-build requires a default.nix file
     flake-compat = {

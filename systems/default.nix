@@ -23,7 +23,7 @@
     };
   x64System = mkGenericSystem "x86_64-linux";
 in {
-  dell = x64System ./dell;
+  AIRNB0017 = x64System ./AIRNB0017;
   homelab = x64System ./homelab;
   main = x64System ./main;
   think = x64System ./think;

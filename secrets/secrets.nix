@@ -9,10 +9,10 @@ let
 
   homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNQZOU4ou1acFONG02i2fr0k6/qmLCbTUNpfRs95U8q";
 
-  dell = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADeWaKQ194hhRQoU6C+Q2xwbaADaDyM9ZYbvxtrvdTS";
+  AIRNB0017 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADeWaKQ194hhRQoU6C+Q2xwbaADaDyM9ZYbvxtrvdTS";
 
   private = [willi main homelab think];
-  work = [willi-work dell];
+  work = [willi-work AIRNB0017];
 
   all = private ++ work;
 in {

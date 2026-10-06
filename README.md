@@ -8,7 +8,7 @@ Currently the following systems are configured:
 
 - `main`: My desktop gaming PC with an AMD Ryzen 5 5600X and an AMD Radeon RX 7800 XT
 - `think`: My laptop, a Lenovo Thinkpad X13
-- `dell`: My work laptop, a Dell Pro
+- `AIRNB0017`: My work laptop, a Dell Pro 14 Plus
 - `homelab`: My homelab server, a Dell Optiplex Micro 3070
 
 ## Creating a new system

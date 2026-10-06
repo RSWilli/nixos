@@ -48,6 +48,8 @@
 
       # Opinionated: disable global registry
       flake-registry = "";
+
+      nix-path = lib.mapAttrsToList (n: v: "${n}=${v}") flakeInputs;
     };
 
     # Opinionated: disable channels
@@ -55,7 +57,6 @@
 
     # Opinionated: make flake registry and nix path match flake inputs
     registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: v: "${n}=${v}") flakeInputs;
   };
 
   environment.systemPackages = with pkgs; [

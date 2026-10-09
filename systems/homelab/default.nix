@@ -23,6 +23,7 @@
     backup.enable = true;
 
     wifi.enable = true;
+    wifi.cleanup.enable = true;
   };
 
   boot.loader.systemd-boot = {

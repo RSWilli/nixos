@@ -17,6 +17,8 @@
 
     docker.enable = true;
 
+    wifi.cleanup.enable = true;
+
     desktop = {
       niri.enable = true;
       enableAutoLogin = true;

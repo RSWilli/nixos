@@ -1,6 +1,5 @@
 # declaritive wifi configuration. Does not disallow adding additional networks via the GUI.
-# remove all networks not declared by this module:
-# sudo nmcli -f UUID,FILENAME -t connection show | awk -F: '$2 ~ "^/etc/NetworkManager"{print $1}' | xargs -rn1 sudo nmcli connection delete
+# set my.wifi.cleanup.enable to remove all wifi networks not declared by this module once a week
 {
   lib,
   config,
@@ -74,10 +73,13 @@ with lib; let
   openNetworks = {
     # only works with docker when docker is not on 172.18.x.x
     "WIFIonICE" = {connection.autoconnect-priority = -100;}; # lower than hotspot, because of https://www.youtube.com/watch?v=uellmynA34U
+    # Czech train wifi:
+    "CDWiFi" = {connection.autoconnect-priority = -100;};
   };
 in {
   options.my.wifi = {
     enable = mkEnableOption "wifi";
+    cleanup.enable = mkEnableOption "weekly removal of wifi networks not declared by this module";
   };
 
   config = mkIf cfg.enable {
@@ -90,6 +92,28 @@ in {
         profiles =
           lib.mapAttrs mkWifi pskNetworks
           // lib.mapAttrs mkOpen openNetworks;
+      };
+    };
+
+    # declared profiles live in /run/NetworkManager, GUI-added ones in /etc/NetworkManager
+    systemd.services.wifi-cleanup = mkIf cfg.cleanup.enable {
+      description = "Remove wifi networks not declared in the nixos config";
+      after = ["NetworkManager.service"];
+      requires = ["NetworkManager.service"];
+      path = [config.networking.networkmanager.package pkgs.gawk pkgs.findutils];
+      serviceConfig.Type = "oneshot";
+      script = ''
+        nmcli -t -f UUID,TYPE,FILENAME connection show \
+          | awk -F: '$2 == "802-11-wireless" && $3 ~ "^/etc/NetworkManager" {print $1}' \
+          | xargs -rn1 nmcli connection delete
+      '';
+    };
+
+    systemd.timers.wifi-cleanup = mkIf cfg.cleanup.enable {
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
       };
     };
   };

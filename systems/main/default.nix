@@ -20,6 +20,8 @@
       rocmGpuTargets = "gfx1101"; # RX 7800 XT only
     };
 
+    wifi.cleanup.enable = true;
+
     desktop = {
       niri.enable = true;
 

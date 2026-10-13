@@ -27,6 +27,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Affinity v3 under wine
+    affinity-nix.url = "github:mrshmllow/affinity-nix";
+
     # nix-build requires a default.nix file
     flake-compat = {
       url = "github:edolstra/flake-compat";

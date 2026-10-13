@@ -12,6 +12,7 @@
     };
     overlays = [
       self.overlays.custompackages
+      inputs.affinity-nix.overlays.default
       # # overlay stable nixpkgs:
       # (final: _prev: {
       #   stable = import inputs.nixpkgs-stable {
@@ -50,6 +51,10 @@
       flake-registry = "";
 
       nix-path = lib.mapAttrsToList (n: v: "${n}=${v}") flakeInputs;
+
+      # prebuilt wine prefix for affinity-nix
+      substituters = ["https://cache.forall.systems"];
+      trusted-public-keys = ["cache.forall.systems:5PmD7QO4MSF8YgyRZtkSGXRDo96H3bybIf2SsQh8ScI="];
     };
 
     # Opinionated: disable channels

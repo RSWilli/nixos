@@ -20,7 +20,7 @@ with lib; let
     destination = "/etc/xdg/gtk-3.0/settings.ini";
   };
 in {
-  config = mkIf (cfg.gnome.enable || cfg.cosmic.enable || cfg.niri.enable) {
+  config = mkIf (cfg.gnome.enable || cfg.kde.enable || cfg.niri.enable) {
     # provides share/icons/Adwaita, which xdg.icons puts on XCURSOR_PATH
     environment.systemPackages = [
       pkgs.adwaita-icon-theme

@@ -24,6 +24,7 @@
   x64System = mkGenericSystem "x86_64-linux";
 in {
   AIRNB0017 = x64System ./AIRNB0017;
+  creative = x64System ./creative;
   homelab = x64System ./homelab;
   main = x64System ./main;
   think = x64System ./think;

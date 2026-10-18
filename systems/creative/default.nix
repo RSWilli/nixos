@@ -4,7 +4,9 @@
   ...
 }: {
   imports = [
-    # TODO: nixos hardware module for Framework Laptop 12 if available
+    # FIXME: when they release a module for the core series 300
+    # https://github.com/NixOS/nixos-hardware/tree/master/framework/12-inch/13th-gen-intel
+    inputs.nixosHardware.nixosModules.framework-12-13th-gen-intel
   ];
 
   boot = {

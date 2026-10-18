@@ -40,8 +40,9 @@
 
   environment.systemPackages = with pkgs; [
     google-chrome
-    thunderbird
     libreoffice
+    thunderbird
+    xournalpp
 
     affinity-v3
   ];

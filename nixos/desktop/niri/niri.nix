@@ -152,6 +152,21 @@ in {
 
     services.gnome.gnome-keyring.enable = true;
 
+    # removable drives: gvfs lets nautilus list/mount volumes (plus trash, MTP),
+    # udiskie replaces gnome-shell's automounting on plug-in
+    services.gvfs.enable = true;
+    services.udisks2.enable = true;
+    systemd.user.services.udiskie = {
+      description = "udiskie automounter";
+      wantedBy = ["graphical-session.target"];
+      partOf = ["graphical-session.target"];
+      after = ["graphical-session.target"];
+      serviceConfig = {
+        ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --no-tray";
+        Restart = "on-failure";
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       noctalia
       xwayland-satellite

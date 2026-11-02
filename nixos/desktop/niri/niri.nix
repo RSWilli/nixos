@@ -162,7 +162,7 @@ in {
       partOf = ["graphical-session.target"];
       after = ["graphical-session.target"];
       serviceConfig = {
-        ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --no-tray";
+        ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --tray";
         Restart = "on-failure";
       };
     };

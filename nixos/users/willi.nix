@@ -45,6 +45,7 @@ in {
         extraGroups = [
           "audio"
           "avahi"
+          "dialout"
           "networkmanager"
           "render"
           "video"

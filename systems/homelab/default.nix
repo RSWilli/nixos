@@ -14,8 +14,7 @@
     server = {
       enable = true;
 
-      # TODO: replace with the real domain
-      domain = "home.example.com";
+      domain = "w-bartel.de";
 
       paperless.enable = true;
       vaultwarden.enable = true;

@@ -28,24 +28,24 @@ in {
 
     my.netbird.enable = true;
 
-    # # contains HETZNER_API_TOKEN=..., used for ACME DNS-01
-    # age.secrets.hetzner-dns.file = ../../secrets/hetzner-dns.age;
+    # contains HETZNER_API_TOKEN=..., used for ACME DNS-01
+    age.secrets.hetzner-dns.file = ../../secrets/hetzner-dns.age;
 
-    # # wildcard cert for all services, works without exposing anything publicly
-    # security.acme = {
-    #   acceptTerms = true;
-    #   defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # use staging letsencrypt, for testing
-    #   certs.${cfg.domain} = {
-    #     domain = "*.${cfg.domain}";
-    #     dnsProvider = "hetzner";
-    #     environmentFile = config.age.secrets.hetzner-dns.path;
-    #     group = config.services.nginx.group;
-    #   };
-    # };
+    # wildcard cert for all services, works without exposing anything publicly
+    security.acme = {
+      acceptTerms = true;
+      defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # use staging letsencrypt, for testing
+      certs.${cfg.domain} = {
+        domain = "*.${cfg.domain}";
+        dnsProvider = "hetzner";
+        environmentFile = config.age.secrets.hetzner-dns.path;
+        group = config.services.nginx.group;
+      };
+    };
 
     # reverse proxy for the services, every service module adds its own virtualHost
     services.nginx = {
-      # enable = true;
+      enable = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;

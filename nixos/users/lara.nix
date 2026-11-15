@@ -13,7 +13,6 @@ in {
   };
 
   config = mkIf cfg.lara.enable {
-
     age.secrets.password.file = ../../secrets/password.age;
 
     users.users = {

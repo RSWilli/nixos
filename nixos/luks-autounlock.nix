@@ -16,8 +16,6 @@ in {
   # needs a command run by the user:
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/<my encrypted device>
   config = mkIf cfg.enable {
-    boot.initrd.systemd.enable = true;
-
     environment.systemPackages = [pkgs.tpm2-tss];
   };
 }

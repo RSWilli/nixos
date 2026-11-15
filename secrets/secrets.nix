@@ -5,7 +5,7 @@ let
   think = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDseXq0mgC/CN9CtgZeduV7MG1h0wzohUS+Cy+hzRMBz";
   main = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDdftcbfr7MVnbjMPzRL1KHfOoYkwnDScyZCJWcSBmN";
 
-  homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNQZOU4ou1acFONG02i2fr0k6/qmLCbTUNpfRs95U8q";
+  homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXD1ePg7YCDBezyH/VXWv4OpdLaftm9rNNuXQBFcp19";
 
   AIRNB0017 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADeWaKQ194hhRQoU6C+Q2xwbaADaDyM9ZYbvxtrvdTS";
 
@@ -26,4 +26,7 @@ in {
   "willi-id_ed25519.age".publicKeys = all;
 
   "password-lara.age".publicKeys = all;
+
+  # HETZNER_API_TOKEN=... for ACME, only needed on the server
+  "hetzner-dns.age".publicKeys = [willi homelab];
 }

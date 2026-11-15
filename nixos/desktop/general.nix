@@ -47,10 +47,20 @@ in {
       wrapperConfig = {
         pipewireSupport = true;
       };
+
+      # bitwarden browser extension, points to the vaultwarden server on homelab
+      policies.ExtensionSettings."{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+      };
     };
+
+    # VPN to reach the homelab services
+    my.netbird.enable = mkDefault true;
 
     environment.systemPackages = with pkgs; [
       baobab # GNOME disk usage analyzer
+      bitwarden-desktop
 
       pavucontrol
       qjackctl

@@ -60,10 +60,23 @@ with lib; let
     }
     overrides;
 
+  # no privacy addresses at home: mac based (eui64) interface ids and no temporary addresses,
+  # so the fritzbox can recognize the devices (MyFRITZ, IPv6 port sharing)
+  homeIpv6 = {
+    addr-gen-mode = "eui64";
+    ip6-privacy = 0;
+  };
+
   # keys in the secret file, with overrides for the network config
   pskNetworks = {
-    home = {connection.autoconnect-priority = 100;};
-    home24 = {connection.autoconnect-priority = 10;};
+    home = {
+      connection.autoconnect-priority = 100;
+      ipv6 = homeIpv6;
+    };
+    home24 = {
+      connection.autoconnect-priority = 10;
+      ipv6 = homeIpv6;
+    };
     work = {};
     willihotspot = {connection.autoconnect-priority = -10;};
     kase = {};

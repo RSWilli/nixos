@@ -13,7 +13,12 @@
   my = {
     server = {
       enable = true;
+
+      # TODO: replace with the real domain
+      domain = "home.example.com";
+
       paperless.enable = true;
+      vaultwarden.enable = true;
       immich.enable = true;
       teamspeak.enable = true;
     };
@@ -21,6 +26,7 @@
     luksAutoUnlock.enable = true;
 
     backup.enable = true;
+    backup.directory = "/backup";
 
     wifi.enable = true;
     wifi.cleanup.enable = true;

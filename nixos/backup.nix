@@ -25,6 +25,16 @@ in {
       location = "${cfg.directory}/postgresql";
     };
 
+    # the backup drive may be mounted with nofail. Without the mount the backups would
+    # silently be written to the root filesystem, so fail instead.
+    systemd.services = let
+      requireBackupDir = enabled: mkIf enabled {unitConfig.RequiresMountsFor = [cfg.directory];};
+    in {
+      postgresqlBackup = requireBackupDir config.services.postgresql.enable;
+      paperless-exporter = requireBackupDir config.services.paperless.exporter.enable;
+      backup-vaultwarden = requireBackupDir (config.services.vaultwarden.backupDir != null);
+    };
+
     # TODO: backup to external, e.g. with borg
   };
 }

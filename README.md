@@ -9,7 +9,7 @@ Currently the following systems are configured:
 - `main`: My desktop gaming PC with an AMD Ryzen 5 5600X and an AMD Radeon RX 7800 XT
 - `think`: My laptop, a Lenovo Thinkpad X13
 - `AIRNB0017`: My work laptop, a Dell Pro 14 Plus
-- `homelab`: My homelab server, a Dell Optiplex Micro 3070
+- `homelab`: My homelab server, a Dell Optiplex Micro 3070 (Fritz!Box setup: [systems/homelab/README.md](systems/homelab/README.md))
 
 ## Creating a new system
 

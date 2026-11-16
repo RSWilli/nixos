@@ -34,7 +34,7 @@ in {
     # wildcard cert for all services, works without exposing anything publicly
     security.acme = {
       acceptTerms = true;
-      defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # use staging letsencrypt, for testing
+      # defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # use staging letsencrypt, for testing
       certs.${cfg.domain} = {
         domain = "*.${cfg.domain}";
         dnsProvider = "hetzner";

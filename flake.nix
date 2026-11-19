@@ -119,6 +119,11 @@
               nix flake update
             ''
           )
+          (
+            pkgs.writeShellScriptBin "remote" ''
+              ${pkgs.nh}/bin/nh os boot -H homelab --target-host root@homelab --build-host root@homelab --ask
+            ''
+          )
         ];
       };
     });

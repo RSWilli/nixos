@@ -22,7 +22,7 @@ in {
         # source: https://gist.github.com/sunsided/7840e89ff4e11b64a2d7503fafa0290c
         "bip" = "172.39.1.5/24";
         "fixed-cidr" = "172.39.1.0/25";
-        "dns" = [ "1.1.1.1" "8.8.8.8" ]; # netbird DNS override
+        "dns" = ["1.1.1.1" "8.8.8.8"]; # netbird DNS override
       };
     };
 

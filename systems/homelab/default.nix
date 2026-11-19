@@ -22,6 +22,11 @@
       teamspeak.enable = true;
     };
 
+    autoUpgrade = {
+      enable = true;
+      autoReboot = true;
+    };
+
     luksAutoUnlock.enable = true;
 
     backup.enable = true;

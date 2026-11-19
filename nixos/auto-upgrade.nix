@@ -9,6 +9,7 @@ with lib; let
 in {
   options.my.autoUpgrade = {
     enable = mkEnableOption "auto upgrade system";
+    autoReboot = mkEnableOption "auto reboot after upgrade";
   };
 
   config = mkIf cfg.enable {

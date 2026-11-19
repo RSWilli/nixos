@@ -35,6 +35,7 @@ in {
     security.acme = {
       acceptTerms = true;
       # defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # use staging letsencrypt, for testing
+      defaults.dnsResolver = "1.1.1.1:53"; # don't use netbird's resolver
       certs.${cfg.domain} = {
         domain = "*.${cfg.domain}";
         dnsProvider = "hetzner";

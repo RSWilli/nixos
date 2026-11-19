@@ -14,11 +14,7 @@
   # boot.kernelPackages = pkgs.linuxPackages; # latest LTS kernel
 
   my = {
-    ai = {
-      enable = false;
-      backend = "rocm"; # default, but explicit alongside HSA_OVERRIDE below
-      rocmGpuTargets = "gfx1101"; # RX 7800 XT only
-    };
+    claude.enable = true;
 
     wifi.cleanup.enable = true;
 
@@ -59,12 +55,6 @@
     # blender-hip # blender with AMD HIP support
     xournalpp
   ];
-
-  environment.sessionVariables = {
-    # Radeon RX 7800XT needs for ROCm 11.0.0 as per: https://llvm.org/docs/AMDGPUUsage.html
-    # defined by the gfx1100
-    HSA_OVERRIDE_GFX_VERSION = "11.0.0";
-  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "26.11";

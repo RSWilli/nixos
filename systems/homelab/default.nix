@@ -10,6 +10,9 @@
   # https://nixos.wiki/wiki/Linux_kernel
   boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel
 
+  # nh diffs remote deployments by running dix on the target
+  environment.systemPackages = [pkgs.dix];
+
   my = {
     server = {
       enable = true;

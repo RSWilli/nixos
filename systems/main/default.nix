@@ -39,7 +39,7 @@
 
     minecraft.enable = true;
 
-    docker.enable = true;
+    podman.enable = true;
 
     users = {
       willi.enable = true;

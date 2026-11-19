@@ -22,6 +22,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # port 22 is not forwarded by the router, so only reachable from LAN and VPN
     services.openssh.enable = true;
 
     services.fail2ban.enable = true;

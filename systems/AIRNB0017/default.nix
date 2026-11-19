@@ -15,7 +15,7 @@
   my = {
     claude.enable = true;
 
-    docker.enable = true;
+    podman.enable = true;
 
     wifi.cleanup.enable = true;
 

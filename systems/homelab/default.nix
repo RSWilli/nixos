@@ -23,6 +23,11 @@
       vaultwarden.enable = true;
       immich.enable = true;
       teamspeak.enable = true;
+
+      monitoring = {
+        enable = true;
+        shellyAddress = "192.168.178.61";
+      };
     };
 
     autoUpgrade = {

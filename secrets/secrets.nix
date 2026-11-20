@@ -29,4 +29,8 @@ in {
 
   # HETZNER_API_TOKEN=... for ACME, only needed on the server
   "hetzner-dns.age".publicKeys = [willi homelab];
+
+  # grafana initial admin password and cookie/datasource secret key
+  "grafana-admin.age".publicKeys = [willi homelab];
+  "grafana-secret-key.age".publicKeys = [willi homelab];
 }

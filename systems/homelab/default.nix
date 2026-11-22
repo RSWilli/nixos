@@ -24,6 +24,11 @@
       immich.enable = true;
       teamspeak.enable = true;
 
+      dyndns = {
+        enable = true;
+        domain = "querbeet-gaming.de";
+      };
+
       monitoring = {
         enable = true;
         shellyAddress = "192.168.178.61";

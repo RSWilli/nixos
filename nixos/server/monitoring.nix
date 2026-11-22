@@ -32,6 +32,19 @@ with lib; let
       }
     ];
   });
+
+  blackboxConfig = pkgs.writeText "blackbox.yaml" (builtins.toJSON {
+    modules.https_2xx = {
+      prober = "http";
+      timeout = "5s";
+      http.fail_if_not_ssl = true;
+    };
+  });
+
+  # every service behind nginx, so new services are probed automatically
+  serviceUrls =
+    map (host: "https://${host}")
+    (filter (hasSuffix ".${config.my.server.domain}") (attrNames config.services.nginx.virtualHosts));
 in {
   options.my.server.monitoring = {
     enable = mkEnableOption "host and power monitoring with prometheus and grafana";
@@ -74,6 +87,18 @@ in {
         configFile = jsonExporterConfig;
       };
 
+      exporters.blackbox = {
+        enable = true;
+        listenAddress = "127.0.0.1";
+        configFile = blackboxConfig;
+      };
+
+      # SMART health of all disks, including the backup drive
+      exporters.smartctl = {
+        enable = true;
+        listenAddress = "127.0.0.1";
+      };
+
       scrapeConfigs = [
         {
           job_name = "node";
@@ -96,6 +121,36 @@ in {
             {
               targets = ["127.0.0.1:${toString config.services.prometheus.exporters.json.port}"];
               labels.instance = "shelly-${config.networking.hostName}";
+            }
+          ];
+        }
+        {
+          job_name = "smartctl";
+          static_configs = [
+            {
+              targets = ["127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}"];
+              labels.instance = config.networking.hostName;
+            }
+          ];
+        }
+        {
+          # one probe per url: the url becomes the target parameter and the instance label
+          job_name = "services";
+          metrics_path = "/probe";
+          params.module = ["https_2xx"];
+          static_configs = [{targets = serviceUrls;}];
+          relabel_configs = [
+            {
+              source_labels = ["__address__"];
+              target_label = "__param_target";
+            }
+            {
+              source_labels = ["__param_target"];
+              target_label = "instance";
+            }
+            {
+              target_label = "__address__";
+              replacement = "127.0.0.1:${toString config.services.prometheus.exporters.blackbox.port}";
             }
           ];
         }
@@ -142,11 +197,19 @@ in {
           }
         ];
 
-        # edit in grafana, export as JSON and replace the file
         dashboards.settings.providers = [
           {
             name = "homelab";
-            options.path = ./grafana-dashboards;
+            options.path = pkgs.linkFarm "grafana-dashboards" {
+              # overview, edit in grafana, export as JSON and replace the file
+              "homelab.json" = ./grafana-dashboards/homelab.json;
+
+              # host details, linked from the overview
+              "node-exporter-full.json" = pkgs.fetchurl {
+                url = "https://raw.githubusercontent.com/rfmoz/grafana-dashboards/b07d8a90d8fadd112e9ac841b777ee863cda850b/prometheus/node-exporter-full.json";
+                hash = "sha256-wueaXq0VU34OvidqKHjJXWKGyhq42yzX9p1LqMB53n4=";
+              };
+            };
           }
         ];
       };

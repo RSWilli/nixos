@@ -120,8 +120,13 @@
             ''
           )
           (
-            pkgs.writeShellScriptBin "remote" ''
-              ${pkgs.nh}/bin/nh os boot -H homelab --target-host root@homelab --build-host root@homelab --ask
+            pkgs.writeShellScriptBin "remote-boot" ''
+              ${pkgs.nh}/bin/nh os boot -H homelab --target-host root@homelab.netbird.cloud --build-host root@homelab.netbird.cloud --ask
+            ''
+          )
+          (
+            pkgs.writeShellScriptBin "remote-apply" ''
+              ${pkgs.nh}/bin/nh os switch -H homelab --target-host root@homelab.netbird.cloud --build-host root@homelab.netbird.cloud --ask
             ''
           )
         ];

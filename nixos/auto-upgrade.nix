@@ -19,7 +19,7 @@ in {
       dates = "04:00";
       randomizedDelaySec = "45min";
       persistent = true;
-      allowReboot = false;
+      allowReboot = cfg.autoReboot;
       operation = "boot";
     };
   };

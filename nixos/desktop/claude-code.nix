@@ -65,6 +65,15 @@ with lib; let
 
       # read-only system bus for systemctl (see dbusProxy below)
       DBUS_SYSTEM_BUS_ADDRESS = "unix:path=${dbusProxySocket}";
+
+      # request summarized thinking from the API so it can be shown, see
+      # https://github.com/anthropics/claude-code/issues/54348#issuecomment-4337318753
+      CLAUDE_CODE_EXTRA_BODY = builtins.toJSON {
+        thinking = {
+          type = "adaptive";
+          display = "summarized";
+        };
+      };
     };
 
     sandbox = {

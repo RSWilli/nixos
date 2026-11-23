@@ -36,7 +36,7 @@ in {
     virtualisation.containers.containersConf.settings.containers.dns_servers = ["1.1.1.1" "8.8.8.8"];
 
     environment.systemPackages = [
-      pkgs.docker-compose # used by `podman compose` / `docker compose`
+      pkgs.podman-compose # used by `podman compose` / `docker compose`; builds via buildah (supports additional_contexts)
     ];
   };
 }

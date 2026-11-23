@@ -22,21 +22,30 @@ in {
   };
 
   config = mkIf cfg.enable {
-    virtualisation.podman = {
-      enable = true;
+    virtualisation = {
+      podman = {
+        enable = true;
 
-      # `docker` alias for the podman CLI
-      dockerCompat = true;
+        # `docker` alias for the podman CLI
+        dockerCompat = true;
 
-      # automatically run a prune schedule
-      autoPrune.enable = true;
+        # automatically run a prune schedule
+        autoPrune.enable = true;
+      };
+
+      containers = {
+        # resolve short image names against Docker Hub like docker does
+        registries.settings.unqualified-search-registries = ["docker.io"];
+
+        containersConf.settings.containers = {
+          # bypass the netbird DNS override inside containers
+          dns_servers = ["1.1.1.1" "8.8.8.8"];
+
+          # don't copy the host's /etc/hosts into containers (docker doesn't either)
+          base_hosts_file = "none";
+        };
+      };
     };
-
-    # resolve short image names against Docker Hub like docker does
-    virtualisation.containers.registries.settings.unqualified-search-registries = ["docker.io"];
-
-    # bypass the netbird DNS override inside containers
-    virtualisation.containers.containersConf.settings.containers.dns_servers = ["1.1.1.1" "8.8.8.8"];
 
     environment.systemPackages = [
       pkgs.podman-compose # used by `podman compose` / `docker compose`; builds via buildah (supports additional_contexts)

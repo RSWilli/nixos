@@ -1,7 +1,7 @@
 # Claude Code, whole process inside sandbox-runtime (srt):
 #  - reads: project and ~/.claude only (no home, no secret sockets)
 #  - writes: project, ~/.claude, /tmp, cache; settings files read-only
-#  - network: domain allowlist, no localhost
+#  - network: domain allowlist, plus host loopback
 #  - Bash/Read/Grep/Glob allowed outright, auto mode for the rest
 #  - VS Code: claudeCode.claudeProcessWrapper = /run/current-system/sw/bin/claude
 {
@@ -86,14 +86,26 @@ with lib; let
         "claude.com"
         "*.claude.com"
 
-        "proxy.golang.org"
-        "sum.golang.org"
-        "registry.npmjs.org"
+        # Go
+        "*.golang.org"
+        "storage.googleapis.com" # module zips from proxy.golang.org
+        "go.dev"
+        "*.go.dev"
+        "gopkg.in"
+        "*.googlesource.com"
+
+        "github.com"
+        "*.github.com"
+        "*.githubusercontent.com"
+        "*.npmjs.org"
+        "pypi.org"
+        "files.pythonhosted.org"
+        "*.docker.io"
+        "*.docker.com"
+        "ghcr.io"
         "cache.nixos.org"
         "channels.nixos.org"
-        "github.com"
-        "api.github.com"
-        "codeload.github.com"
+
         "gitlab.streamonkey.net"
         "prometheus.streamonkey.net"
 

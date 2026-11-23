@@ -32,6 +32,9 @@ in {
       autoPrune.enable = true;
     };
 
+    # resolve short image names against Docker Hub like docker does
+    virtualisation.containers.registries.settings.unqualified-search-registries = ["docker.io"];
+
     # bypass the netbird DNS override inside containers
     virtualisation.containers.containersConf.settings.containers.dns_servers = ["1.1.1.1" "8.8.8.8"];
 

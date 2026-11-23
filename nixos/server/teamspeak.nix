@@ -35,6 +35,14 @@ in {
       };
     };
 
+    # the container start script copies the host /etc/resolv.conf once, so wait until
+    # NetworkManager has a connection (and nameservers), otherwise DNS stays broken in the
+    # container and ts3server shuts down after failing to reach the license server for 2h
+    systemd.services."container@teamspeak" = {
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+    };
+
     networking.firewall = {
       # allowedTCPPorts = [ts.fileTransferPort]; # no file transfer allowed
       allowedUDPPortRanges = [

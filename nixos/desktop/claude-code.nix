@@ -1,14 +1,9 @@
-# Claude Code with its built-in sandbox (sandbox-runtime), configured the same
-# on every machine via /etc/claude-code/managed-settings.json:
-#  - Read/Write/Edit tools: no access outside the working directories
-#  - Bash: runs in bubblewrap per command; home and secret sockets unreadable,
-#    writes only to the project, .git/hooks, .git/config and .vscode of every
-#    repo (also ones created mid-session) read-only, network by domain allowlist
-#  - systemctl read commands work inside the sandbox via a read-only
-#    system bus proxy
-#  - auto mode: routine actions (incl. MCP, Claude in Chrome) need no
-#    approval, risky ones do; commits work, fetch/push don't
-#    (no SSH keys or tokens reachable)
+# Claude Code, whole process inside sandbox-runtime (srt):
+#  - reads: project and ~/.claude only (no home, no secret sockets)
+#  - writes: project, ~/.claude, /tmp, cache; settings files read-only
+#  - network: domain allowlist, no localhost
+#  - Bash/Read/Grep/Glob allowed outright, auto mode for the rest
+#  - VS Code: claudeCode.claudeProcessWrapper = /run/current-system/sw/bin/claude
 {
   lib,
   config,
@@ -18,37 +13,40 @@
 with lib; let
   cfg = config.my.claude;
 
-  # Claude's own Go/npm/nix/... caches, separate from the user's. Private to
-  # willi: others must never write here (cache poisoning), and have no
-  # reason to read it.
+  # Claude's own caches; private to willi (cache poisoning)
   cache = "/var/cache/claude-sandbox";
 
   settings = {
     model = "opus[1m]";
     effortLevel = "medium";
 
-    # show (summarized) thinking in the conversation and transcript (ctrl+o)
+    # here, since Claude can't write its settings files
+    theme = "light";
+    tui = "fullscreen";
+    autoMemoryEnabled = false;
+
+    # show summarized thinking
     alwaysThinkingEnabled = true;
     showThinkingSummaries = true;
 
-    # hooks are shell commands; only allow ones defined here, never ones
-    # written to user or project settings
+    # only hooks defined here
     allowManagedHooksOnly = true;
 
     permissions = {
-      # auto mode: a classifier approves routine actions (incl. MCP calls)
-      # and only stops risky ones (exfiltration, destructive actions, ...).
-      # Sandboxed commands and edits in the project never prompt.
       defaultMode = "auto";
       disableBypassPermissionsMode = "disable";
 
-      # file tools (and sandboxed reads) stay inside the working directories
-      blockReadsOutsideWorkingDirectories = true;
+      # not blockReadsOutsideWorkingDirectories: it makes Bash ask for any
+      # outside path; srt limits reads instead
       blockWritesOutsideWorkingDirectories = true;
-      blockReadsExemptPaths = [cache];
 
-      # trusted MCP servers: all their tools, without asking the classifier
       allow = [
+        # bounded by srt
+        "Bash"
+        "Read"
+        "Grep"
+        "Glob"
+        # trusted MCP servers
         "mcp__claude_ai_aireal_Live_Platform_MCP"
         "mcp__claude-in-chrome"
       ];
@@ -59,14 +57,11 @@ with lib; let
       GOPATH = "${cache}/go";
       npm_config_cache = "${cache}/npm";
 
-      # Claude in Chrome: browser MCP tools via the Chrome/Chromium extension;
-      # Claude installs the native messaging host manifest itself
+      # Claude in Chrome
       CLAUDE_CODE_ENABLE_CFC = "true";
-
-      # read-only system bus for systemctl (see dbusProxy below)
+      # read-only system bus for systemctl
       DBUS_SYSTEM_BUS_ADDRESS = "unix:path=${dbusProxySocket}";
 
-      # request summarized thinking from the API so it can be shown, see
       # https://github.com/anthropics/claude-code/issues/54348#issuecomment-4337318753
       CLAUDE_CODE_EXTRA_BODY = builtins.toJSON {
         thinking = {
@@ -76,48 +71,103 @@ with lib; let
       };
     };
 
-    sandbox = {
-      enabled = true;
-      failIfUnavailable = true;
-      autoAllowBashIfSandboxed = true;
-      allowUnsandboxedCommands = false;
+    # no built-in Bash sandbox: would nest bubblewrap inside srt
+  };
 
-      network = {
-        # other domains ask once per session
-        allowedDomains = [
-          "proxy.golang.org"
-          "sum.golang.org"
-          "registry.npmjs.org"
-          "cache.nixos.org"
-          "channels.nixos.org"
-          "github.com"
-          "api.github.com"
-          "codeload.github.com"
-        ];
-        # nix daemon socket; dangerous sockets are hidden below
-        allowAllUnixSockets = true;
-      };
+  # relative paths: the directory claude is started in
+  srtSettings = {
+    network = {
+      allowedDomains = [
+        # Claude Code itself
+        "anthropic.com"
+        "*.anthropic.com"
+        "claude.ai"
+        "*.claude.ai"
+        "claude.com"
+        "*.claude.com"
 
-      filesystem = {
-        allowWrite = [cache];
-        denyRead = [
-          "/run/docker.sock" # docker group == root
-          "/run/dbus" # the real system bus; systemctl uses dbusProxySocket
-          "/run/user" # session bus, ssh/gpg agents, wayland
-          "/run/netbird"
-          "/run/agenix"
-          "/run/agenix.d"
-        ];
-      };
+        "proxy.golang.org"
+        "sum.golang.org"
+        "registry.npmjs.org"
+        "cache.nixos.org"
+        "channels.nixos.org"
+        "github.com"
+        "api.github.com"
+        "codeload.github.com"
+        "gitlab.streamonkey.net"
+        "prometheus.streamonkey.net"
+
+        # local docker services; resolves to 127.0.0.1, which srt only
+        # dials when allow-listed
+        "local.streamonkey.net"
+        "127.0.0.1"
+      ];
+      deniedDomains = []; # required by srt
+      # nix daemon, dbus proxy; dangerous sockets hidden below
+      allowAllUnixSockets = true;
+    };
+
+    filesystem = {
+      denyRead = [
+        "/home"
+        "/root"
+        "/mnt"
+        "/media"
+        "/run/media"
+        "/srv"
+        "/run/docker.sock" # docker group == root
+        "/run/dbus" # the real system bus; systemctl uses dbusProxySocket
+        "/run/user" # session bus, ssh/gpg agents, wayland
+        "/run/netbird"
+        "/run/agenix"
+        "/run/agenix.d"
+      ];
+      allowRead = [
+        "."
+        "~/.claude"
+      ];
+      allowWrite = [
+        "."
+        "~/.claude"
+        "/tmp"
+        cache
+      ];
+      # Must exist, or srt mounts an empty placeholder there. Project .claude
+      # stays writable: srt mounts its own placeholders inside it.
+      denyWrite = [
+        "~/.claude/settings.json"
+        "~/.claude/chrome" # Chrome runs the native host outside srt
+      ];
     };
   };
 
-  # Read-only system bus for the sandbox: xdg-dbus-proxy (the filter flatpak
-  # uses) only passes systemd's read methods, so `systemctl status|show|cat|
-  # list-*|is-*` work inside the sandbox, also in pipes and chains. Everything
-  # else on the bus (StartUnit, NetworkManager, udisks, ...) is invisible. The
-  # proxy runs as a throwaway user, so systemd/polkit see an identity without
-  # any rights even if a call slipped through.
+  srtSettingsFile = (pkgs.formats.json {}).generate "claude-srt-settings.json" srtSettings;
+
+  # Claude in Chrome: the browser manifests point at
+  # ~/.claude/chrome/chrome-native-host, which Chrome starts unsandboxed.
+  # Linked here so the sandbox can't change what runs.
+  chromeNativeHost = pkgs.writeShellScript "chrome-native-host" ''
+    export CLAUDE_CONFIG_DIR="$HOME/.claude"
+    exec ${getExe pkgs.claude-code} --chrome-native-host
+  '';
+
+  claude-sandboxed = pkgs.writeShellScriptBin "claude" ''
+    # "." would expose all of it
+    case "$PWD" in
+      / | /home | "$HOME")
+        echo "claude: not starting in $PWD, the sandbox would expose all of it" >&2
+        exit 1
+        ;;
+    esac
+    # state in ~/.claude/.claude.json instead of ~/.claude.json
+    export CLAUDE_CONFIG_DIR="$HOME/.claude"
+    # VS Code's claudeProcessWrapper passes its bundled binary first: drop it
+    if [[ ''${1-} == /* && -f ''${1-} && -x ''${1-} ]]; then shift; fi
+    exec ${getExe pkgs.sandbox-runtime} --settings ${srtSettingsFile} -- ${getExe pkgs.claude-code} "$@"
+  '';
+
+  # Read-only system bus: xdg-dbus-proxy passes only systemd's read methods
+  # (systemctl status/show/cat/list-*/is-*), as a throwaway user without rights
   dbusProxySocket = "/run/claude-dbus/system_bus_socket";
 
   systemdReadMethods = map (m: "org.freedesktop.systemd1.Manager.${m}@/org/freedesktop/systemd1") [
@@ -148,14 +198,9 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      claude-code
+      claude-sandboxed
 
-      # sandbox runtime dependencies
-      bubblewrap
-      socat
-      ripgrep
-
-      # tools claude likes to use:
+      # tools claude likes to use
       python3
       jq
     ];
@@ -163,7 +208,11 @@ in {
     environment.etc."claude-code/managed-settings.json".source =
       (pkgs.formats.json {}).generate "claude-managed-settings.json" settings;
 
-    systemd.tmpfiles.rules = ["d ${cache} 0700 willi users -"];
+    systemd.tmpfiles.rules = [
+      "d ${cache} 0700 willi users -"
+      "d /home/willi/.claude/chrome 0755 willi users -"
+      "L+ /home/willi/.claude/chrome/chrome-native-host - - - - ${chromeNativeHost}"
+    ];
 
     systemd.services.claude-dbus-proxy = {
       description = "Read-only system bus proxy for the Claude Code sandbox";

@@ -125,6 +125,8 @@ with lib; let
       allowRead = [
         "."
         "~/.claude"
+        # private Go modules from GitLab; token readable by the sandbox
+        "~/.netrc"
       ];
       allowWrite = [
         "."

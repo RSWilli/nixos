@@ -106,8 +106,7 @@ with lib; let
         "cache.nixos.org"
         "channels.nixos.org"
 
-        "gitlab.streamonkey.net"
-        "prometheus.streamonkey.net"
+        "*.streamonkey.net"
 
         # local docker services; resolves to 127.0.0.1, which srt only
         # dials when allow-listed

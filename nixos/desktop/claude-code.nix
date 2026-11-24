@@ -165,19 +165,31 @@ with lib; let
     exec ${getExe pkgs.claude-code} --chrome-native-host
   '';
 
-  claude-sandboxed = pkgs.writeShellScriptBin "claude" ''
-    # "." would expose all of it
+  # "." would expose all of it
+  checkPwd = ''
     case "$PWD" in
       / | /home | "$HOME")
-        echo "claude: not starting in $PWD, the sandbox would expose all of it" >&2
+        echo "$0: not starting in $PWD, the sandbox would expose all of it" >&2
         exit 1
         ;;
     esac
+  '';
+
+  claude-sandboxed = pkgs.writeShellScriptBin "claude" ''
+    ${checkPwd}
     # state in ~/.claude/.claude.json instead of ~/.claude.json
     export CLAUDE_CONFIG_DIR="$HOME/.claude"
     # VS Code's claudeProcessWrapper passes its bundled binary first: drop it
     if [[ ''${1-} == /* && -f ''${1-} && -x ''${1-} ]]; then shift; fi
     exec ${getExe pkgs.sandbox-runtime} --settings ${srtSettingsFile} -- ${getExe pkgs.claude-code} "$@"
+  '';
+
+  # interactive shell in the same sandbox, with the env Claude's Bash gets
+  claude-shell = pkgs.writeShellScriptBin "claude-shell" ''
+    ${checkPwd}
+    ${toShellVars settings.env}
+    export ${concatStringsSep " " (attrNames settings.env)}
+    exec ${getExe pkgs.sandbox-runtime} --settings ${srtSettingsFile} -- ${getExe pkgs.bashInteractive} --norc
   '';
 
   # Read-only system bus: xdg-dbus-proxy passes only systemd's read methods
@@ -213,6 +225,7 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       claude-sandboxed
+      claude-shell
 
       # tools claude likes to use
       python3

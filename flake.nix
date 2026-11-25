@@ -129,6 +129,14 @@
               ${pkgs.nh}/bin/nh os switch -H homelab --target-host root@homelab.netbird.cloud --build-host root@homelab.netbird.cloud --ask
             ''
           )
+          (
+            pkgs.writeShellScriptBin "cve" ''
+              set -euo pipefail
+              host="''${1:-$(uname -n)}"
+              system=$(nix build --no-link --print-out-paths ".#nixosConfigurations.$host.config.system.build.toplevel")
+              ${pkgs.lib.getExe pkgs.vulnix} -C "$system" "''${@:2}"
+            ''
+          )
         ];
       };
     });

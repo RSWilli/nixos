@@ -43,6 +43,22 @@ in {
       after = ["network-online.target"];
     };
 
+    # ts3server keeps refreshing its license files in the data dir, so back the dir up regularly.
+    # the sqlite db is copied with .backup to get a consistent snapshot while the server runs
+    systemd.services.backup-teamspeak = mkIf config.my.backup.enable {
+      startAt = "daily";
+      unitConfig.RequiresMountsFor = [config.my.backup.directory];
+      path = [pkgs.rsync pkgs.sqlite];
+      serviceConfig.Type = "oneshot";
+      script = ''
+        src=/var/lib/nixos-containers/teamspeak${ts.dataDir}
+        dst=${config.my.backup.directory}/teamspeak
+        mkdir -p "$dst"
+        rsync -a --delete --exclude 'ts3server.sqlitedb*' "$src/" "$dst/"
+        sqlite3 "$src/ts3server.sqlitedb" ".backup '$dst/ts3server.sqlitedb'"
+      '';
+    };
+
     networking.firewall = {
       # allowedTCPPorts = [ts.fileTransferPort]; # no file transfer allowed
       allowedUDPPortRanges = [

@@ -85,6 +85,7 @@ with lib; let
         "*.claude.ai"
         "claude.com"
         "*.claude.com"
+        "*.claudeusercontent.com" # Claude in Chrome bridge
 
         # Go
         "*.golang.org"

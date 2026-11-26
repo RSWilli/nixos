@@ -6,7 +6,7 @@
   imports = [
     # FIXME: when they release a module for the core series 300
     # https://github.com/NixOS/nixos-hardware/tree/master/framework/12-inch/13th-gen-intel
-    inputs.nixosHardware.nixosModules.framework-12-13th-gen-intel
+    inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
   ];
 
   boot = {
@@ -29,6 +29,9 @@
       kde.enable = true;
 
       steam = true;
+      libreoffice = true;
+      flatpak = true; # lets her install apps herself via Discover
+      remoteMaintenance.enable = true;
     };
 
     users = {
@@ -40,7 +43,6 @@
 
   environment.systemPackages = with pkgs; [
     google-chrome
-    libreoffice
     thunderbird
     xournalpp
 
@@ -56,6 +58,9 @@
       driver = pkgs.libfprint-2-tod1-goodix;
     };
   };
+
+  # phone integration (files, notifications, SMS)
+  programs.kdeconnect.enable = true;
 
   # BIOS updates, run `fwupdmgr update` to check for updates and install them
   # https://wiki.nixos.org/wiki/Fwupd

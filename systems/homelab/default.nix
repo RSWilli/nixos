@@ -5,7 +5,18 @@
 }: {
   imports = [
     inputs.nixos-hardware.nixosModules.common-pc-ssd
+    # i3-9100T (Coffee Lake, UHD 630): VAAPI drivers for immich transcoding
+    "${inputs.nixos-hardware}/common/cpu/intel/coffee-lake"
   ];
+
+  hardware.graphics.enable = true;
+
+  # immich hardware transcoding on the iGPU
+  services.immich = {
+    settings.ffmpeg.accel = "vaapi"; # default: disabled
+    accelerationDevices = ["/dev/dri/renderD128"];
+  };
+  users.users.immich.extraGroups = ["video" "render"];
 
   # https://nixos.wiki/wiki/Linux_kernel
   boot.kernelPackages = pkgs.linuxPackages_latest; # latest stable kernel

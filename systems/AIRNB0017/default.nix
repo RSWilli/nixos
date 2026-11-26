@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   ...
 }: {
@@ -58,6 +59,26 @@
   # BIOS updates, run `fwupdmgr update` to check for updates and install them
   # https://wiki.nixos.org/wiki/Fwupd
   services.fwupd.enable = true;
+
+  # autostart via /etc/xdg/autostart, honored by GNOME, KDE and niri
+  environment.systemPackages = with pkgs; [
+    (makeAutostartItem {
+      name = "firefox";
+      package = config.programs.firefox.finalPackage;
+    })
+    (makeAutostartItem {
+      name = "chromium-browser";
+      package = chromium;
+    })
+    (makeAutostartItem {
+      name = "org.telegram.desktop";
+      package = telegram-desktop;
+    })
+    (makeAutostartItem {
+      name = "code";
+      package = vscode;
+    })
+  ];
 
   networking.hostName = "AIRNB0017";
 

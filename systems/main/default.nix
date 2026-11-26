@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   ...
 }: {
@@ -54,6 +55,24 @@
     # appimage-run
     # blender-hip # blender with AMD HIP support
     xournalpp
+
+    # autostart via /etc/xdg/autostart, honored by GNOME, KDE and niri
+    (makeAutostartItem {
+      name = "steam";
+      package = config.programs.steam.package;
+    })
+    (makeAutostartItem {
+      name = "org.telegram.desktop";
+      package = telegram-desktop;
+    })
+    (makeAutostartItem {
+      name = "code";
+      package = vscode;
+    })
+    (makeAutostartItem {
+      name = "firefox";
+      package = config.programs.firefox.finalPackage;
+    })
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

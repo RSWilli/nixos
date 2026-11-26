@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   ...
 }: {
@@ -33,6 +34,16 @@
 
   environment.systemPackages = with pkgs; [
     obsidian
+
+    # autostart via /etc/xdg/autostart, honored by GNOME, KDE and niri
+    (makeAutostartItem {
+      name = "firefox";
+      package = config.programs.firefox.finalPackage;
+    })
+    (makeAutostartItem {
+      name = "org.telegram.desktop";
+      package = telegram-desktop;
+    })
   ];
 
   # BIOS updates, run `fwupdmgr update` to check for updates and install them

@@ -33,4 +33,7 @@ in {
   # grafana initial admin password and cookie/datasource secret key
   "grafana-admin.age".publicKeys = [willi homelab];
   "grafana-secret-key.age".publicKeys = [willi homelab];
+
+  # htpasswd file for the http proxy
+  "proxy-htpasswd.age".publicKeys = [willi homelab];
 }

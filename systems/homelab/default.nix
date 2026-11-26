@@ -23,6 +23,7 @@
       vaultwarden.enable = true;
       immich.enable = true;
       teamspeak.enable = true;
+      proxy.enable = false;
 
       dyndns = {
         enable = true;

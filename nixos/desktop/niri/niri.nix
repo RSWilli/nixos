@@ -90,6 +90,13 @@ in {
       enable = true;
     };
 
+    # greetd ignores services.displayManager.autoLogin; its autologin is
+    # initial_session, which skips the greeter only on the first login after boot
+    services.greetd.settings.initial_session = mkIf config.my.desktop.enableAutoLogin {
+      user = config.services.displayManager.autoLogin.user;
+      command = getExe' config.programs.niri.package "niri-session";
+    };
+
     services.displayManager.noctalia-greeter = {
       enable = true;
 

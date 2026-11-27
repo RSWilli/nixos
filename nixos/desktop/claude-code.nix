@@ -1,7 +1,8 @@
 # Claude Code, whole process inside sandbox-runtime (srt):
 #  - reads: project and ~/.claude only (no home, no secret sockets)
 #  - writes: project, ~/.claude, /tmp, cache; settings files read-only
-#  - network: domain allowlist, plus host loopback
+#  - network: domain allowlist, plus host loopback; ports listening on the
+#    host are mirrored onto the sandbox's loopback (pasta)
 #  - Bash/Read/Grep/Glob allowed outright, auto mode for the rest
 #  - VS Code: claudeCode.claudeProcessWrapper = /run/current-system/sw/bin/claude
 {
@@ -175,12 +176,86 @@ with lib; let
     esac
   '';
 
+  # Host ports on the sandbox's loopback: pasta binds every port bound on the
+  # host in srt's network namespace too, forwarding to the host. Loopback only
+  # (--splice-only), so srt's proxy stays the only way out. TCP only (srt never
+  # carried UDP), no DNS (the host resolver would leak any name), no ephemeral
+  # ports (pasta's auto default). Runs beside srt, whose pid it gets.
+  hostLoopback = pkgs.writeScript "claude-host-loopback" ''
+    #!${pkgs.python3}/bin/python3 -I
+    import fcntl, os, subprocess, sys, time
+
+    srt = int(sys.argv[1])
+
+
+    def alive(pid):
+        return os.path.exists(f"/proc/{pid}")
+
+
+    # processes come and go while srt starts: a vanished one has no children
+    # and no namespace
+    def children(pid):
+        try:
+            tasks = os.listdir(f"/proc/{pid}/task")
+            return [c for t in tasks for c in open(f"/proc/{pid}/task/{t}/children").read().split()]
+        except OSError:
+            return []
+
+
+    def netns(pid):
+        try:
+            return os.readlink(f"/proc/{pid}/ns/net")
+        except OSError:
+            return None
+
+
+    # first descendant of srt in another network namespace
+    def find_sandbox():
+        todo = children(srt)
+        while todo:
+            pid = todo.pop()
+            if netns(pid) not in (own, None):
+                return pid
+            todo += children(pid)
+
+
+    own = netns(srt)
+    for _ in range(100):
+        if not alive(srt):
+            sys.exit()  # e.g. a quick --version
+        pid = find_sandbox()
+        if pid:
+            break
+        time.sleep(0.1)
+    else:
+        sys.exit("no sandbox process found")
+
+    # The sandbox runs in a user namespace nested in the one owning its netns;
+    # pasta joins the owner (NS_GET_USERNS). It closes inherited fds, so it
+    # opens it through our /proc.
+    net = os.open(f"/proc/{pid}/ns/net", os.O_RDONLY)
+    user = fcntl.ioctl(net, 0xB701)
+    pasta = subprocess.Popen([
+        "${pkgs.passt}/bin/pasta", "-f", "--splice-only", "--no-netns-quit",
+        "-t", "none", "-u", "none", "-T", "~53,auto", "-U", "none",
+        "--userns", f"/proc/{os.getpid()}/fd/{user}",
+        "--netns", f"/proc/{pid}/ns/net",
+    ])
+    while alive(srt) and pasta.poll() is None:
+        time.sleep(1)
+    pasta.terminate()
+  '';
+
+  # beside srt, which becomes $$ through exec
+  startHostLoopback = "${hostLoopback} $$ </dev/null >/dev/null 2>>${cache}/host-loopback.log &";
+
   claude-sandboxed = pkgs.writeShellScriptBin "claude" ''
     ${checkPwd}
     # state in ~/.claude/.claude.json instead of ~/.claude.json
     export CLAUDE_CONFIG_DIR="$HOME/.claude"
     # VS Code's claudeProcessWrapper passes its bundled binary first: drop it
     if [[ ''${1-} == /* && -f ''${1-} && -x ''${1-} ]]; then shift; fi
+    ${startHostLoopback}
     exec ${getExe pkgs.sandbox-runtime} --settings ${srtSettingsFile} -- ${getExe pkgs.claude-code} "$@"
   '';
 
@@ -189,6 +264,7 @@ with lib; let
     ${checkPwd}
     ${toShellVars settings.env}
     export ${concatStringsSep " " (attrNames settings.env)}
+    ${startHostLoopback}
     exec ${getExe pkgs.sandbox-runtime} --settings ${srtSettingsFile} -- ${getExe pkgs.bashInteractive} --norc
   '';
 
